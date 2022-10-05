@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #E7E7E7;
+}
+.whiteBox{
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px 1px #00000025;
+    background-color: #f9f9f9;
+    font-family: Lato;
+}
+.col{
+    display: flex;
+    flex-direction: column;
+}
+.row{
+    display: flex;
+    flex-direction: row;
+}
+.center{
+    display: flex;
+    justify-content: center;
+}
