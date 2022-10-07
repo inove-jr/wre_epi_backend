@@ -45,6 +45,57 @@ export default {
 
 </script>
 <style scoped>
+
+* {
+        font-family: Lato;
+    }
+    .nome{
+        font-size: 1em;
+        font-weight: bold;
+        margin: 0.9em;
+        text-align: center;
+    }
+    .image{
+        text-align: center;
+        align-content: center;
+        padding: 1.4em;
+        margin: 0.4em 0;
+        background-color: white;
+    }
+    span{
+        font-size: 0.85rem;
+    }
+    .text-bot-preco {
+        text-align: left;
+    }
+    .preco{
+        font-weight: bold;
+        font-size: 1.5em;
+    }
+
+    button{
+        color: white;
+        font-size: 1.25em;
+        font-weight: bold;
+        background-color: #0a260b;
+        border: none;
+        border-radius: 0.4em;
+        padding: 0.15em 1em 0.3em 1em;
+        margin: 0.75em 0;
+        cursor: pointer;
+        transition: 0.05s ease-in-out;
+    }
+
+    button:hover{
+        background-color: #2A732A;
+    }
+    .card{
+        max-width: 15rem;
+        min-width: 14rem;
+    }
+
+
+/*
     * {
         font-family: Lato;
     }
@@ -93,5 +144,5 @@ export default {
         min-width: 14rem;
     }
 
-
+*/
 </style>

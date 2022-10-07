@@ -16,7 +16,7 @@ export default {
 <style scoped>
 #line{
     display: inline-block;
-    margin: 15px;
+    margin: 0.95rem;
 }
 #content{
     display: flex;

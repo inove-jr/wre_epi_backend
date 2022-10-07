@@ -1,6 +1,6 @@
 <template>
   <main>
-    <SessaoProdutos :nomeSessao="sessao" :listaProdutos="produtos"/>
+    <SessaoProdutos id="test" :nomeSessao="sessao" :listaProdutos="produtos"/>
     <br>
     <SessaoProdutos :nomeSessao="sessao" :listaProdutos="produtos"/>
   </main>
