@@ -1,7 +1,7 @@
 <template>
     <div class="whiteBox card">
-        <div>
-            <div class="nome">{{ nomeProduto }}</div>
+        <div class="row center">
+            <span class="nome">{{ nomeProduto }}</span>
         </div>
         <div class="image">
             <img :src="imagem" alt="Imagem Produto">
@@ -59,7 +59,7 @@ export default {
         text-align: center;
         align-content: center;
         padding: 1.4em;
-        margin: 0.4em 0;
+        margin-bottom: 0.4em;
         background-color: white;
     }
     span{

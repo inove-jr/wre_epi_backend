@@ -48,12 +48,12 @@ export default {
             //Encontar a lista do componente indivivual
             let lista =  this.$el.getElementsByClassName("list")[0]
             //Usei este para diminuir a velocidade da mudança, mas fora o lista.scrollLeft-=300, a função não é necessaria, o valor de 300 no lista.scrollLeft também pode ser alterado
-            setTimeout(() => lista.scrollLeft-=300, 300);
+            lista.scrollLeft -= 500;
         },
         produtosDireita(){
             
             let lista =  this.$el.getElementsByClassName("list")[0]
-            setTimeout(() => lista.scrollLeft+=300, 300);
+            lista.scrollLeft += 500;
         }
     },
     mounted(){
@@ -68,12 +68,12 @@ export default {
         /*Em vez de hidden coloquei para um scroll escondido, movimentado pelos botões externos */
         overflow: scroll;
         /*Este paddin ainha o primeiro produto, mas não é a solução perfeita, já que mudar o tamanho da tela afeta*/
-        padding-left: 20em;
+        
         /*Esta configuração causa o deslize, mas se quiser experimentar com outros para ver um melhor pode ficar a vontade */
         scroll-behavior: smooth;
     }
     .list::-webkit-scrollbar {
-        display: none;
+       display: none;
     }
     .sessao{
         padding: 20px;
@@ -107,6 +107,18 @@ export default {
         background-color: #f9f9f9;
         opacity: 50%;
         cursor: pointer;
+    }
+    @media (max-width: 1000px) {
+        .direcional {
+            height: unset;
+            padding: 10px;
+        }
+        .line{
+            padding: 0;
+        }
+        .sessao{
+            padding: 0;
+        }
     }
     .direcional:hover{
         opacity: 100%;
