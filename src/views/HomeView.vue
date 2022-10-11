@@ -3,13 +3,15 @@
     <SessaoProdutos id="test" :nomeSessao="sessao" :listaProdutos="produtos"/>
     <br>
     <SessaoProdutos :nomeSessao="sessao" :listaProdutos="produtos"/>
+    <BotaoFaleConosco/>
   </main>
 </template>
 
 <script>
 import SessaoProdutos from '../components/sessaoProdutos.vue';
+import BotaoFaleConosco from '@/components/BotaoFaleConosco.vue';
 export default {
-  components: { SessaoProdutos },
+  components: { SessaoProdutos, BotaoFaleConosco },
     data(){
       return{
         produtos:[
