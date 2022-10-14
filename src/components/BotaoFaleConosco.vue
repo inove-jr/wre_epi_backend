@@ -1,23 +1,4 @@
 <template>
-   <!--
-    <button class="whiteBox" id="faleConosco">
-        <div id="faleCabeçalho">
-            <img src="/img/fale.svg">
-            <span>Fale Conosco</span>
-        </div>
-        <div id="faleText">
-            Selecione seu canal de atendimento...
-        </div>
-        <div id="faleOpcoes">  
-            <a href=""><button>
-                Fale Conosco: Dúvidas, reclamações
-            </button></a>
-            <button>
-                Atendimento personalizado
-            </button>
-        </div>
-    </button>
-    -->
     <div>
         <input type="checkbox" id="activate-div">
         <label for="activate-div">
