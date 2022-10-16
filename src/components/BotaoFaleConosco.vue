@@ -4,8 +4,9 @@
         <label for="activate-div">
             <div class="whiteBox" id="faleConosco">
                 <div id="faleCabeçalho">
-            <img src="/img/fale.svg">
+            <img id="fale_img" src="/img/fale.svg">
             <span>Fale Conosco</span>
+            <img id="close" src="/img/cross.svg">
         </div>
         <div id="faleText">
             Selecione seu canal de atendimento...
@@ -61,9 +62,12 @@ export default {
 span{
     display: none;
 }
-#faleCabeçalho img{
+#faleCabeçalho #fale_img{
     visibility: visible;
     margin-left: 55%;
+}
+#close{
+    display: none;
 }
 #activate-div:checked ~ label #faleConosco{
     width: 24rem;
@@ -75,6 +79,11 @@ span{
     cursor:auto;
     transition: height ease-in-out 1s;
     
+}
+#activate-div:checked ~ label #faleConosco #close{
+    display: flex;
+    margin-left: 3em;
+    cursor: pointer;
 }
 #activate-div:checked ~ label #faleConosco #faleCabeçalho{
     visibility: visible;
@@ -92,7 +101,7 @@ span{
     font-size: 1.4em;
     color: white;
 }
-#activate-div:checked ~ label #faleConosco #faleCabeçalho img{
+#activate-div:checked ~ label #faleConosco #faleCabeçalho #fale_img{
     margin-left: 5em;
 }
 #activate-div:checked ~ label #faleConosco #faleText{
