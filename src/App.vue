@@ -1,5 +1,5 @@
 <template>
-  <!-- <HeaderComponent/> -->
+  <HeaderComponent/>
   <CarrouselComponent/>
   <router-view/>
 
@@ -7,14 +7,14 @@
 </template>
 
 <script>
-// import HeaderComponent from './components/Header.vue'
+import HeaderComponent from './components/Header.vue'
 import CarrouselComponent from "./components/CarrouselComponent.vue";
 
 
 export default {
   name: 'App',
   components: {
-    // HeaderComponent,
+    HeaderComponent,
     CarrouselComponent,
 }
 }
