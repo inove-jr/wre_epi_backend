@@ -1,6 +1,8 @@
 <template>
   <HeaderComponent/>
+  <CarrouselComponent/>
   <router-view/>
+
   
 </template>
 
