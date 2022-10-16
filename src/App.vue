@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import HeaderComponent from './components/Header.vue'
+import HeaderComponent from './components/header.vue'
 import CarrouselComponent from "./components/CarrouselComponent.vue";
 
 
