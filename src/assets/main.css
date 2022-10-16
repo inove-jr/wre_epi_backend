@@ -25,12 +25,10 @@ body{
     display: flex;
     flex-direction: column;
 }
-
 .row{
     display: flex;
     flex-direction: row;
 }
-
 .center{
     display: flex;
     justify-content: center;
