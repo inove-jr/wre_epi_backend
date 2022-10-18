@@ -37,14 +37,14 @@ export default {
 #faleConosco{
     position: fixed;
     right: 1rem;
-    top: 3rem;
+    top: 30rem;
     width: 5rem;
     height: 5rem;
     border-radius: 100%;
     border: none;
     display: flex;
     align-items: center;
-    text-align: center;
+    justify-content: center;
     background: #1D531F;
     z-index: 3;   
     cursor: pointer;
@@ -63,15 +63,14 @@ span{
     display: none;
 }
 #faleCabeçalho #fale_img{
-    visibility: visible;
-    margin-left: 55%;
+    height: 2.6em;
 }
 #close{
     display: none;
 }
 #activate-div:checked ~ label #faleConosco{
     width: 24rem;
-    height: 23.1rem;
+    height: 24.2rem;
     border-radius: 1em 1em 0 1em;
     display: flex;
     flex-direction: column;
