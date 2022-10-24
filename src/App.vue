@@ -39,6 +39,7 @@ body {
 .vueperslides--fixed-height {
   height: 200px;
 }
+
 body {
   background-color: #ffffff;
 }
