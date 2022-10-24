@@ -1,30 +1,29 @@
 <template>
-  <HeaderComponent/>
-  <CarrouselComponent/>
-  <router-view/>
-
-  
+  <HeaderComponent />
+  <CarrouselComponent />
+  <FooterComponent />
+  <router-view />
 </template>
 
 <script>
-import HeaderComponent from './components/Header.vue'
+import HeaderComponent from "./components/Header.vue";
 import CarrouselComponent from "./components/CarrouselComponent.vue";
-
+import FooterComponent from "./components/footer.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     HeaderComponent,
     CarrouselComponent,
-}
-}
+    FooterComponent,
+  },
+};
 </script>
 
 <style>
-  body{
-    margin: 0;
-
-  }
+body {
+  margin: 0;
+}
 #app {
   margin: 0px;
   padding: 0px;
@@ -37,5 +36,14 @@ export default {
   width: 100%;
   background-color: grey;
 }
-.vueperslides--fixed-height { height: 200px; }
+.vueperslides--fixed-height {
+  height: 200px;
+}
+body {
+  background-color: #ffffff;
+}
+footer {
+  background-color: #3a9e3e;
+  color: #ffffff;
+}
 </style>
