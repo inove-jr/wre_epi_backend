@@ -1,9 +1,9 @@
 <template>
-  <HeaderComponent/>
-  <CarrouselComponent/>
-  <router-view/>
-
-  
+  <div>
+    <HeaderComponent/>
+    <CarrouselComponent/>
+    <router-view/>
+  </div>
 </template>
 
 <script>
