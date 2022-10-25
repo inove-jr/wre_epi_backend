@@ -97,8 +97,6 @@ span{
     font-size: 1.8em;
     color: white;
 }
-#activate-div:checked ~ label #faleConosco #faleCabeçalho #fale_img{
-}
 #activate-div:checked ~ label #faleConosco #faleText{
     display: flex;
     background-color: #F3FFF7;
