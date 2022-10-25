@@ -1,31 +1,31 @@
 <template>
     <div class="whiteBox card">
         <div class="row center">
-            <span class="nome">{{ nomeProduto }}</span>
+            <span class="nome">{{ produto.nome }}</span>
         </div>
         <div class="image">
-            <img :src="imagem" alt="Imagem Produto">
+            <img :src="produto.imagem" alt="Imagem Produto">
         </div>
     
         <div class="row center">
             <div class="col">
                 <span>à vista</span>
-                <span class="preco">R$ {{ preco.toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}</span>
+                <span class="preco">R$ {{ produto.preco.toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}</span>
             </div>
         </div>
 
         <div class="row center">
             <span>
-                x{{parcelas}} de
+                x{{produto.parcelas}} de
                 <span style="font-weight: bold">
-                    R$ {{ (preco/parcelas).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}
+                    R$ {{ (produto.preco/produto.parcelas).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}
                 </span>
                 s/ juros
             </span>
         </div>
             
         <div class="row center">
-            <a :href="link"><button @click="test">Comprar</button></a>
+            <button  @click="$router.push( { name: 'product', params: { id:0} })">Comprar</button>
         </div>
     </div>
 </template>
@@ -33,11 +33,12 @@
 export default {
     name: "ProductCard",
     props:{
-        nomeProduto: String,
-        preco: Number,
-        parcelas: Number,
-        link: String,
-        imagem: String
+        produto:{
+            nome: String,
+            preco: Number,
+            parcelas: Number,
+            imagem: String
+        }
     },
     methods:{
     }
