@@ -1,9 +1,11 @@
 <template>
-    <section>
-      <div class="whiteBox productView grid-2-col">
-
-        <div class="images item1 flex-col">
-          <span>Imagem do produto:</span>
+  <div class="conteiner row" style="">
+    <div class="whiteBox productView col">
+      <div class="row">
+        <div class="columns images col">
+          <span class="text">
+            Imagem do produto:
+          </span>
           
           <div class="bigImage">
             <img :src="bigImage">
@@ -14,20 +16,30 @@
           </div>
         </div>
 
-        <div class="flex-col">
+        <div class="columns col">
           <div class="text">
-            <h2>Nome Produto</h2>
-            <p>
-              "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+            <h2 class="padText">
+              Nome Produto
+            </h2>
+
+            <div class="padText">
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+            </div>
           </div>
-          <div class="video">
-            <iframe 
+
+          <div>
+            <iframe class="video" 
               src="https://www.youtube.com/embed/j5a0jTc9S10">
             </iframe>
           </div>
         </div>
       </div>
-    </section> 
+    </div>
+
+    <div class="whiteBox productBuy col">
+          
+    </div>
+  </div>
 </template>
   
 <script>
@@ -56,51 +68,65 @@
 </script>
 
 <style scoped>
-  .productView{
-      padding: 3em;
-      margin: 3em;
-      width: 64%;
-      font-size: 1.4rem;
+  .conteiner {
+    padding: 1rem 4rem;
   }
-  .grid-2-col{
-    display: grid;
-	  grid-template-columns: 0.6fr 1fr;
+  .productView{
+    padding: 2rem;
+    margin: 0.5rem;
+    width: 70%;
+    font-size: 1.4rem;
+  }
+  .productBuy{
+    min-width: 35rem;
+    width: 30%;
+    padding: 3rem;
+    margin: 0.5rem;
+  }
+  .bigImage img{
+    height: 35rem;
+    aspect-ratio: 1/1;
+    width: auto;
+    border: 0.1em solid rgb(0, 0, 0, 0.5);
+    border-radius: 0.2rem;
+  }
+  @media only screen and (max-width: 1200px) {
+    .conteiner {
+      flex-wrap: wrap;
+    }
+    .productView {
+      width: 100%;
+    }
+    .productBuy {
+      width: 100%;
+    }
   }
   .images{
     text-align: left;
   }
-  .flex-col{
-    display: flex;
-    flex-direction: column;
-  }
   .text{
+    font-family: Inter;
     text-align: justify;
+    padding-bottom: 0.5rem;
   }
-  .bigImage img{
-    height: 24em;
-    width: auto;
-    border: 0.1em solid black;
-  }
+  
   .otherImages img{
-    height: 3.6em;
+    height: 5rem;
+    aspect-ratio: 1/1;
     width: auto;
     margin: 0.1em;
-    border: 0.1em solid black;
+    border: 0.1em solid rgb(0, 0, 0, 0.5);
+    border-radius: 0.2rem;
   }
-  .item1 {
-    grid-column-start: 1;
-    grid-column-end: 1;
+  .columns {
+    padding: 2rem;
   }
-  .item2 {
-    grid-column-start: 2;
-    grid-column-end: 2;
+  .padText {
+    padding-bottom: 1rem;
   }
-
   .video{
-    margin: 3em;
-  }
-  .video iframe{
-    height: 20em;
-    width: 35em;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border: none;
   }
 </style>
