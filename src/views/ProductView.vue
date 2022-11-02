@@ -42,11 +42,25 @@
       </div>
     </div>
     <div class="whiteBox detail">
-      <div class="padText">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+      <h3>Descrição:</h3>
+      <div class="descricao">
+
+        <p class="padText">
+          Descrição longa: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque bibendum eros nec finibus lobortis. Quisque ultricies nec lorem vitae tincidunt. Vivamus aliquam, nisi posuere maximus ullamcorper, lectus magna ultricies eros, et molestie tortor dui at nulla. In hac habitasse platea dictumst. Nam ornare elementum arcu tincidunt laoreet. In hac habitasse platea dictumst. Nam ornare elementum arcu tincidunt laoreet.<br><br>
+
+          Descrição rápida: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque bibendum eros nec finibus lobortis. Quisque ultricies nec lorem vitae tincidunt. Vivamus aliquam, nisi posuere maximus ullamcorper, lectus magna ultricies eros, et molestie tortor dui at nulla. In hac habitasse platea dictumst. Nam ornare elementum arcu tincidunt laoreet. In hac habitasse platea dictumst. Nam ornare elementum arcu tincidunt laoreet.<br><br>
+
+          Descrição rápida: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque bibendum eros nec finibus lobortis. Quisque ultricies nec lorem vitae tincidunt. Vivamus aliquam, nisi posuere maximus ullamcorper, lectus magna ultricies eros, et molestie tortor dui at nulla. In hac habitasse platea dictumst. Nam ornare elementum arcu tincidunt laoreet. In hac habitasse platea dictumst. Nam ornare elementum arcu tincidunt laoreet.<br><br>
+        </p>
+        <div class="video-detalhado">
+          <h2>Vídeo com descrição detalhada:</h2>
+              <iframe class="video" 
+                src="https://www.youtube.com/embed/j5a0jTc9S10">
+              </iframe>
+        </div>
       </div>
     </div>         
-    <SessaoProdutos :nomeSessao="sessao" :listaProdutos="produtos"/> 
+    <SessaoProdutos id="itens-similares" :nomeSessao="sessao" :listaProdutos="produtos"/> 
   </div>
 </template>
   
@@ -187,5 +201,52 @@ import SessaoProdutos from '@/components/sessaoProdutos.vue';
     margin: 4.5rem;
     margin-top: 1rem;
     margin-bottom: 2rem;
+    padding: 2em;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .detail h3{
+    width: 8em;
+    color: #521717;
+  }
+  .descricao{
+    display: flex;
+    flex-direction: column;
+    margin-inline: 2em;
+  }
+  .descricao p{
+    font-size: 1.6rem;
+    text-align: left;
+  }
+  .video-detalhado{
+    margin: 1em;
+    margin-inline: 4em;
+  }
+  .video-detalhado h2{
+    text-align: left;
+    margin-bottom: 1rem;
+  }
+  .video-detalhado iframe{
+    max-height: 50em;
+  }
+  #itens-similares{
+    margin: 2em;
+  }
+
+  @media only screen and (max-width: 820px) {
+    .detail{
+      margin: 1.5rem;
+    } 
+    .descricao{
+      margin-inline: 0.4em;
+    }
+    
+    .video-detalhado{
+      margin: 0;
+    }
+    .video-detalhado iframe{
+      height: 10em;
+    }                   
   }
 </style>
