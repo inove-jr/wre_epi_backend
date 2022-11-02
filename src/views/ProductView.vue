@@ -1,51 +1,59 @@
 <template>
-  <div class="conteiner row" style="">
-    <div class="whiteBox productView col">
-      <div class="row">
-        <div class="columns images col">
-          <span class="text">
-            Imagem do produto:
-          </span>
-          
-          <div class="bigImage">
-            <img :src="bigImage">
-          </div>
+  <div>
+    <div class="conteiner row" style="">
+      <div class="whiteBox productView col">
+        <div class="row">
+          <div class="columns images col">
+            <span class="text">
+              Imagem do produto:
+            </span>
+            
+            <div class="bigImage">
+              <img :src="bigImage">
+            </div>
 
-          <div class="otherImages">
-            <img v-for="(image, index) in otherImages" :key="index" :src="image" @click="select(index)">
-          </div>
-        </div>
-
-        <div class="columns col">
-          <div class="text">
-            <h2 class="padText">
-              Nome Produto
-            </h2>
-
-            <div class="padText">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+            <div class="otherImages">
+              <img v-for="(image, index) in otherImages" :key="index" :src="image" @click="select(index)">
             </div>
           </div>
 
-          <div>
-            <iframe class="video" 
-              src="https://www.youtube.com/embed/j5a0jTc9S10">
-            </iframe>
+          <div class="columns col">
+            <div class="text">
+              <h2 class="padText">
+                Nome Produto
+              </h2>
+
+              <div class="padText">
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+              </div>
+            </div>
+
+            <div>
+              <iframe class="video" 
+                src="https://www.youtube.com/embed/j5a0jTc9S10">
+              </iframe>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="whiteBox productBuy col">
-          
+      <div class="whiteBox productBuy col">
+            
+      </div>
     </div>
+    <div class="whiteBox detail">
+      <div class="padText">
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+      </div>
+    </div>         
+    <SessaoProdutos :nomeSessao="sessao" :listaProdutos="produtos"/> 
   </div>
 </template>
   
 <script>
-
+import SessaoProdutos from '@/components/sessaoProdutos.vue';
   export default {
-    components: {  },
+    components: { SessaoProdutos },
     props:{
      /* bigImage: String,
       otherImages: Array*/
@@ -56,7 +64,51 @@
       data(){
         return{
           bigImage: "/img/prod1.svg",
-          otherImages: ["/img/prod1.svg","/img/prod2.svg","/img/prod3.svg"]
+          otherImages: ["/img/prod1.svg","/img/prod2.svg","/img/prod3.svg"],
+
+          produtos:[
+            {nome: "Nome do produto 1 - Capacete do tipo",
+            preco: 100.00,
+            parcelas: 4,
+            imagem: "/img/produto.svg",
+            },
+            {nome: "Nome do produto 2 - Capacete do tipo",
+            preco: 200.00,
+            parcelas: 4,
+            imagem: "/img/produto.svg",
+            },
+            {nome: "Nome do produto 3 - Capacete do tipo",
+            preco: 300.00,
+            parcelas: 4,
+            imagem: "/img/produto.svg",
+            },
+            {nome: "Nome do produto 4 - Capacete do tipo",
+            preco: 400.00,
+            parcelas: 4,
+            imagem: "/img/produto.svg",
+            },
+            {nome: "Nome do produto 5 - Capacete do tipo",
+            preco: 500.00,
+            parcelas: 4,
+            imagem: "/img/produto.svg",
+            },
+            {nome: "Nome do produto 6 - Capacete do tipo",
+            preco: 600.00,
+            parcelas: 4,
+            imagem: "/img/produto.svg",
+            },
+            {nome: "Nome do produto 7 - Capacete do tipo",
+            preco: 700.00,
+            parcelas: 4,
+            imagem: "/img/produto.svg",
+            },
+            {nome: "Nome do produto 8 - Capacete do tipo",
+            preco: 800.00,
+            parcelas: 4,
+            imagem: "/img/produto.svg",
+            }
+        ],
+        sessao: "Produtos similares..."
         }
       },
       methods: {
@@ -84,8 +136,9 @@
     margin: 0.5rem;
   }
   .bigImage img{
-    height: 35rem;
-    aspect-ratio: 1/1;
+    height: 33rem;
+    width: 33rem;
+   /* aspect-ratio: 1/1;*/
     width: auto;
     border: 0.1em solid rgb(0, 0, 0, 0.5);
     border-radius: 0.2rem;
@@ -128,5 +181,11 @@
     width: 100%;
     aspect-ratio: 16/9;
     border: none;
+  }
+  .detail{
+    font-size: 1.4rem;
+    margin: 4.5rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
   }
 </style>
