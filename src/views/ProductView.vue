@@ -52,9 +52,7 @@
         </p>
         <div class="video-detalhado">
           <h2>Vídeo com descrição detalhada:</h2>
-              <iframe class="video" 
-                src="https://www.youtube.com/embed/j5a0jTc9S10">
-              </iframe>
+            <VideoEmbed url="j5a0jTc9S10"/>
         </div>
       </div>
     </div>         
@@ -64,8 +62,12 @@
   
 <script>
 import SessaoProdutos from '@/components/sessaoProdutos.vue';
+import VideoEmbed from "../components/VideoEmbed.vue";
   export default {
-    components: { SessaoProdutos },
+    components: { 
+      VideoEmbed,
+      SessaoProdutos
+    },
     props:{
      /* bigImage: String,
       otherImages: Array*/
