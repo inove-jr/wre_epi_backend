@@ -28,24 +28,23 @@
           </div>
 
           <div>
-            <iframe class="video" 
-              src="https://www.youtube.com/embed/j5a0jTc9S10">
-            </iframe>
+            <VideoEmbed url="745aPtV_W60"/>
           </div>
         </div>
       </div>
     </div>
 
     <div class="whiteBox productBuy col">
-          
     </div>
   </div>
 </template>
   
 <script>
-
+import VideoEmbed from "../components/VideoEmbed.vue";
   export default {
-    components: {  },
+    components: { 
+      VideoEmbed
+    },
     props:{
      /* bigImage: String,
       otherImages: Array*/
@@ -123,10 +122,5 @@
   }
   .padText {
     padding-bottom: 1rem;
-  }
-  .video{
-    width: 100%;
-    aspect-ratio: 16/9;
-    border: none;
   }
 </style>
