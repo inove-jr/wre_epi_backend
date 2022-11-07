@@ -1,8 +1,9 @@
 <template>
-  <!-- <HeaderComponent />
-  <CarrouselComponent />
-  <FooterComponent /> -->
-  <router-view />
+  <div>
+    <HeaderComponent/>
+    <router-view/>
+    <FooterComponent />
+  </div>
 </template>
 
 <script>

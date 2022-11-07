@@ -1,5 +1,6 @@
 <template>
     <section class="header">
+      <RouterLink to="/">
       <div class="header__logo">
         <img src="../assets/Logomarca.png" alt="Imagem do logo da empresa" />
         <div class="logo__title">
@@ -7,6 +8,7 @@
           <h3>A vida é sua, a segurança é nossa</h3>
         </div>
       </div>
+    </RouterLink>
   
       <div class="header__searchbar">
         <input class="searchbar" type="text" placeholder="Pesquisar produtos" />
