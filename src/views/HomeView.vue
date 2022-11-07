@@ -1,5 +1,8 @@
 <template>
+  <HeaderComponent />
+   
   <main>
+    <CarrouselComponent />
     <BotaoFaleConosco/>
     <section id="campoSessoes">
       <div class="sessao">
@@ -12,13 +15,24 @@
       </div>
     </section>
   </main>
+
+  <FooterComponent />
 </template>
 
 <script>
 import SessaoProdutos from '../components/sessaoProdutos.vue';
 import BotaoFaleConosco from '@/components/BotaoFaleConosco.vue';
+import HeaderComponent from "../components/Header.vue";
+import CarrouselComponent from "../components/CarrouselComponent.vue";
+import FooterComponent from "../components/footer.vue";
 export default {
-  components: { SessaoProdutos, BotaoFaleConosco },
+  components: { 
+    SessaoProdutos, 
+    BotaoFaleConosco,
+    HeaderComponent,
+    CarrouselComponent,
+    FooterComponent,
+  },
     data(){
       return{
         produtos:[

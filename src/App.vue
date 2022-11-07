@@ -1,21 +1,21 @@
 <template>
-  <HeaderComponent />
+  <!-- <HeaderComponent />
   <CarrouselComponent />
-  <FooterComponent />
+  <FooterComponent /> -->
   <router-view />
 </template>
 
 <script>
-import HeaderComponent from "./components/Header.vue";
-import CarrouselComponent from "./components/CarrouselComponent.vue";
-import FooterComponent from "./components/footer.vue";
+// import HeaderComponent from "./components/Header.vue";
+// import CarrouselComponent from "./components/CarrouselComponent.vue";
+// import FooterComponent from "./components/footer.vue";
 
 export default {
   name: "App",
   components: {
-    HeaderComponent,
-    CarrouselComponent,
-    FooterComponent,
+    // HeaderComponent,
+    // CarrouselComponent,
+    // FooterComponent,
   },
 };
 </script>
