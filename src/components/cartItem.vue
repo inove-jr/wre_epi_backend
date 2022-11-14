@@ -1,11 +1,11 @@
 <template>
-    <section class="cartItem">
+    <div class="cartItem">
         <div class="nameItem">
-            <h6>Produto</h6>
-            <h4>{{this.item.nome}}</h4> 
+            <p class="label">Produto</p>
+            <p class="Value">{{this.item.nome}}</p> 
         </div>
         <div class="quantity">
-            <h6>Quantidade:</h6>
+            <p class="label">Quantidade:</p>
             <div class="controlQuantity">
                 <button @click="sub()">
                 -
@@ -17,23 +17,23 @@
             </div>
         </div>
         <div class="atributs">
-            <h6>Atributos:</h6>
-            <div v-if="Object.keys(this.item.atributs) != 0">
-                <h4 v-for="(value, index) in Object.entries(this.item.atributs)" :key="index">
+            <p class="label">Atributos:</p>
+            <div class="Value" v-if="Object.keys(this.item.atributs) != 0">
+                <p v-for="(value, index) in Object.entries(this.item.atributs)" :key="index">
                     {{value[0]}}: {{value[1]}}
-                </h4>
+                </p>
             </div>
-            <h4 v-else> - </h4>
+            <p v-else> - </p>
             
         </div>
         <div class="price">
-            <h6>Valor</h6>
-            <h4>R$ {{ (this.item.preco*this.item.quantity).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}</h4> 
+            <p class="label">Valor</p>
+            <p class="Value">R${{ (this.item.preco*this.item.quantity).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}</p> 
         </div>
-    </section>
+    </div>
 </template>
 <script>
-
+import "/src/assets/main.css"
 export default {
     name: "CartItem",
     mounted(){
@@ -68,27 +68,41 @@ export default {
 <style scoped>
 .cartItem{
     display: flex;
-    flex-direction: row;
     font-size: 2.5rem;
-    background-color: aliceblue;
+    background-color: #f0f8ff;
+    margin: 0px;
+    height: 15rem;
+    align-items: baseline;
+    gap: 20rem;
+    flex-wrap: nowrap;
 }
 .nameItem{
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    justify-content: baseline;
 }
-.cartItem h6{
-    font-weight: 400;
+
+.label{
+    font-weight: bolder;
     color: #5D5D5D;
+    padding: 0.5rem;
 }
-h6{
-    padding-bottom: 1rem;
-}
-.nameItem h6{
-    padding-left: 2rem;
+
+.Value{
+    font-weight: bolder;
+    padding-bottom: 2rem;
+    font-size: 3rem;
 }
 
 .quantity{
+    display: flex;
+    flex-direction: column;
     text-align: center;
-    margin: auto;
+    width: 5rem;
+    justify-content: center;
+    align-items: center;
 }
 .controlQuantity{
     display: flex;
@@ -96,33 +110,38 @@ h6{
     align-items: center;
 }
 .controlQuantity button{
-    width: 2.6em;
-    height: 3em;
+    width: 5rem;
+    height: 5rem;
     background: linear-gradient(180deg, #F7F7F7 0%, #E7E3E3 100%);
     border: 0.1em solid #969393;
     border-radius: 0.3em;
+    font-size: 3.5rem;
 }
 .controlQuantity p{
-    width: 4em;
-    height: 1.8em;
+    width: 3em;
+    height: 2em;
     background: #EEEEEE;
     border: 0.1em solid hsl(0, 0%, 100%);
     box-shadow: inset 0 0.05em 0.2em 0.05em rgba(0, 0, 0, 0.25);
     border-radius: 0.3em;
     padding: 0.3em;
+    font-size: rem;
 }
-.atributs h4{
+.atributs{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 5rem;
+}
+.atributs p{
     text-transform: capitalize;
-    margin: auto;
+    font-size: 2.5rem;
 }
 .price{
-    margin-inline: auto;
     text-align: left;
-}
-.price h4{
-    margin: auto;
-}
-.price h6{
-    padding-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
 }
 </style>
