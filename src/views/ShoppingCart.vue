@@ -2,7 +2,7 @@
   
     <section class="whiteBox ">
       <div class="label-itens">
-      <p>Itens:</p>
+       <p>Itens:</p>
       </div>
       <div class="itemCart" v-for="(item, index) in listTest" :key="index">
         
@@ -98,8 +98,9 @@ section{
 
 .label-itens{
   display: flex;
-  font-size: 4rem;
-  margin: 1rem 0rem 0rem 5rem;
+  font-size: 2rem;
+  margin: 1rem 0rem 0rem 2rem;
+  color: #521717;
 
 }
 
@@ -112,23 +113,27 @@ section{
   
 }
 
+.itemCart{
+  margin-left: 4rem;
+}
+
 .removeButton{
   flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 3rem;
 }
 
 .removeButton button{
   font-family: Arial, Helvetica, sans-serif;
   border-radius: 100%;
-  height: 5rem;
-  width: 5rem;
-  font-size: 4rem;
+  font-size: 1.2rem;
   font-weight: bold;
   border: 0px;
   background-color: #e8e8e8;
-  margin: 0rem 5rem 5rem 10rem;
+  justify-content: center;
+  margin: auto;
 }
 
 .itemInfo{
@@ -143,7 +148,7 @@ section{
   font-weight: bolder;
 }
 .totalPrice p{
-  font-size: 5rem;
+  font-size: 3rem;
 }
 hr{
   margin: 2rem;
