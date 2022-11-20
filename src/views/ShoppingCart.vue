@@ -1,6 +1,6 @@
 <template>
   
-    <section class="whiteBox ">
+    <section class="whiteBox">
       <div class="label-itens">
        <p>Itens:</p>
       </div>
@@ -94,63 +94,69 @@ import CartItem from '@/components/cartItem.vue';
 section{
   font-size: 10rem;
   margin:10rem;
+  /*margin:10vw*/
 }
 
 .label-itens{
   display: flex;
-  font-size: 2rem;
-  margin: 1rem 0rem 0rem 2rem;
+  font-size: 2vw;
+  margin: 1rem 0rem 0rem 5rem;
   color: #521717;
-
+  height: fit-content;
 }
 
 .rowItem{
   display: flex;
   align-items: center;
   justify-content:center;
-  margin:0rem;
+  margin:0;
   padding: 0rem;
   
 }
 
 .itemCart{
-  margin-left: 4rem;
+  margin-right: 0vw;
 }
 
 .removeButton{
-  flex-grow: 1;
+  flex-grow: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 3rem;
+  margin: 0rem 4vw 0rem 10vw;
+  
 }
 
 .removeButton button{
   font-family: Arial, Helvetica, sans-serif;
   border-radius: 100%;
-  font-size: 1.2rem;
+  font-size: 1.5vw;
   font-weight: bold;
   border: 0px;
   background-color: #e8e8e8;
   justify-content: center;
   margin: auto;
+  width: 2vw;
+  height: 2vw;
 }
 
 .itemInfo{
-  flex-grow: 9;
+  flex-grow: 0;
+  margin: 0vw 10vw 0vw 0vw;
 }
 
 .totalPrice{
   display: flex;
   justify-content: flex-end;
-  margin: 1rem 5rem;
-  margin-bottom: 5rem;
+  margin: 1vw 5vw;
+  margin-bottom: 3vw;
   font-weight: bolder;
 }
 .totalPrice p{
-  font-size: 3rem;
+  font-size: 2.5vw;
 }
 hr{
   margin: 2rem;
+  
 }
 </style>

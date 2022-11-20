@@ -68,10 +68,9 @@ export default {
 <style scoped>
 .cartItem{
     display: flex;
-    font-size: 1rem;
+    font-size: 1vw;
     margin: 0px;
     align-items: baseline;
-    gap: 20rem;
     flex-wrap: nowrap;
 }
 .nameItem{
@@ -91,7 +90,7 @@ export default {
 .Value{
     font-weight: bolder;
     padding-bottom: 2rem;
-    font-size: 1.4rem;
+    font-size: 1.2vw;
 }
 
 .quantity{
@@ -101,44 +100,49 @@ export default {
     width: 5rem;
     justify-content: center;
     align-items: center;
+    margin: 0vw 2vw 0vw 8vw;
 }
 .controlQuantity{
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
 }
 .controlQuantity button{
-    width: 2rem;
-    height: 2rem;
+    width: 2vw;
+    height: 2vw;
     background: linear-gradient(180deg, #F7F7F7 0%, #E7E3E3 100%);
-    border: 0.2em solid #969393;
-    border-radius: 0.2em;
-    font-size: 1rem;
+    border: 0.1rem solid #969393;
+    border-radius: 0.5rem;
+    font-size: 1.2vw;
+    
 }
 .controlQuantity p{
-    width: 3em;
-    height: 2em;
+    width: 2.2vw;
+    height: 2vw;
     background: #EEEEEE;
     border: 0.1em solid hsl(0, 0%, 100%);
     box-shadow: inset 0 0.05em 0.2em 0.05em rgba(0, 0, 0, 0.25);
     border-radius: 0.3em;
     padding: 0.3em;
-    font-size: 1.1rem;
+    font-size: 0.8vw;
 }
 .atributs{
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 15vw;
 }
 .atributs p{
     text-transform: capitalize;
-    font-size: 1.4rem;
+    font-size: 1vw;
 }
 .price{
     text-align: left;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+    margin: 0;
 }
 </style>
