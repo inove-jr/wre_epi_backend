@@ -5,6 +5,7 @@
             <div class="imput-container">
                 <label for="name">Nome Completo</label>
                 <input type="text" id="name" name="name" v-model="name" placeholder="Digite seu nome..."/>
+                <span>{{v$.name}}</span>
             </div>
             <div class="imput-container">
                 <label for="company">Empresa</label>
@@ -16,27 +17,101 @@
             </div>
             <div class="imput-container">
                 <label for="email">E-mail</label>
-                <input type="email" id="email" name="email" v-model="email" placeholder="Digite seu e-mail..."/>
+                <input type="text" id="email" name="email" v-model="email" placeholder="Digite seu e-mail..."/>
             </div>
             <div class="imput-container">
                 <label for="password">Senha</label>
-                <input type="password" id="password" name="password" v-model="password" placeholder="Digite sua senha..."/>
+                <input type="text" id="password" name="password" v-model="password" placeholder="Digite sua senha..."/>
             </div>
             <div class="imput-container">
                 <label for="password-confirm">Confirme Senha</label>
-                <input type="password" id="password-confirm" name="password-confirm" v-model="passwordConfirm" placeholder="Digite sua senha..."/>
+                <input type="text" id="password-confirm" name="password-confirm" v-model="passwordConfirm" placeholder="Digite sua senha..."/>
             </div>
             <div class="buttons-container">
                 <input type="submit" class="submit" value="Cadastrar"/>
-                <button class="submit">Cançelar</button>
+                <button class="submit" @click="cadastro">Cançelar</button>
             </div>
         </form>
     </section>
 </template>
 <script>
+import useVuelidate from '@vuelidate/core'
+import { required, email, minLength, sameAs } from '@vuelidate/validators'
+
+    const validCPF = (cpf) => checkAll(prepare(cpf))
+////////
+
+    const notDig = i => !['.', '-', ' '].includes(i)
+    const prepare = cpf => cpf.trim().split('').filter(notDig).map(Number)
+    const is11Len = cpf => cpf.length === 11
+    const notAllEquals = cpf => !cpf.every(i => cpf[0] === i)
+    const onlyNum = cpf => cpf.every(i => !isNaN(i))
+
+    const calcDig = limit => (a, i, idx) => a + i * ((limit + 1) - idx)
+    const somaDig = (cpf, limit) => cpf.slice(0, limit).reduce(calcDig(limit), 0)
+    const resto11 = somaDig => 11 - (somaDig % 11)
+    const zero1011 = resto11 => [10, 11].includes(resto11) ? 0 : resto11
+
+    const getDV = (cpf, limit) => zero1011(resto11(somaDig(cpf, limit)))
+    const verDig = pos => cpf => getDV(cpf, pos) === cpf[pos]
+
+    const checks = [is11Len, notAllEquals, onlyNum, verDig(9), verDig(10)]
+    const checkAll = cpf => checks.map(f => f(cpf)).every(r => !!r)
+
+
+////////
     export default{
         name: 'CadastroForm',
+        data(){
+            return{
+                v$: useVuelidate(),
+                name: '',
+                company: '',
+                CPF: '',
+                email: '',
+                password: '',
+                passwordConfirm: ''
+            }
+        },
+        methods:{
+            validations(){
+                return{
+                    name: {required},
+                    company: {required},
+                    CPF: {required},
+                    email: {required},
+                    password: {required},
+                    passwordConfirm: {required}
+                }
+            },
+            async cadastro(e){
+                e.preventDefault();
+                const data = {
+                        name: this.name,                    
+                        company: this.company,                    
+                        CPF: this.CPF,                    
+                        email: this.email,
+                        password: this.password,
+                    }
+                this.v$.$validate()
+                console.log(this.v$.$error)
+               /* console.log(this.v$.$error)
+                if(!this.v$.$error){
+                    const data = {
+                        name: this.name,                    
+                        company: this.company,                    
+                        CPF: this.CPF,                    
+                        email: this.email,
+                        password: this.password,
+                    }
+                    console.log(this.v$.$error)
 
+                    console.log(data)
+                }else{
+                    console.log("não valido")
+                }  */
+            }
+        }
     }
 </script>
 <style scoped>
@@ -53,9 +128,6 @@
     text-align: center;
     padding-bottom: 1rem;
     color: #0A260B;
-}
-.cadastro-form{
-   
 }
 .imput-container{
     display: flex;
