@@ -7,11 +7,11 @@
         <div class="quantity">
             <p class="label">Quantidade:</p>
             <div class="controlQuantity">
-                <button @click="sub()">
+                <button class="inputButton" @click="sub()">
                 -
                 </button>
-                <p>{{this.item.quantity}}</p>
-                <button @click="add()">
+                <p class="inputText">{{this.item.quantity}}</p>
+                <button class="inputButton" @click="add()">
                     +
                 </button>
             </div>
@@ -108,6 +108,7 @@ export default {
     align-items: center;
     justify-content: center;
 }
+/*
 .controlQuantity button{
     width: 2vw;
     height: 2vw;
@@ -117,6 +118,7 @@ export default {
     font-size: 1.2vw;
     
 }
+/*
 .controlQuantity p{
     width: 2.2vw;
     height: 2vw;
@@ -127,6 +129,7 @@ export default {
     padding: 0.3em;
     font-size: 0.8vw;
 }
+*/
 .atributs{
     display:flex;
     flex-direction: column;

@@ -1,6 +1,6 @@
 <template>
-    <section class="col" style="padding: 1rem 5rem">
-        <div class="whiteBox row" style="flex-wrap: wrap; padding: 1rem 0rem 2rem 0rem; margin: 1rem">
+    <section class="col">
+        <div class="whiteBox row" style="flex-wrap: wrap; padding: 1rem 0rem 2rem 0rem;">
           <div style="padding: 1rem 3rem 1rem 3rem">
             <label id="lblDados">Dados Pessoais:</label>
           </div>
@@ -61,13 +61,9 @@
             </div>
           </div>
         </div>
-
-        <div class="whiteBox">
-
-        </div>
     </section>
   
-    <section class="whiteBox">
+    <section class="whiteBox" >
       <div class="label-itens">
        <p>Itens:</p>
       </div>
@@ -191,8 +187,7 @@ import CartItem from '@/components/cartItem.vue';
 <style scoped>
 section{
   font-size: 10rem;
-  margin:10rem;
-  /*margin:10vw*/
+  margin: 5rem;
 }
 
 .label-itens{
