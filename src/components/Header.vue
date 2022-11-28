@@ -25,11 +25,12 @@
             <p>Sair</p>
           </div>
         </div>
+  
         <router-link to="/cart">
-        <button class="cart-button">
-          <img src="../assets/Vector.svg" alt="" />
-          <p>0</p>
-        </button>
+          <button class="cart-button" >
+            <img src="../assets/Vector.svg" alt="" />
+            <p>0</p>
+          </button>
         </router-link>
       </div>
     </section>
