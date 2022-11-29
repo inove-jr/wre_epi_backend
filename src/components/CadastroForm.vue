@@ -28,7 +28,7 @@
             </div>
             <div class="buttons-container">
                 <input type="submit" class="submit" value="Cadastrar"/>
-                <button class="submit" @click="cadastro">Cançelar</button>
+                <button class="submit" @click="cadastro">Cancelar</button>
             </div>
         </form>
     </section>
