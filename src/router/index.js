@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import ProductView from '../views/ProductView.vue'
 import ShoppingCart from '../views/ShoppingCart.vue'
 import Login from '../views/Login.vue'
+import CadastroView from '../views/CadastroView.vue'
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  },
+  {
+    path: '/cadastro',
+    name: 'cadastro',
+    component: CadastroView
   },
   {
     path: '/about',

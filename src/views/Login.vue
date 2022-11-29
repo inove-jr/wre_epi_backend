@@ -22,7 +22,10 @@
                 </div>
 
                 <div class="lblTextInf">
-                    <span>Não possui uma conta? </span><a href="">Cadastre-se</a>
+                    <span>Não possui uma conta? </span>
+                    <router-link to="/cadastro">
+                    <a href="">Cadastre-se</a>
+                    </router-link>
                 </div>
             </div>
         </section>
