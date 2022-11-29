@@ -35,7 +35,6 @@ body {
   color: #000;
   height: 100%;
   width: 100%;
-  background-color: grey;
 }
 .vueperslides--fixed-height {
   height: 200px;
