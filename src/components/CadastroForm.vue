@@ -5,7 +5,6 @@
             <div class="imput-container">
                 <label for="name">Nome Completo</label>
                 <input type="text" id="name" name="name" v-model="name" placeholder="Digite seu nome..."/>
-                <span>{{v$.name}}</span>
             </div>
             <div class="imput-container">
                 <label for="company">Empresa</label>
@@ -35,8 +34,6 @@
     </section>
 </template>
 <script>
-import useVuelidate from '@vuelidate/core'
-import { required, email, minLength, sameAs } from '@vuelidate/validators'
 
     const validCPF = (cpf) => checkAll(prepare(cpf))
 ////////
@@ -64,7 +61,6 @@ import { required, email, minLength, sameAs } from '@vuelidate/validators'
         name: 'CadastroForm',
         data(){
             return{
-                v$: useVuelidate(),
                 name: '',
                 company: '',
                 CPF: '',
@@ -74,16 +70,6 @@ import { required, email, minLength, sameAs } from '@vuelidate/validators'
             }
         },
         methods:{
-            validations(){
-                return{
-                    name: {required},
-                    company: {required},
-                    CPF: {required},
-                    email: {required},
-                    password: {required},
-                    passwordConfirm: {required}
-                }
-            },
             async cadastro(e){
                 e.preventDefault();
                 const data = {
@@ -93,23 +79,6 @@ import { required, email, minLength, sameAs } from '@vuelidate/validators'
                         email: this.email,
                         password: this.password,
                     }
-                this.v$.$validate()
-                console.log(this.v$.$error)
-               /* console.log(this.v$.$error)
-                if(!this.v$.$error){
-                    const data = {
-                        name: this.name,                    
-                        company: this.company,                    
-                        CPF: this.CPF,                    
-                        email: this.email,
-                        password: this.password,
-                    }
-                    console.log(this.v$.$error)
-
-                    console.log(data)
-                }else{
-                    console.log("não valido")
-                }  */
             }
         }
     }
