@@ -63,7 +63,7 @@
         </div>
     </section>
   
-    <section class="whiteBox" >
+    <section id="listItem" class="whiteBox" >
       <div class="label-itens">
        <p>Itens:</p>
       </div>
@@ -186,8 +186,9 @@ import CartItem from '@/components/cartItem.vue';
   
 <style scoped>
 section{
+  margin: 2rem 5rem;
+} #listItem {
   font-size: 10rem;
-  margin: 5rem;
 }
 
 .label-itens{
