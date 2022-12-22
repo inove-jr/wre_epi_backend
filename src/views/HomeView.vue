@@ -94,4 +94,10 @@ export default {
   .sessao{
     margin: auto;
   }
+
+  @media(min-width: 720px){
+  main{
+    background: rgb(236,236,236);
+  }
+  }
 </style>
