@@ -10,12 +10,16 @@
                 <img src="/img/seta.svg" alt="seta" width="20" height="55">
             </button>
         </div>
+        <div class="prodMobile">
+            <ProductCard class="prodCard" v-for="(produto, index) in listaProdutos" :id="'prod'+index" :key="index" :produto="produto"></ProductCard>
+        </div>/
     </section>
 </template>
 <script>
 import ListaProdutos from '../components/ListaProdutos.vue';
+import ProductCard from '../components/ProductCard.vue';
 export default {
-    components: { ListaProdutos },
+    components: { ListaProdutos, ProductCard },
     props:{
         listaProdutos : Array,
         nomeSessao: String,
@@ -62,6 +66,9 @@ export default {
 }
 </script>
 <style scoped>
+    .prodMobile{
+        display: none;
+    }
     .list{
         left: -30px;
         right: -30px;
@@ -132,5 +139,20 @@ export default {
     }
     .right img{
         transform: scaleX(-1);
+    }
+
+     @media (max-width: 720px) {
+        .prodMobile{
+            display: contents;
+        }
+        .line{
+            display: none;
+        }
+        .sessao{
+            padding: 0px;
+        }
+        .sessao h2{
+            display: none;
+        }
     }
 </style>

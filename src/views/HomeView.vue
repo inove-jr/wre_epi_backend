@@ -4,12 +4,12 @@
     <CarrouselComponent id="carrousel" />
     <BotaoFaleConosco/>
     <section id="campoSessoes">
-      <div class="sessao">
-        <SessaoProdutos :nomeSessao="sessao" :listaProdutos="produtos"/>
+      <div>
+        <SessaoProdutos class="sessao" :nomeSessao="sessao" :listaProdutos="produtos"/>
         <br>
-      </div>
-      <div class="sessao">
-        <SessaoProdutos :nomeSessao="sessao" :listaProdutos="produtos"/>
+      </div> 
+      <div>
+        <SessaoProdutos class="sessao" :nomeSessao="sessao" :listaProdutos="produtos"/>
         <br>
       </div>
     </section>
@@ -101,6 +101,16 @@ export default {
     }
     #carrousel{
       display: none;
+    }
+    #campoSessoes{
+      width: 100%;
+    }
+    #campoSessoes .sessao{
+      width: 90%;
+      margin: auto;
+      display: flex;
+      flex-direction: unset;
+      flex-wrap: wrap;
     }
   }
 </style>

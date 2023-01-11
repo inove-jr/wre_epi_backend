@@ -30,6 +30,10 @@
             <p class="label">Valor</p>
             <p class="Value">R${{ (this.item.preco*this.item.quantity).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}</p> 
         </div>
+        
+        <div>
+            <hr>
+        </div>
     </div>
 </template>
 <script>
@@ -66,6 +70,9 @@ export default {
 }
 </script>
 <style scoped>
+hr{
+    display: none;
+}
 .cartItem{
     display: flex;
     font-size: 1vw;
@@ -147,5 +154,79 @@ export default {
     flex-direction: column;
     flex-wrap: nowrap;
     margin: 0;
+}
+@media (max-width: 720px) {
+    .cartItem{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        font-size: 1rem;
+    }  
+    .nameItem{
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        white-space:normal;
+        justify-content:left;
+    }
+    .label{
+        font-weight: bolder;
+        color: #5D5D5D;
+        padding:0;
+        padding-bottom: 0.5rem;
+        align-self: flex-start;
+    }
+
+    .Value{
+        font-weight: bolder;
+        padding-bottom: 1rem;
+        font-size: 1.6rem;
+        
+    }
+
+    .quantity{
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        width: auto;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+    }
+    .controlQuantity{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+    .controlQuantity .inputText{
+        width: 8rem;
+        text-align: center;
+    }
+    .controlQuantity .inputButton{
+        width: 4rem;
+    }
+    .atributs p{
+        text-transform: capitalize;
+        font-size: 1.6rem;
+    }
+    .atributs .label{
+        text-transform: capitalize;
+        font-size: 1rem;
+    }
+    .atributs{
+        display:flex;
+        flex-direction: column;
+        text-align: left;
+        width: auto;
+        margin-top: 1vh;
+    }
+    hr{
+        display: block;
+        width:55vw;
+        border-top: 2px solid red;
+    }
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <section>
     <div class="conteiner row" style="">
       <div class="whiteBox productView col">
-        <div class="row">
+        <div class="row row-inverse">
           <div class="columns images col">
             <span class="text">
               Imagem do produto:
@@ -14,6 +14,10 @@
 
             <div class="otherImages">
               <img v-for="(image, index) in otherImages" :key="index" :src="image" @click="select(index)">
+            </div>
+
+            <div class="simple-video-mobile">
+              <VideoEmbed url="745aPtV_W60"/>
             </div>
           </div>
 
@@ -28,7 +32,7 @@
               </div>
             </div>
 
-          <div>
+          <div class="simple-video">
             <VideoEmbed url="745aPtV_W60"/>
           </div>
         </div>
@@ -55,13 +59,13 @@
             <VideoEmbed url="j5a0jTc9S10"/>
         </div>
       </div>
-    </div>         
-    <SessaoProdutos id="itens-similares" :nomeSessao="sessao" :listaProdutos="produtos"/> 
-  </div>
+    </div>    
+      <SessaoProdutos class="itens-similares" :nomeSessao="sessao" :listaProdutos="produtos"/>  
+  </section>
 </template>
   
 <script>
-import SessaoProdutos from '@/components/sessaoProdutos.vue';
+import SessaoProdutos from '../components/sessaoProdutos.vue';
 import VideoEmbed from "../components/VideoEmbed.vue";
   export default {
     components: { 
@@ -142,6 +146,9 @@ import VideoEmbed from "../components/VideoEmbed.vue";
     margin: 0.5rem;
     width: 70%;
     font-size: 1.4rem;
+  }
+  .simple-video-mobile{
+    display: none;
   }
   .productBuy{
     min-width: 35rem;
@@ -230,7 +237,7 @@ import VideoEmbed from "../components/VideoEmbed.vue";
   .video-detalhado iframe{
     max-height: 50em;
   }
-  #itens-similares{
+  .itens-similares{
     margin: 2em;
   }
 
@@ -248,5 +255,51 @@ import VideoEmbed from "../components/VideoEmbed.vue";
     .video-detalhado iframe{
       height: 10em;
     }                   
+  }
+
+  @media(max-width: 720px) {
+    .conteiner{
+      padding: 1rem 1rem;
+    }
+    .productView{
+      padding: 2rem;
+      width: 100%;
+      font-size: 1.4rem;
+    }
+    .simple-video-mobile{
+      display:contents;
+    }
+    .simple-video{
+      display: none;
+    }
+    .images .text{
+      margin-left: 1vw;
+    }
+    .images .otherImages{
+      margin-bottom: 4rem;
+    }
+    .bigImage {
+      align-self: center;
+    }
+    .bigImage img{
+        height: 29rem;
+    }
+    .row-inverse{
+      flex-direction: column-reverse;
+    }     
+    .detail{
+      flex-direction: column;
+    }       
+    .detail h3{
+      width: 8rem;
+      color: #521717;
+    } 
+    .itens-similares{
+      
+      margin: 2em;
+      display: flex;
+      flex-direction:inherit;
+      flex-wrap: wrap;
+    }
   }
 </style>

@@ -94,4 +94,36 @@ export default {
         max-width: 24rem;
         min-width: 22.4rem;
     }
+    
+    @media (max-width: 720px) {
+        .nome{
+            font-size: 1.2rem;
+            margin: 1.5rem;
+        }
+        .image{
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background-color: white;
+            margin: auto;  
+        }
+        .image img{
+            max-width: 8rem;
+        }
+        span{
+            font-size: 1.1rem;
+        }
+        .text-bot-preco {
+            text-align: left;
+        }
+        .preco{
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .card{
+            max-width: 16.9rem;
+            min-width: 14rem;
+            margin: 0.3rem;
+            margin-bottom: 1rem;
+        }
+    }
 </style>

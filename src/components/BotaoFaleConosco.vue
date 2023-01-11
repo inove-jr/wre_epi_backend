@@ -130,4 +130,17 @@ span{
     background-color: #57dc55;
 }
 
+@media(max-width: 720px){
+    #faleConosco{
+        width: 8rem;
+        height: 8rem;
+    }
+    #faleCabeçalho #fale_img{
+        height: 3.6em;
+    }
+    #activate-div:checked ~ label #faleConosco{
+        height: 29rem;
+    }
+  }
+
 </style>
