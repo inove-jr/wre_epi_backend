@@ -226,7 +226,7 @@ hr{
     hr{
         display: block;
         width:55vw;
-        border-top: 2px solid red;
+        border-top: 2px solid rgb(27, 27, 27);
     }
 }
 </style>
