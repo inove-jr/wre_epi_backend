@@ -26,10 +26,12 @@
           </div>
         </div>
   
-        <button class="cart-button">
-          <img src="../assets/Vector.svg" alt="" />
-          <p>0</p>
-        </button>
+        <router-link to="/cart">
+          <button class="cart-button" >
+            <img src="../assets/Vector.svg" alt="" />
+            <p>0</p>
+          </button>
+        </router-link>
       </div>
     </section>
   </template>
@@ -172,6 +174,8 @@
   
     border: none;
     position: relative;
+
+    cursor: pointer;
   }
   
   .cart-button p {
