@@ -7,16 +7,16 @@
 </template>
 
 <script>
-// import HeaderComponent from "./components/Header.vue";
+import HeaderComponent from "./components/Header.vue";
 // import CarrouselComponent from "./components/CarrouselComponent.vue";
-// import FooterComponent from "./components/footer.vue";
+import FooterComponent from "./components/footer.vue";
 
 export default {
   name: "App",
   components: {
-    // HeaderComponent,
+    HeaderComponent,
     // CarrouselComponent,
-    // FooterComponent,
+    FooterComponent,
   },
 };
 </script>

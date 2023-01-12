@@ -1,6 +1,4 @@
 <template>
-  <HeaderComponent />
-   
   <main>
     <CarrouselComponent />
     <BotaoFaleConosco/>
@@ -15,8 +13,6 @@
       </div>
     </section>
   </main>
-  
-  <FooterComponent />
 </template>
 
 <script>

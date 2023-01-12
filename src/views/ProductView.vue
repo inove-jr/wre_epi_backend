@@ -159,9 +159,6 @@
 <script>
 import SessaoProdutos from "@/components/sessaoProdutos.vue";
 import VideoEmbed from "../components/VideoEmbed.vue";
-import '@fortawesome/fontawesome-free/css/all.css';
-import '@fortawesome/fontawesome-free/js/all.js';
-import { numberLiteralTypeAnnotation } from "@babel/types";
 export default {
   components: {
     VideoEmbed,
