@@ -1,4 +1,5 @@
 <template>
+  <HeaderComponent />
    
   <main>
     <CarrouselComponent />
@@ -14,7 +15,8 @@
       </div>
     </section>
   </main>
-
+  
+  <FooterComponent />
 </template>
 
 <script>
