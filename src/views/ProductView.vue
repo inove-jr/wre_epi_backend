@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <section>
     <div class="conteiner row" style="">
       <div class="whiteBox productView col">
-        <div class="row">
+        <div class="row row-inverse">
           <div class="columns images col">
             <span class="text"> Imagem do produto: </span>
 
@@ -17,6 +17,10 @@
                 :src="image"
                 @click="select(index)"
               />
+            </div>
+
+            <div class="simple-video-mobile">
+              <VideoEmbed url="745aPtV_W60"/>
             </div>
           </div>
 
@@ -35,8 +39,8 @@
               </div>
             </div>
 
-            <div>
-              <VideoEmbed url="745aPtV_W60" />
+            <div class="simple-video">
+              <VideoEmbed url="745aPtV_W60"/>
             </div>
           </div>
         </div>
@@ -147,15 +151,11 @@
           <VideoEmbed url="j5a0jTc9S10" />
         </div>
       </div>
-    </div>
-    <SessaoProdutos
-      id="itens-similares"
-      :nomeSessao="sessao"
-      :listaProdutos="produtos"
-    />
-  </div>
+    </div>    
+      <SessaoProdutos class="itens-similares" :nomeSessao="sessao" :listaProdutos="produtos"/>  
+  </section>
 </template>
-
+ 
 <script>
 import SessaoProdutos from "@/components/sessaoProdutos.vue";
 import VideoEmbed from "../components/VideoEmbed.vue";
@@ -278,7 +278,64 @@ export default {
   .conteiner {
     flex-wrap: wrap;
   }
-  .productView {
+  .productView{
+    padding: 2rem;
+    margin: 0.5rem;
+    width: 70%;
+    font-size: 1.4rem;
+  }
+  .simple-video-mobile{
+    display: none;
+  }
+  .productBuy{
+    min-width: 35rem;
+    width: 30%;
+    padding: 3rem;
+    margin: 0.5rem;
+  }
+  .bigImage img{
+    height: 33rem;
+    width: 33rem;
+   /* aspect-ratio: 1/1;*/
+    width: auto;
+    border: 0.1em solid rgb(0, 0, 0, 0.5);
+    border-radius: 0.2rem;
+  }
+  @media only screen and (max-width: 1200px) {
+    .conteiner {
+      flex-wrap: wrap;
+    }
+    .productView {
+      width: 100%;
+    }
+    .productBuy {
+      width: 100%;
+    }
+  }
+  .images{
+    text-align: left;
+  }
+  .text{
+    font-family: Inter;
+    text-align: justify;
+    padding-bottom: 0.5rem;
+  }
+  
+  .otherImages img{
+    height: 5rem;
+    aspect-ratio: 1/1;
+    width: auto;
+    margin: 0.1em;
+    border: 0.1em solid rgb(0, 0, 0, 0.5);
+    border-radius: 0.2rem;
+  }
+  .columns {
+    padding: 2rem;
+  }
+  .padText {
+    padding-bottom: 1rem;
+  }
+  .video{
     width: 100%;
   }
   .productBuy {
@@ -530,6 +587,86 @@ input[type="number"] {
   }
   .video-detalhado iframe {
     height: 10em;
+  }
+  .descricao p{
+    font-size: 1.6rem;
+    text-align: left;
+  }
+  .video-detalhado{
+    margin: 1em;
+    margin-inline: 4em;
+  }
+  .video-detalhado h2{
+    text-align: left;
+    margin-bottom: 1rem;
+  }
+  .video-detalhado iframe{
+    max-height: 50em;
+  }
+  .itens-similares{
+    margin: 2em;
+  }
+
+  @media only screen and (max-width: 820px) {
+    .detail{
+      margin: 1.5rem;
+    } 
+    .descricao{
+      margin-inline: 0.4em;
+    }
+    
+    .video-detalhado{
+      margin: 0;
+    }
+    .video-detalhado iframe{
+      height: 10em;
+    }                   
+  }
+
+  @media(max-width: 720px) {
+    .conteiner{
+      padding: 1rem 1rem;
+    }
+    .productView{
+      padding: 2rem;
+      width: 100%;
+      font-size: 1.4rem;
+    }
+    .simple-video-mobile{
+      display:contents;
+    }
+    .simple-video{
+      display: none;
+    }
+    .images .text{
+      margin-left: 1vw;
+    }
+    .images .otherImages{
+      margin-bottom: 4rem;
+    }
+    .bigImage {
+      align-self: center;
+    }
+    .bigImage img{
+        height: 29rem;
+    }
+    .row-inverse{
+      flex-direction: column-reverse;
+    }     
+    .detail{
+      flex-direction: column;
+    }       
+    .detail h3{
+      width: 8rem;
+      color: #521717;
+    } 
+    .itens-similares{
+      
+      margin: 2em;
+      display: flex;
+      flex-direction:inherit;
+      flex-wrap: wrap;
+    }
   }
 }
 </style>

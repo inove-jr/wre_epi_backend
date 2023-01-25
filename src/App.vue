@@ -2,7 +2,7 @@
   <div>
     <HeaderComponent/>
     <router-view/>
-    <FooterComponent />
+    <FooterComponent id="footer"/>
   </div>
 </template>
 
@@ -47,4 +47,9 @@ footer {
   background-color: #3a9e3e;
   color: #ffffff;
 }
+@media(max-width: 720px){
+    #footer {
+      display: none;
+    }
+  }
 </style>

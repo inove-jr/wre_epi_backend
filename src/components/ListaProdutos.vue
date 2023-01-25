@@ -22,4 +22,9 @@ export default {
     display: flex;
     width: 100%;
 }
+@media (max-width: 720px) {
+    #content{
+        transform: scale(0.8);
+    }
+}
 </style>

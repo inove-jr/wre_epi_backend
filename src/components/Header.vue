@@ -257,5 +257,69 @@
       font-size: 0.9rem;
     }
   }
+
+  @media (max-width: 720px) {
+    .header{
+      flex-direction: column;
+      height: fit-content;
+    }
+    .header__logo {
+      display: flex;
+      margin-left: 2.2rem;
+      padding-top: 1.6rem;
+      padding-bottom: 0.6rem;
+      font-size: clamp(1rem, 1.6em, 3rem);
+    }
+    .logo__title {
+      padding-top: 0.6rem;
+    }
+    .logo__title h1 {
+      font-size: clamp(1rem, 1.8rem, 3rem);
+    }
+    .logo__title h3 {
+      font-size: clamp(1rem, 1.2rem, 3rem);
+    }
+    
+    .header__logo img {
+      width: 4.6rem;
+      height: 4.3rem;
+    }
+    .header__searchbar {
+      width: 100%;
+      margin-top: 1rem;
+      padding: 2rem;
+      justify-content: center;
+      background-color: #318234;
+    }
+    
+    .searchbar {
+      width: 100%;
+      padding: 0.8rem 1.2rem;
+    
+    }
+    .header__cart {
+      position: absolute;
+      right: 0;
+      width: 50%;
+      visibility: hidden;
+    }
+
+    .cart-button{
+      visibility:visible;
+      width: 5.8rem;
+      height: 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cart-button img {
+      width: 3rem;
+    }
+    .cart-button p {
+      right: 0.6rem;
+      top: 0.6rem;
+    }
+  }
+
   </style>
   

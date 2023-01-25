@@ -71,11 +71,11 @@
         
         <div class="rowItem">
           <div class="removeButton">
-          <button @click="remove(index), calcTotal()">X</button>
+            <button @click="remove(index), calcTotal()">X</button>
           </div>
 
           <div class="itemInfo">
-          <CartItem @click="calcTotal()" :item=item></CartItem>
+            <CartItem @click="calcTotal()" :item=item></CartItem>
           </div> 
           
         </div>
@@ -236,7 +236,7 @@ section{
 
 .itemInfo{
   flex-grow: 0;
-  margin: 0vw 10vw 0vw 0vw;
+  margin: 0;
 }
 
 .totalPrice{
@@ -251,6 +251,38 @@ section{
 }
 hr{
   margin: 2rem;
+  
+}
+@media (max-width: 720px) {
+  .label-itens{
+    font-size: 2rem;
+    margin: 0;
+  }
+  .rowItem{
+    display: flex;
+    flex-direction:column-reverse;
+    width: 100%;
+    
+  }
+  .itemCart{
+    margin-top: 4vw;
+  }
+  .removeButton{
+    
+    margin: 0rem 0vw 0rem 50vw;
+  }
+  .removeButton button{
+    
+    position: absolute;
+    z-index: 10;
+    right: 26vw;
+    margin: 0;
+    margin-bottom: 4rem;
+    font-size: 2.4rem;
+    height: 3rem;
+    width: 3rem;
+    justify-self:right;
+  }
   
 }
 </style>
