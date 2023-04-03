@@ -44,6 +44,7 @@ body {
   background-color: #ffffff;
 }
 footer {
+  position: relative;
   background-color: #3a9e3e;
   color: #ffffff;
 }

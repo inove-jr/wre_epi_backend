@@ -5,7 +5,7 @@
             <label id="lblDados">Dados Pessoais:</label>
           </div>
 
-          <div class="row" style="flex-wrap: wrap-reverse;">
+          <div class="row" id="formStance">
             <div class="row" style="padding-left: 1rem; flex-wrap: wrap; max-width: 80rem">
               <div class="col paddingForm">
                 <label class="lblInput">Nome:</label>
@@ -59,6 +59,12 @@
                 <input id="cep" type="text" class="inputText"/>
               </div>
             </div>
+
+            <div class="paddingForm">
+              <div class="col" id="save_endereco">
+                <buton class="endSave">Salvar Endereço</buton>
+              </div>
+            </div>
           </div>
         </div>
     </section>
@@ -97,6 +103,15 @@
     font-size: 1.2rem;
     margin: 1rem 0 0.5rem 0;
     color: #515151;
+  }
+
+  #formStance{
+    flex-wrap: wrap-reverse;
+  }
+
+  #save_endereco{
+    margin-left: 4rem;
+    margin-top:10rem;
   }
   .paddingForm {
     margin: 0rem 0.5rem 0.5rem 0.5rem
@@ -191,6 +206,25 @@ section{
   font-size: 10rem;
 }
 
+.endSave{
+    border-radius: 0.5rem;
+    background-color: rgb(0, 167, 0);
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem green, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+    height: 4rem;
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    font-size: 1.6rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: white;
+}
+
+
+.endSave:active{
+    background-color: rgb(0, 208, 0);
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(1, 158, 1), 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+}
+
 .label-itens{
   display: flex;
   font-size: 2vw;
@@ -257,6 +291,15 @@ hr{
   .label-itens{
     font-size: 2rem;
     margin: 0;
+  }
+
+  #formStance{
+    flex-wrap: wrap;
+  }
+
+  #save_endereco{
+    margin-left: 7rem;
+    margin-top: 1rem;
   }
   .rowItem{
     display: flex;

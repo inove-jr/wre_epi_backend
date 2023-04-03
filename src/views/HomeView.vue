@@ -82,7 +82,6 @@ export default {
 <style>
   main{
     background: rgb(236,236,236);
-    background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 14%, rgba(143,143,143,1) 15%, rgba(124,124,124,1) 50%, rgba(157,157,157,1) 84%, white 85%, white 100%);
   }
   #campoSessoes{
     padding-top: 2em;

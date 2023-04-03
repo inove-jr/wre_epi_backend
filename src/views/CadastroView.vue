@@ -1,5 +1,5 @@
 <template>
-    <CadastroForm/>
+    <CadastroForm id="cadastro"/>
 </template>
 <script>
 import CadastroForm from '@/components/CadastroForm.vue';
@@ -13,5 +13,8 @@ import CadastroForm from '@/components/CadastroForm.vue';
     components: { CadastroForm }
 }
 </script>
-<style>
+<style scoped>
+    #cadastro{
+        padding-bottom: 4.3rem;
+    }
 </style>
