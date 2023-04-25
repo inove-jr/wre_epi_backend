@@ -9,15 +9,7 @@
         </div>
         <div class="quantity">
             <p class="label">Quantidade:</p>
-            <div class="controlQuantity">
-                <button class="inputButton" @click="sub()">
-                -
-                </button>
-                <p class="inputText">{{this.item.quantity}}</p>
-                <button class="inputButton" @click="add()">
-                    +
-                </button>
-            </div>
+            <p >{{this.item.quantity}}</p>
         </div>
         <div class="atributs">
             <p class="label">Atributos:</p>
@@ -42,7 +34,7 @@
 <script>
 import "/src/assets/main.css"
 export default {
-    name: "CartItem",
+    name: "CartItemResume",
     mounted(){
         //console.log(this.item.key);
     },
@@ -85,7 +77,7 @@ hr{
     display: flex;
     font-size: 1vw;
     margin: 0px;
-    align-items: baseline;
+    justify-content: center;
     flex-wrap: nowrap;
 }
 .nameItem{
@@ -99,7 +91,7 @@ hr{
 .label{
     font-weight: bolder;
     color: #5D5D5D;
-    padding: 0.5rem;
+    padding: 0.1rem;
 }
 
 .Value{
@@ -113,9 +105,8 @@ hr{
     flex-direction: column;
     text-align: center;
     width: 5rem;
-    justify-content: center;
     align-items: center;
-    margin: 0vw 2vw 0vw 8vw;
+    margin: 0vw 2vw 0vw 3vw;
 }
 .controlQuantity{
     display: flex;
@@ -148,7 +139,6 @@ hr{
 .atributs{
     display:flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     width: 15vw;
 }
@@ -208,10 +198,6 @@ hr{
         align-items: center;
         justify-content: center;
         gap: 1rem;
-    }
-    .controlQuantity .inputText{
-        width: 8rem;
-        text-align: center;
     }
     .controlQuantity .inputButton{
         width: 4rem;

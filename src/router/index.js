@@ -4,6 +4,7 @@ import ProductView from '../views/ProductView.vue'
 import ShoppingCart from '../views/ShoppingCart.vue'
 import Login from '../views/Login.vue'
 import CadastroView from '../views/CadastroView.vue'
+import ConfirmBuyView from '../views/ConfirmBuyView.vue'
 
 const routes = [
   {
@@ -35,6 +36,12 @@ const routes = [
     path: '/about',
     name: 'about',
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  },
+  {
+    path: '/confirm',
+    name: 'confirmarCompra',
+    component: ConfirmBuyView,
+    props: true
   }
 ]
 

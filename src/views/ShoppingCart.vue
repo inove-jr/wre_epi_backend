@@ -62,7 +62,7 @@
 
             <div class="paddingForm">
               <div class="col" id="save_endereco">
-                <buton class="endSave">Salvar Endereço</buton>
+                <button class="endSave">Salvar Endereço</button>
               </div>
             </div>
           </div>
@@ -87,11 +87,17 @@
         </div>
       </div>
       <hr>
-      <div class="totalPrice">
-      <p class="priceLabel">
-        Total: 
-      </p>
-      <p>R$ {{som}}</p>
+      <div class="totalPrice col">
+        <div class="row">
+          <p class="priceLabel">
+            Total: 
+          </p>
+          <p>R$ {{som}}</p>
+        </div>
+        <!----<RouterLink to="/confirm"> -->
+        <RouterLink to="/confirm" :produtos="listTest" >
+          <button class="confirmBuy">Confimar compra</button>
+        </RouterLink>
       </div>
     </section> 
 </template>
@@ -112,6 +118,7 @@
   #save_endereco{
     margin-left: 4rem;
     margin-top:10rem;
+    align-items: end;
   }
   .paddingForm {
     margin: 0rem 0.5rem 0.5rem 0.5rem
@@ -206,6 +213,26 @@ section{
   font-size: 10rem;
 }
 
+.confirmBuy{
+  border-radius: 0.5rem;
+    background-color: rgb(0, 167, 0);
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem green, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+    height: 4rem;
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    font-size: 1.6rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.confirmBuy:active{
+    background-color: rgb(0, 208, 0);
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(1, 158, 1), 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+}
+
 .endSave{
     border-radius: 0.5rem;
     background-color: rgb(0, 167, 0);
@@ -217,6 +244,7 @@ section{
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     color: white;
+    cursor: pointer;
 }
 
 
@@ -251,7 +279,7 @@ section{
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0rem 4vw 0rem 10vw;
+  margin: 0rem 4vw 0rem 6vw;
   
 }
 
@@ -277,8 +305,10 @@ section{
   display: flex;
   justify-content: flex-end;
   margin: 1vw 5vw;
+  margin-left: auto;
   margin-bottom: 3vw;
   font-weight: bolder;
+  width: 16vw;
 }
 .totalPrice p{
   font-size: 2.5vw;
