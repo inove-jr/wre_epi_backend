@@ -21,6 +21,8 @@ import BotaoFaleConosco from '@/components/BotaoFaleConosco.vue';
 import HeaderComponent from "../components/Header.vue";
 import CarrouselComponent from "../components/CarrouselComponent.vue";
 import FooterComponent from "../components/footer.vue";
+  
+  import { useCookies } from "vue3-cookies";
 export default {
   components: { 
     SessaoProdutos, 
@@ -29,6 +31,10 @@ export default {
     CarrouselComponent,
     FooterComponent,
   },
+    setup() {
+      const { cookies } = useCookies();
+      return { cookies };
+    },
     data(){
       return{
         produtos:[
@@ -73,9 +79,9 @@ export default {
             imagem: "/img/produto.svg",
             }
         ],
-        sessao: "Seção..."
+        sessao: "Seção...",
       }
-    }
+    },
 }
 </script>
 

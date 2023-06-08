@@ -12,7 +12,7 @@
         </div>
         <div class="prodMobile">
             <ProductCard class="prodCard" v-for="(produto, index) in listaProdutos" :id="'prod'+index" :key="index" :produto="produto"></ProductCard>
-        </div>/
+        </div>
     </section>
 </template>
 <script>

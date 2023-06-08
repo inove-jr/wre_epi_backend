@@ -169,7 +169,7 @@ export default {
       otherImages: Array*/
   },
   mounted() {
-    console.log(this.$route.params.id);
+    //console.log(this.$route.params.id);
   },
   data() {
     return {
@@ -274,6 +274,11 @@ export default {
   border: 0.1em solid rgb(0, 0, 0, 0.5);
   border-radius: 0.2rem;
 }
+
+.simple-video-mobile{
+    display: none;
+}
+
 @media only screen and (max-width: 1200px) {
   .conteiner {
     flex-wrap: wrap;
@@ -283,9 +288,6 @@ export default {
     margin: 0.5rem;
     width: 70%;
     font-size: 1.4rem;
-  }
-  .simple-video-mobile{
-    display: none;
   }
   .productBuy{
     min-width: 35rem;
@@ -633,7 +635,7 @@ input[type="number"] {
       font-size: 1.4rem;
     }
     .simple-video-mobile{
-      display:contents;
+      display: contents;
     }
     .simple-video{
       display: none;

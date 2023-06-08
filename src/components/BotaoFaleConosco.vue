@@ -15,9 +15,9 @@
             <a href=""><button>
                 Fale Conosco: Dúvidas, reclamações
             </button></a>
-            <button>
+            <a href=""><button>
                 Atendimento personalizado
-            </button>
+            </button></a>
         </div>
             </div>
         </label>
@@ -71,7 +71,7 @@ span{
 }
 #activate-div:checked ~ label #faleConosco{
     width: 24rem;
-    height: 24.2rem;
+    height: 28rem;
     border-radius: 1em 1em 0 1em;
     display: flex;
     flex-direction: column;
@@ -137,9 +137,6 @@ span{
     }
     #faleCabeçalho #fale_img{
         height: 3.6em;
-    }
-    #activate-div:checked ~ label #faleConosco{
-        height: 29rem;
     }
   }
 

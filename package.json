@@ -16,8 +16,13 @@
     "cocoapods": "^0.0.0",
     "cordova": "^11.1.0",
     "core-js": "^3.8.3",
+    "usemodal-vue3": "^0.3.7",
+    "v-credit-card": "^1.2.4",
     "vue": "^3.2.45",
+    "vue-cookie": "^1.1.4",
+    "vue-cookies-reactive": "^2.1.1",
     "vue-router": "^4.0.3",
+    "vue3-cookies": "^1.0.6",
     "vueperslides": "^3.4.2",
     "vuex": "^4.0.2"
   },

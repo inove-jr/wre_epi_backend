@@ -2,17 +2,17 @@
     <div class="main">
     <vueper-slides autoplay :fixed-height="true">
     
-    <vueper-slide
-      @click="teste()"
-      v-for="(slide, i) in slides"
-      :key="i"
-      :image="slide.image"
-      :title="slide.title"
-      :content="slide.content"
-      :style="slide.style"
-      >
-    </vueper-slide>
-  </vueper-slides>
+      <vueper-slide
+        @click="teste()"
+        v-for="(slide, i) in slides"
+        :key="i"
+        :image="slide.image"
+        :title="slide.title"
+        :content="slide.content"
+        :style="slide.style"
+        >
+      </vueper-slide>
+    </vueper-slides>
     </div>
 </template>
 

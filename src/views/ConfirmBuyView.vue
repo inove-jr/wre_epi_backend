@@ -35,9 +35,19 @@
             </section>
 
             <section class="forma-pagamento">
-                
+                <h3>Escolha o método de pagamento</h3>
+                <div class="options">
+                    <button @click="change(1)" class="metodo-cartao"><img src="\img\1034362_payment_bank_card_credit_finance_icon.png" alt="CARTÃO"></button>
+                    <button @click="change(2)" class="metodo-boleto"><img src="\img\365593_boleto_business_buy_card_cash_icon.png" alt="BOLETO"></button>
+                    <button @click="change(3)" class="metodo-pix"><img src="\img\8666421_pix_icon.png" alt="PIX"></button>                
+                </div>
             </section>
         </div>
+        <section class="overlay_blur" v-if="this.formSee" @click="close()">
+        </section>
+        <section class="overlay" v-if="this.formSee">
+            <PopUp  :type="this.type"></PopUp>
+        </section>
     </section>
 </template>
 
@@ -50,6 +60,7 @@
 .buy-sumary{
     display: flex;
     flex-direction: row;
+    margin-block: 5.1vw;
 }
 .resumo{
     width: 50%;
@@ -60,7 +71,7 @@
 }
 
 .resumo .itemInfo{
-   transform: scale(0.7);
+   transform: scale(0.8);
    margin-left: 0;
 }
 
@@ -84,6 +95,7 @@
     flex-wrap: wrap;
     text-align: left;
     justify-content: center;
+    border-radius: 0 2rem 0 0;
 }
 
 #endereco{
@@ -132,21 +144,70 @@
     box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(1, 158, 1), 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
 }
 .forma-pagamento{
-    height: 5rem;
-    background-color:cadetblue;
+    font-size: 16pt;
+    text-transform: uppercase;
+    color: whitesmoke;
+    padding-block: 3rem;
+    background-color: rgba(8, 128, 8, 0.707);
+    border-radius: 0 0 2rem 0;
 }
+
+.options button{
+    background: none;
+    border: none;
+    margin-inline: 3.4rem;
+    margin-block: 2rem;
+}
+
+.options button img{
+    max-height: 6vmax;
+}
+
+.overlay{
+    position: fixed;
+    z-index: 4;
+    opacity: 0;
+    animation: show 0.4s ease-in-out;
+    animation-fill-mode: forwards;
+}
+.overlay_blur{
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.555);
+    backdrop-filter: blur(6px);
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    z-index: 2;
+    opacity: 0;
+    animation: show 0.4s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes show{
+    0% {opacity: 0;}
+    
+    100% {opacity: 1;}
+}
+
 </style>
 
 <script>
 import CartItemrResume from '@/components/cartItemrResume.vue';
+import PopUp from '@/components/PopUp.vue';
 
 export default {
     name: "ConfirmBuy",
+    components:{
+        PopUp,
+        CartItemrResume
+    },
     mounted(){
       this.calcTotal()
     },
     data() {
         return {
+            formSee: false,
             listTest: [
               {nome: "Nome do produto 1 - Capacete do tipo",
                 quantity: 2,
@@ -183,9 +244,10 @@ export default {
               },
             ],
             som: 0,
+            type: ""
         };
     },
-    components: { CartItemrResume },
+    components: { CartItemrResume, PopUp },
     methods: {
         calcTotal() {
             this.som = 0
@@ -196,6 +258,18 @@ export default {
         },
         remove(index){
           this.listTest.splice(index,1)
+        },
+        change(formato){
+            let formasDePagamento = ['credit','boleto','pix']
+
+            this.type = formasDePagamento[formato-1]
+            this.formSee = !this.formSee
+            console.log(this.
+            formSee)
+
+        },
+        close(){
+            this.formSee = false;
         }
     },
 }

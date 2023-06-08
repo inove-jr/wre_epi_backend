@@ -1,14 +1,14 @@
 <template>
     <section class="header">
-      <RouterLink to="/">
-      <div class="header__logo">
-        <img src="../assets/Logomarca.png" alt="Imagem do logo da empresa" />
-        <div class="logo__title">
-          <h1>wre epi</h1>
-          <h3>A vida é sua, a segurança é nossa</h3>
+      <router-link to="/">
+        <div class="header__logo">
+          <img src="../assets/Logomarca.png" alt="Imagem do logo da empresa" />
+          <div class="logo__title">
+            <h1>wre epi</h1>
+            <h3>A vida é sua, a segurança é nossa</h3>
+          </div>
         </div>
-      </div>
-    </RouterLink>
+      </router-link>
   
       <div class="header__searchbar">
         <input class="searchbar" type="text" placeholder="Pesquisar produtos" />
@@ -18,12 +18,22 @@
       </div>
   
       <div class="header__cart">
-        <div class="cart-info">
-          <p>Bem-vindo, <span>Usuário</span></p>
+
+        <div v-if="loggedIn === true"  class="cart-info">
+          <p>Bem-vindo, <span>{{this.user_name}}</span></p>
           <div class="cart-info-email">
-            <p>wreepi@gmail.com</p>
-            <p>Sair</p>
+            <p>{{this.user_email}}</p>
+            <p @click="logOut()">Sair</p>
           </div>
+        </div>
+
+        <div v-if="loggedIn === false" class="cart-info">
+          <p>Bem-vindo</p>
+          <router-link to="/login" class="log-camp">
+            <div class="cart-info-start">
+              <p>Realize o login</p>
+            </div>
+          </router-link>
         </div>
   
         <router-link to="/cart">
@@ -37,8 +47,51 @@
   </template>
   
   <script>
+  
+  import { useCookies } from "vue3-cookies";
+
   export default {
     name: "HeaderComponent",
+    setup() {
+      const { cookies } = useCookies();
+      return { cookies };
+    },
+    data(){
+      return {
+        loggedIn: false,
+        user_name: String,
+        user_email: String
+      }
+    },
+    beforeRouteUpdate() {
+        console.log(this.$route)
+    },
+    methods: {
+      getCookie: function() { 
+
+            if(this.cookies.isKey('loggedIn')) {
+                this.loggedIn = true;
+                this.user_name = this.cookies.get('loggedUser_name');
+                this.user_email = this.cookies.get('loggedUser_email');
+              } 
+
+          },
+
+      makeCookie: function() { this.cookies.set('loggedIn', true, { expires: '1h' }); },//7
+      
+      logOut: function(){
+        this.loggedIn = false;
+        this.cookies.remove('loggedIn');
+        this.cookies.remove('reloaded');
+      }
+    },
+    beforeMount() {
+      this.getCookie()
+    },
+    beforeRouteLeave (to, from) {
+      console.log('A')  
+      //this.$router.go();
+    }
   };
   </script>
   
@@ -62,7 +115,12 @@
   
     /* border: 1px solid green; */
   }
-  
+  .log-camp{
+    color: white;
+  }
+  .log-camp:hover{
+    color: rgb(148, 171, 150);
+  }
   .header__logo img {
     width: 4.6rem;
     height: 4.3rem;
@@ -148,7 +206,12 @@
   .cart-info span {
     font-weight: bold;
   }
-  
+
+  .cart-info-start{
+    display: flex;
+    text-decoration: underline;
+  }
+
   .cart-info-email {
     display: flex;
   }

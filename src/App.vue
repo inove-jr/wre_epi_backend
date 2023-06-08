@@ -1,8 +1,8 @@
 <template>
   <div>
-    <HeaderComponent/>
+    <HeaderComponent :key="$route.fullPath"/>
     <router-view/>
-    <FooterComponent id="footer"/>
+    <FooterComponent class="footer"/>
   </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
     HeaderComponent,
     // CarrouselComponent,
     FooterComponent,
-  },
+  }
 };
 </script>
 
@@ -43,11 +43,12 @@ body {
 body {
   background-color: #ffffff;
 }
-footer {
+.footer {
   position: relative;
   background-color: #3a9e3e;
   color: #ffffff;
 }
+
 @media(max-width: 720px){
     #footer {
       display: none;

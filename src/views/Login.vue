@@ -1,22 +1,24 @@
 <template>
-    <div class="row" style="width: 100%; justify-content: center">
+    <div class="row" style="width: 100%; height: 58.5rem; justify-content: center">
         <section class="whiteBox row">
             <div class="col" style="width: 100%; margin: 3rem">
                 <label class="lblTitle">Login:</label>
                 <div style="margin: 2rem 0">
                     <div class="col" style="padding: 0 2rem">
                         <label class="lblInput">E-mail:</label>
-                        <input id="email" type="text" class="inputText" placeholder="Digite seu e-mail"/>
+                        <input id="email" type="text" class="inputText" placeholder="Digite seu e-mail"
+                            v-model="email"/>
                     </div>
 
                     <div class="col" style="padding: 0 2rem">
                         <label class="lblInput">Senha:</label>
-                        <input id="senha" type="password" class="inputText" placeholder="Digite sua senha"/>
+                        <input id="senha" type="password" class="inputText" placeholder="Digite sua senha"
+                            v-model="password"/>
                     </div>
                 </div>
 
                 <div class="row" style="justify-content: center">
-                    <button>Login</button>
+                    <button @click="login()">Login</button>
 
                     <button>Cancelar</button>
                 </div>
@@ -33,14 +35,37 @@
 </template>
   
 <script>
+
+  import { useCookies } from "vue3-cookies";
+
   export default {
+    setup() {
+      const { cookies } = useCookies();
+      return { cookies };
+    },
     mounted() {
     },
-      data() {
+    data() {
         return {
+            email: "",
+            password: "",
         }
-      }
-  }
+    },
+    methods: {
+        login: function() { 
+            console.log(this.$cookies);
+            if(!(this.email == "" || this.password == "")){
+                this.makeCookie(this.email);
+                this.$router.back();
+            }
+        },
+        makeCookie: function(email) { 
+            this.cookies.set('loggedIn', 'true', { expires: '1h' }); 
+            this.cookies.set('loggedUser_name',"Carlo", { expires: '1h' }); 
+            this.cookies.set('loggedUser_email', email, { expires: '1h' });
+        },
+    },
+}
 </script>
   
 <style scoped>

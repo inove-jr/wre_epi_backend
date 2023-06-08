@@ -23,7 +23,7 @@
         </div>
         <div class="price">
             <p class="label">Valor</p>
-            <p class="Value">R${{ (this.item.preco*this.item.quantity).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}</p> 
+            <p class="Value">R${{ (this.item.preco*this.item.quantity).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</p> 
         </div>
         
         <div>
