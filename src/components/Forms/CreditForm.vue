@@ -105,11 +105,11 @@
                         if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
               />
             </div>
-        </div>
+        </div> 
+
         <div style="width: 100%;">
-          <button @click="submitCard" class="card-form__button">
-            Comprar
-          </button>
+          <input v-if="this.isValid()" type="submit" value="Pagar" class="card-form__button" name="submit" @click="submitCard" />
+          <input v-if="!this.isValid()" type="submit" value="Pagar" class="card-form__button disable" disabled />
         </div>
         
     </form>
@@ -130,6 +130,7 @@
                 name: "",
                 cvv: "",
                 currentYear: new Date().getFullYear(),
+                currentMonth: new Date().getMonth()+1,
                 isValidNumber: true,
                 isEmpty: true,
             };
@@ -185,6 +186,22 @@
 
               return ["visa",false]; // default type
             },
+            isValid(){
+              let temp = false
+
+              if(this.expireYear < this.currentYear){
+                if(this.expireYear == this.currentYear){
+                  if(this.expireMonth > this.currentMonth){
+                    temp = true
+                  }
+                }
+              }else{
+                temp = true
+              }
+
+
+              return (this.isValidNumber && this.name!='' && this.cvv.length==3 && temp)
+            }
         }
     }
 
@@ -204,6 +221,15 @@ input::-webkit-inner-spin-button {
 }
 .card-input__input{
   min-width: -webkit-fill-available;
+  background-color: rgb(236, 236, 236);
+  border-radius: 4px;
+  min-height: 1rem;
+  padding: 0.6rem;
+  border:none;
+  box-shadow: inset 0px 0px 6px 2px rgba(0, 0, 0, 0.25);
+}
+.card-input__input:focus-visible{
+    outline:none;
 }
 .select-input{
   display: flex;
@@ -243,6 +269,13 @@ input::-webkit-inner-spin-button {
 .card-form__button:active{
     background-color: rgb(0, 208, 0);
     box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(1, 158, 1), 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+}
+
+.disable{
+  filter: grayscale(1);
+}
+.disable:active{
+  background-color: gray;
 }
 
 #cardName{

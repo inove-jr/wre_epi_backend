@@ -5,6 +5,10 @@ import ShoppingCart from '../views/ShoppingCart.vue'
 import Login from '../views/Login.vue'
 import CadastroView from '../views/CadastroView.vue'
 import ConfirmBuyView from '../views/ConfirmBuyView.vue'
+import UserView from '../views/UserView.vue'
+import UserData from '../components/UserPageForms/UserData.vue'
+import ProductCadForm from '../components/UserPageForms/ProductCadForm.vue'
+import SectionCadForm from '../components/UserPageForms/SectionCadForm.vue'
 
 const routes = [
   {
@@ -42,6 +46,28 @@ const routes = [
     name: 'confirmarCompra',
     component: ConfirmBuyView,
     props: true
+  },
+  {
+    path: '/perfil',
+    name: 'perfil',
+    component: UserView,
+    children: [
+      {
+        path: '',
+        name: 'userPefil',
+        component: UserData,
+      },
+      {
+        path: 'produt-cad',
+        name: 'productCad',
+        component: ProductCadForm,
+      },
+      {
+        path: 'section-cad',
+        name: 'sectionCad',
+        component: SectionCadForm,
+      },
+    ]
   }
 ]
 

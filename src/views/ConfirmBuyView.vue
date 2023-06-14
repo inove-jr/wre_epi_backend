@@ -15,23 +15,23 @@
             <section class="endereco">
                
                 <img class="mapIcon">
-               
                 <div class="col" id="endereço-data" style="padding: 0.6rem; flex-wrap: wrap;">
-                    <span id="endereco">Endereço: {{ endereço }}</span>
-                    <div class="row">    
-                        <span id="numero">Número: {{ numero }}</span>
-                        <span id="complemento">Complemento: {{ complemento }}</span>
+                    <span id="endereco">Endereço: {{ this.endereco }}</span>
+                    <div class="row num-com">    
+                        <span id="numero">Número: {{ this.numero }}</span>
+                        <span id="complemento">Complemento: {{ this.complemento }}</span>
                     </div>
-                    <span id="bairro">Bairro: {{ bairro }}</span>
+                    <span id="bairro">Bairro: {{ this.bairro }}</span>
                     <div class="row">    
-                        <span id="cidade">Cidade: {{ cidade }}</span>
-                        <span id="uf">UF: {{ uf }}</span>
+                        <span id="cidade">Cidade: {{ this.cidade }}</span>
+                        <span id="uf">UF: {{ this.uf }}</span>
                     </div>
 
                     <div style="width: 100%; text-align: center;">
-                        <button class="endereco-change">Escolher outro endereço</button>
+                        <button class="endereco-change" @click="this.$router.back();">Escolher outro endereço</button>
                     </div>
                 </div>
+   
             </section>
 
             <section class="forma-pagamento">
@@ -46,7 +46,7 @@
         <section class="overlay_blur" v-if="this.formSee" @click="close()">
         </section>
         <section class="overlay" v-if="this.formSee">
-            <PopUp  :type="this.type"></PopUp>
+            <PopUp  :type="this.type" :nome="this.nome" :email="this.email" :tel="this.tel"></PopUp>
         </section>
     </section>
 </template>
@@ -61,6 +61,7 @@
     display: flex;
     flex-direction: row;
     margin-block: 5.1vw;
+    margin-inline: 1rem;
 }
 .resumo{
     width: 50%;
@@ -102,7 +103,7 @@
     min-width: 100%;
 }
 #numero{
-    min-width: 40%;
+    min-width: 32%;
 }
 #complemento{
     min-width: 60%;
@@ -150,6 +151,10 @@
     padding-block: 3rem;
     background-color: rgba(8, 128, 8, 0.707);
     border-radius: 0 0 2rem 0;
+}
+
+.forma-pagamento h3{
+    margin-left: 30%;
 }
 
 .options button{
@@ -202,8 +207,15 @@ export default {
         PopUp,
         CartItemrResume
     },
-    mounted(){
-      this.calcTotal()
+    beforeMount(){
+        this.calcTotal()
+    
+        this.endereco = "Rua Tal..."
+        this.numero = 0
+        this.complemento = "CASA"
+        this.bairro = "Centro"
+        this.cidade = "Lugar Nenhum"
+        this.uf = "PE"
     },
     data() {
         return {
@@ -244,7 +256,16 @@ export default {
               },
             ],
             som: 0,
-            type: ""
+            type: "",
+            endereco: "",
+            numero: "",
+            complemento: "",
+            bairro: "",
+            cidade: "",
+            uf: "",
+            nome: 'Alan',
+            email: '',
+            tel: ''
         };
     },
     components: { CartItemrResume, PopUp },

@@ -8,7 +8,7 @@
           <input
             id="name"
             class="card-input__input"
-            v-model="name"
+            v-model="this.nome"
             autocomplete="off"
           />
         </div>
@@ -21,16 +21,15 @@
             id="email"
             class="card-input__input"
             type="email"
-            v-model="email"
+            v-model="this.email"
             autocomplete="off"
-            @input="validMail($event.target)"
+            @input="this.validM = validMail($event.target)"
           />
         </div>
 
         <div style="width: 100%;">
-          <button @click="submitCard" class="card-form__button">
-            Submit
-          </button>
+          <input v-if="this.nome!='' && this.validM" type="submit" value="Pagar" class="card-form__button" name="submit" @click="submitCard" />
+          <input v-if="!(this.nome!='' && this.validM)" type="submit" value="Pagar" class="card-form__button disable" disabled />
         </div>
         
     </form>
@@ -41,17 +40,22 @@
         name: 'BoletoForm',
         components:{
         },
-        props:['price'],
+        props:['price','N','E'],
+        beforeMount(){
+          this.nome = this.N
+          this.email = this.E
+        },
         data() {
             return {
-                email: "",
-                name: "",
+              nome: '',
+              email: '',
+              validM: false
             };
         },
         methods: {
             submitCard() {
               alert(`
-                  ${this.name}\n
+                  ${this.nome}\n
                   ${this.email};`)
             },
             validMail(target) {
@@ -83,6 +87,15 @@ input::-webkit-inner-spin-button {
 }
 .card-input__input{
   min-width: -webkit-fill-available;
+  background-color: rgb(236, 236, 236);
+  border-radius: 4px;
+  min-height: 1rem;
+  padding: 0.6rem;
+  border:none;
+  box-shadow: inset 0px 0px 6px 2px rgba(0, 0, 0, 0.25);
+}
+.card-input__input:focus-visible{
+    outline:none;
 }
 .select-input{
   display: flex;
@@ -122,6 +135,13 @@ input::-webkit-inner-spin-button {
 .card-form__button:active{
     background-color: rgb(0, 208, 0);
     box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(1, 158, 1), 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+}
+
+.disable{
+  filter: grayscale(1);
+}
+.disable:active{
+  background-color: gray;
 }
 
 #cardName{

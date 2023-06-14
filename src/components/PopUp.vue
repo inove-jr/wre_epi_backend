@@ -2,8 +2,8 @@
     <section class="popup">
 
         <CreditForm v-if="this.type=='credit'" :price="100.0"/>
-        <BoletoForm v-if="this.type=='boleto'"/>
-        <PixForm v-if="this.type=='pix'"/>
+        <BoletoForm v-if="this.type=='boleto'" :N="this.nome" :E="this.email"/>
+        <PixForm v-if="this.type=='pix'" :N="this.nome" :E="this.email" :T="this.tel"/>
 
     </section>
 </template>
@@ -19,7 +19,7 @@
             PixForm,
             BoletoForm
         },
-        props:['type'],
+        props:['type', 'nome',  'email', 'tel'],
         data() {
           return {
           }
