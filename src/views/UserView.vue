@@ -37,6 +37,10 @@
 </script>
   
 <style scoped>
+.conteudo{
+    width: 100%;
+    padding-inline: 2rem;
+}
 .info{
     display: flex;
     flex-direction: row;

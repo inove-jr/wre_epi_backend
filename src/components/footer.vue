@@ -3,9 +3,8 @@
 
       <div class="contato"> 
             <h4>Contato:</h4>
-             <p>E-mail: wreppig@gmail.com <br>
-                Telefone: 87 9604-8688
-             </p>
+             <p>E-mail: wreppig@gmail.com </p>
+             <p>Telefone: 87 9604-8688 </p>
         </div>
 
         <div class="empresa"> 
@@ -36,9 +35,12 @@
 
 
   .contato {
-    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
     margin-left: 90px;
     width: 200px;
+    
   }
 
   .empresa{

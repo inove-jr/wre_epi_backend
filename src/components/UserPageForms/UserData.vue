@@ -3,9 +3,9 @@
                 <div class="basic-info">
                     <div class="profile-upload">
                         <label for="profile-picture">
-                            <img class="iconProfile" v-bind:src='this.imageFile'>
+                            <img class="iconProfile" v-bind:class="{pointer : this.editing}" v-bind:src='this.imageFile'>
                         </label>
-                        <input type="file" id="profile-picture" accept="image/*" @change="changeProfilePic($event)">
+                        <input v-if="this.editing" type="file" id="profile-picture" accept="image/*" @change="changeProfilePic($event)">
                     </div>
                     <div class="data">
                         <div>
@@ -31,8 +31,8 @@
                                 <h3>Nascimento</h3>
                             </label>
                             <h3>
-                                <input v-if="this.editing" class="input-camp" type="date" :value="this.date">
-                                <span v-if="!this.editing">{{ this.date }}</span>
+                                <input v-if="this.editing" class="input-camp" type="date" v-model="this.date">
+                                <span v-if="!this.editing">{{ this.dateFormat() }}</span>
                             </h3>
                         </div>
                     </div>
@@ -50,18 +50,26 @@
             </section>
 </template>
 <script>
+
+
 export default {
     name: 'UserData',
     beforeMount(){
         this.name = "Juselino Carandino Justiniano"
         this.email = "Juseli.randino.tiniano@somemail.com.br"
-        this.date = "02/02/2022"
+        this.date = "2022-02-02"
     },  
     data() {
         return {
             name: '',
             email: '',
             date: '',
+           /* previous: {
+                name: '',
+                email: '',
+                date: '',
+                imageFile: ''
+            },*/
             editing: false,
             imageFile: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjc3IiBoZWlnaHQ9IjI3NyIgdmlld0JveD0iMCAwIDI3NyAyNzciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+DQo8cGF0aCBkPSJNMTM5LjA1NCAyMzIuNjhDODYuOTc4IDIzMi42OCA0NC44NzQgMTkwLjU3NiA0NC44NzQgMTM4LjVDNDQuODc0IDg2LjQyNDEgODYuOTc4IDQ0LjMyMDEgMTM5LjA1NCA0NC4zMjAxQzE5MS4xMyA0NC4zMjAxIDIzMy4yMzQgODYuNDI0MSAyMzMuMjM0IDEzOC41QzIzMy4yMzQgMTkwLjU3NiAxOTAuNTc2IDIzMi42OCAxMzkuMDU0IDIzMi42OFpNMTM5LjA1NCA1NS40MDAxQzkzLjA3MiA1NS40MDAxIDU1Ljk1NCA5Mi41MTgxIDU1Ljk1NCAxMzguNUM1NS45NTQgMTg0LjQ4MiA5My4wNzIgMjIxLjYgMTM5LjA1NCAyMjEuNkMxODUuMDM2IDIyMS42IDIyMi4xNTQgMTg0LjQ4MiAyMjIuMTU0IDEzOC41QzIyMi4xNTQgOTIuNTE4MSAxODQuNDgyIDU1LjQwMDEgMTM5LjA1NCA1NS40MDAxWiIgZmlsbD0iYmxhY2siLz4NCjxwYXRoIGQ9Ik04NC43NjIgMjA2LjY0Mkw3NC43OSAyMDIuMjFDNzcuNTYgMTk1LjU2MiA4Ni40MjQgMTkxLjY4NCA5NS44NDIgMTg3LjI1MkMxMDUuMjYgMTgyLjgyIDExNi44OTQgMTc3LjgzNCAxMTYuODk0IDE3MS43NFYxNjMuNDNDMTEzLjU3IDE2MC42NiAxMDguMDMgMTU0LjU2NiAxMDYuOTIyIDE0NS43MDJDMTA0LjE1MiAxNDIuOTMyIDk5LjcyIDEzNy45NDYgOTkuNzIgMTMxLjI5OEM5OS43MiAxMjcuNDIgMTAxLjM4MiAxMjQuMDk2IDEwMi40OSAxMjEuODhDMTAxLjM4MiAxMTcuNDQ4IDEwMC4yNzQgMTA5LjEzOCAxMDAuMjc0IDEwMi40OUMxMDAuMjc0IDgwLjg4NCAxMTUuMjMyIDY2LjQ4IDEzOS4wNTQgNjYuNDhDMTQ1LjcwMiA2Ni40OCAxNTQuMDEyIDY4LjE0MiAxNTguNDQ0IDczLjEyOEMxNjguOTcgNzUuMzQ0IDE3Ny44MzQgODcuNTMyIDE3Ny44MzQgMTAyLjQ5QzE3Ny44MzQgMTExLjkwOCAxNzYuMTcyIDExOS42NjQgMTc1LjA2NCAxMjMuNTQyQzE3Ni4xNzIgMTI1LjIwNCAxNzcuMjggMTI3Ljk3NCAxNzcuMjggMTMxLjI5OEMxNzcuMjggMTM4LjUgMTczLjQwMiAxNDMuNDg2IDE3MC4wNzggMTQ1LjcwMkMxNjguOTcgMTU0LjU2NiAxNjMuOTg0IDE2MC4xMDYgMTYwLjY2IDE2Mi44NzZWMTcxLjc0QzE2MC42NiAxNzYuNzI2IDE3MC42MzIgMTgwLjYwNCAxNzkuNDk2IDE4My45MjhDMTkwLjAyMiAxODcuODA2IDIwMS4xMDIgMTkyLjIzOCAyMDQuOTggMjAxLjEwMkwxOTQuNDU0IDIwNC45OEMxOTIuNzkyIDIwMC41NDggMTgzLjkyOCAxOTcuMjI0IDE3NS42MTggMTk0LjQ1NEMxNjMuNDMgMTkwLjAyMiAxNDkuNTggMTg1LjAzNiAxNDkuNTggMTcyLjI5NFYxNTcuODlMMTUyLjM1IDE1Ni4yMjhDMTUyLjM1IDE1Ni4yMjggMTU4Ljk5OCAxNTEuNzk2IDE1OC45OTggMTQyLjkzMlYxMzkuMDU0TDE2Mi4zMjIgMTM3LjM5MkMxNjIuODc2IDEzNy4zOTIgMTY1LjY0NiAxMzUuNzMgMTY1LjY0NiAxMzEuMjk4QzE2NS42NDYgMTMwLjE5IDE2NC41MzggMTI4LjUyOCAxNjMuOTg0IDEyNy45NzRMMTYxLjc2OCAxMjUuNzU4TDE2Mi44NzYgMTIyLjk4OEMxNjIuODc2IDEyMi45ODggMTY1LjY0NiAxMTQuMTI0IDE2NS42NDYgMTAzLjA0NEMxNjUuNjQ2IDkyLjUxOCAxNTkuNTUyIDg0Ljc2MiAxNTQuNTY2IDg0Ljc2MkgxNTEuMjQyTDE0OS41OCA4MS45OTJDMTQ5LjU4IDc5Ljc3NiAxNDUuNzAyIDc3LjU2IDEzOS4wNTQgNzcuNTZDMTIxLjg4IDc3LjU2IDExMS4zNTQgODYuOTc4IDExMS4zNTQgMTAyLjQ5QzExMS4zNTQgMTA5LjY5MiAxMTQuMTI0IDEyMS44OCAxMTQuMTI0IDEyMS44OEwxMTQuNjc4IDEyNC42NUwxMTIuNDYyIDEyNy40MkMxMTEuOTA4IDEyNy40MiAxMTAuOCAxMjkuMDgyIDExMC44IDEzMS4yOThDMTEwLjggMTM0LjA2OCAxMTQuMTI0IDEzNy4zOTIgMTE1Ljc4NiAxMzguNUwxMTguMDAyIDE0MC4xNjJWMTQyLjkzMkMxMTguMDAyIDE1MS4yNDIgMTI1LjIwNCAxNTUuNjc0IDEyNS4yMDQgMTU2LjIyOEwxMjcuOTc0IDE1Ny44OVYxNzIuMjk0QzEyNy45NzQgMTg1LjU5IDExMy41NyAxOTIuMjM4IDEwMC4yNzQgMTk3Ljc3OEM5NC4xOCAxOTkuOTk0IDg1Ljg3IDIwMy44NzIgODQuNzYyIDIwNi42NDJaIiBmaWxsPSJibGFjayIvPg0KPC9zdmc+DQo=',
         }
@@ -85,10 +93,17 @@ export default {
         },
         edit(){
             this.editing = true
-            console.log( this.editing)
+            /*this.previous.name = this.name
+            this.previous.email = this.email
+            this.previous.date = this.date
+            this.previous.imageFile = this.imageFile*/
         },
         save(){
-
+            this.editing = false
+        },
+        dateFormat(){
+            let D = new Date(this.date)
+            return (D.getDay() <= 9 ? '0'+D.getDay().toString() :D.getDay().toString()) + '/' + (D.getMonth()+1 <= 9 ? '0'+(D.getMonth()+1).toString() : (D.getMonth()+1).toString()) + '/' + D.getFullYear().toString()
         }
     },
 }
@@ -114,13 +129,15 @@ h3 span{
 }
 .iconProfile{
     filter: drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.6));
-    cursor: pointer;
     border-radius: 100%;
     margin: 1rem;
     max-height: 28rem;
     min-height: 28rem;
     max-width: 28rem;
     min-width: 28rem;
+}
+.pointer{
+    cursor: pointer;
 }
 
 .profile-upload>input {
@@ -137,7 +154,7 @@ h3 span{
 }
 .edit{
     cursor: pointer;
-    margin-bottom: 20%;
+    margin-bottom: 16%;
 }
 
 .input-camp{

@@ -28,7 +28,7 @@
                     </div>
 
                     <div style="width: 100%; text-align: center;">
-                        <button class="endereco-change" @click="this.$router.back();">Escolher outro endereço</button>
+                        <button class="endereco-change" @click="this.$router.push({name: 'cart'});">Escolher outro endereço</button>
                     </div>
                 </div>
    

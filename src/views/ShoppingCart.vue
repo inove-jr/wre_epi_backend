@@ -149,6 +149,7 @@ import CartItem from '@/components/cartItem.vue';
   export default {
     beforeMount(){
       this.calcTotal()
+      this.getInfo()
     },
     data() {
         return {
@@ -200,6 +201,9 @@ import CartItem from '@/components/cartItem.vue';
         },
         remove(index){
           this.listTest.splice(index,1)
+        },
+        getInfo(){
+
         }
     },
     components: { CartItem }
@@ -244,6 +248,7 @@ section{
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     color: white;
+    border: none;
     cursor: pointer;
 }
 
