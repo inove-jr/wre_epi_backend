@@ -47,7 +47,7 @@
     margin: auto;
     margin-block: 4rem;
     width: 80%;
-    height: 50rem;
+    min-height: 50rem;
     background-color: white;
     transition: width 0.5s ease-in-out;
     border-radius: 8px;
@@ -61,7 +61,6 @@
     justify-content: space-evenly;
     gap: 3rem;
     padding: 1rem;
-    height: 100%;
     width: 6rem;
     border-radius: 8px 0px 0px 8px;
 }

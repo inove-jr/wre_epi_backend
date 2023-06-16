@@ -6,57 +6,57 @@
           </div>
 
           <div class="row" id="formStance">
-            <div class="row" style="padding-left: 1rem; flex-wrap: wrap; max-width: 80rem">
+            <div class="row" style="padding-left: 1rem; flex-wrap: wrap; max-width: 70rem">
               <div class="col paddingForm">
                 <label class="lblInput">Nome:</label>
-                <input id="nome" type="text" class="inputText"/>
+                <input id="nome" type="text" class="inputText" v-model="this.name"/>
               </div>
 
               <div class="col paddingForm">
                 <label class="lblInput">Empresa:</label>
-                <input id="empresa" type="text" class="inputText"/>
+                <input id="empresa" type="text" class="inputText" v-model="this.empresa"/>
               </div>
 
               <div class="col paddingForm">
                 <label class="lblInput">CPF:</label>
-                <input id="cpf" type="text" class="inputText"/>
+                <input id="cpf" type="text" class="inputText" v-model="this.cpf"/>
               </div>
 
               <div class="col paddingForm">
                 <label class="lblInput">Endereço:</label>
-                <input id="endereco" type="text" class="inputText"/>
+                <input id="endereco" type="text" class="inputText" v-model="this.endereco_form.endereco"/>
               </div>
 
               <div class="col paddingForm">
                 <label class="lblInput">Número:</label>
-                <input id="numero" type="text" class="inputText"/>
+                <input id="numero" type="text" class="inputText" v-model="this.endereco_form.numero"/>
               </div>
 
               <div class="col paddingForm">
                 <label class="lblInput">Complemento:</label>
-                <input id="complemento" type="text" class="inputText"/>
+                <input id="complemento" type="text" class="inputText" v-model="this.endereco_form.complemento"/>
               </div>
 
               <div class="col paddingForm">
                 <label class="lblInput">Bairro:</label>
-                <input id="bairro" type="text" class="inputText"/>
+                <input id="bairro" type="text" class="inputText" v-model="this.endereco_form.bairro"/>
               </div>
 
               <div class="col paddingForm">
                 <label class="lblInput">Cidade:</label>
-                <input id="cidade" type="text" class="inputText"/>
+                <input id="cidade" type="text" class="inputText" v-model="this.endereco_form.cidade"/>
               </div>
 
               <div class="col paddingForm">
                 <label class="lblInput">UF:</label>
-                <input id="uf" type="text" class="inputText"/>
+                <input id="uf" type="text" class="inputText" v-model="this.endereco_form.uf"/>
               </div>
             </div>
 
             <div class="paddingForm">
               <div class="col" style="padding-left: 1rem">
                 <label class="lblInput">CEP:</label>
-                <input id="cep" type="text" class="inputText"/>
+                <input id="cep" type="text" class="inputText" v-model="this.endereco_form.cep"/>
               </div>
             </div>
 
@@ -73,7 +73,7 @@
       <div class="label-itens">
        <p>Itens:</p>
       </div>
-      <div class="itemCart" v-for="(item, index) in listTest" :key="index">
+      <div class="itemCart" v-for="(item, index) in listProducts" :key="index">
         
         <div class="rowItem">
           <div class="removeButton">
@@ -95,7 +95,7 @@
           <p>R$ {{som}}</p>
         </div>
         <!----<RouterLink to="/confirm"> -->
-        <RouterLink to="/confirm" :produtos="listTest" >
+        <RouterLink to="/confirm" :produtos="listProducts" >
           <button class="confirmBuy">Confimar compra</button>
         </RouterLink>
       </div>
@@ -124,7 +124,7 @@
     margin: 0rem 0.5rem 0.5rem 0.5rem
   }
   #cep {
-    width: 12rem;
+    width: 16rem;
   }
   #cpf {
     max-width: 15rem;
@@ -153,7 +153,51 @@ import CartItem from '@/components/cartItem.vue';
     },
     data() {
         return {
-            listTest: [
+            listProducts: [],
+            som: 0,
+            name: '',
+            empresa: '',
+            cpf: '',
+            endereco_form: {
+                endereco: '',
+                numero: 0,
+                cidade: '',
+                bairro: '',
+                complemento: '',
+                uf: '',
+                cep: ''
+            },
+            endereco_saved: {
+                endereco: '',
+                numero: 0,
+                cidade: '',
+                bairro: '',
+                complemento: '',
+                uf: '',
+                cep: ''
+            },
+        };
+    },
+    methods: {
+        calcTotal() {
+            this.som = 0
+            this.listProducts.forEach(element => {
+              this.som = this.som + element.preco*element.quantity
+            //  console.log(element.preco)
+            });
+        },
+        remove(index){
+          this.listProducts.splice(index,1)
+        },
+        getInfo(){
+          
+          this.name = "Juselino Carandino Justiniano"
+            this.email = "Juseli.randino.tiniano@somemail.com.br"
+            this.date = "2022-02-02"
+            this.empresa = "MeCompre Inc."
+            this.cpf = "123.456.789-99"
+          
+          this.listProducts = [
               {nome: "Nome do produto 1 - Capacete do tipo",
                 quantity: 2,
                 preco: 100.00,
@@ -188,22 +232,17 @@ import CartItem from '@/components/cartItem.vue';
               tamanho: 12}
               },
             ],
-            som: 0,
-        };
-    },
-    methods: {
-        calcTotal() {
-            this.som = 0
-            this.listTest.forEach(element => {
-              this.som = this.som + element.preco*element.quantity
-            //  console.log(element.preco)
-            });
-        },
-        remove(index){
-          this.listTest.splice(index,1)
-        },
-        getInfo(){
-
+          this.endereco_saved = {
+                endereco: 'Rua Dos Tolos',
+                numero: 0,
+                cidade: 'Lugar Nenhum',
+                bairro: 'Vazio',
+                complemento: 'Casa',
+                uf: 'ND',
+                cep: '000.000.000-99'
+          }
+            
+           this.endereco_form = this.endereco_saved
         }
     },
     components: { CartItem }
