@@ -1,16 +1,16 @@
 <template>
     <div class="whiteBox card">
         <div class="row center">
-            <span class="nome">{{ produto.nome }}</span>
+            <span class="nome">{{ produto.name }}</span>
         </div>
         <div class="image">
-            <img :src="produto.imagem" alt="Imagem Produto">
+            <img :src="produto.imageUrl" alt="Imagem Produto">
         </div>
     
         <div class="row center">
             <div class="col">
                 <span>à vista</span>
-                <span class="preco">R$ {{ produto.preco.toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}</span>
+                <span class="preco">R$ {{ produto.price.toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}</span>
             </div>
         </div>
 
@@ -18,7 +18,7 @@
             <span>
                 x{{produto.parcelas}} de
                 <span style="font-weight: bold">
-                    R$ {{ (produto.preco/produto.parcelas).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}
+                    R$ {{ (produto.price/4).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}
                 </span>
                 s/ juros
             </span>
@@ -34,10 +34,14 @@ export default {
     name: "ProductCard",
     props:{
         produto:{
-            nome: String,
-            preco: Number,
-            parcelas: Number,
-            imagem: String
+            // nome: String,
+            // preco: Number,
+            // parcelas: Number,
+            // imagem: String
+            name: String,
+            price: Number,
+            parcelas: 4,
+            imageUrl: String
         }
     },
     methods:{

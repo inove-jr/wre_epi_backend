@@ -2,38 +2,44 @@
     <section class="whiteBox form-container">
         <h3>Cadastro</h3>
         <form class="cadastro-form">
-            <div class="imput-container">
+            <div class="input-container">
                 <label for="name">Nome Completo</label>
-                <input type="text" id="name" name="name" v-model="name" placeholder="Digite seu nome..."/>
+                <input type="text" id="name" name="name" v-model="user.name" required placeholder="Digite seu nome..."/>
             </div>
-            <div class="imput-container">
+            <div class="input-container">
                 <label for="company">Empresa</label>
-                <input type="text" id="company" name="company" v-model="company" placeholder="Digite sua empresa..."/>
+                <input type="text" id="company" name="company" v-model="user.empresa" required placeholder="Digite sua empresa..."/>
             </div>
-            <div class="imput-container">
+            <div class="input-container">
                 <label for="CPF">CPF</label>
-                <input type="text" id="CPF" name="CPF" v-model="CPF" placeholder="Digite seu CPF..."/>
+                <input type="text" id="CPF" name="CPF" v-model="user.cpf" required placeholder="Digite seu CPF..."/>
             </div>
-            <div class="imput-container">
+            <div class="input-container">
+                <label for="CPF">Telefone</label>
+                <input type="text" id="CPF" name="CPF" v-model="user.telefone" required placeholder="Informe Um Telefone para Contato"/>
+            </div>
+            <div class="input-container">
                 <label for="email">E-mail</label>
-                <input type="text" id="email" name="email" v-model="email" placeholder="Digite seu e-mail..."/>
+                <input type="text" id="email" name="email" v-model="user.email" required placeholder="Digite seu e-mail..."/>
             </div>
-            <div class="imput-container">
+            <div class="input-container">
                 <label for="password">Senha</label>
-                <input type="text" id="password" name="password" v-model="password" placeholder="Digite sua senha..."/>
+                <input type="password" id="password" name="password" v-model="user.password" required placeholder="Digite sua senha..."/>
             </div>
-            <div class="imput-container">
+            <div class="input-container">
                 <label for="password-confirm">Confirme Senha</label>
-                <input type="text" id="password-confirm" name="password-confirm" v-model="passwordConfirm" placeholder="Digite sua senha..."/>
+                <input type="password" id="password-confirm" name="password-confirm" v-model="user.confirmPassword" required placeholder="Confirmar senha"/>
             </div>
             <div class="buttons-container">
-                <input type="submit" class="submit" value="Cadastrar"/>
-                <button class="submit" @click="cadastro">Cancelar</button>
+                <button class="submit" @click="saveUser">Cadastrar</button>
+                <button class="submit" @click="reset">Cancelar</button>
             </div>
         </form>
     </section>
 </template>
 <script>
+    import axios from 'axios'
+    import { baseApiUrl } from '@/global'
 
     const validCPF = (cpf) => checkAll(prepare(cpf))
 ////////
@@ -61,24 +67,38 @@
         name: 'CadastroForm',
         data(){
             return{
-                name: '',
-                company: '',
-                CPF: '',
-                email: '',
-                password: '',
-                passwordConfirm: ''
+                mode:'save',
+                user:{},
+                // name: '',
+                // company: '',
+                // CPF: '',
+                // email: '',
+                // password: '',
+                // passwordConfirm: ''
             }
         },
         methods:{
             async cadastro(e){
                 e.preventDefault();
                 const data = {
-                        name: this.name,                    
-                        company: this.company,                    
-                        CPF: this.CPF,                    
-                        email: this.email,
-                        password: this.password,
+                        // name: this.name,                    
+                        // company: this.company,                    
+                        // CPF: this.CPF,                    
+                        // email: this.email,
+                        // password: this.password,
                     }
+            },
+            reset(){
+                this.user={}
+            },
+            saveUser(){
+                const url = `${baseApiUrl}/signup`
+                axios.post(url, this.user).then(res =>{
+                    alert("Cadastro Realizado Com Sucesso!!")
+                    this.reset()
+                }).catch((e=>{
+                    alert(e.response.data)
+                }))
             }
         }
     }
@@ -98,20 +118,20 @@
     padding-bottom: 1rem;
     color: #0A260B;
 }
-.imput-container{
+.input-container{
     display: flex;
     flex-direction: column;
     text-align: left;
     padding: 0.3rem;
     gap: 0.3rem;
 }
-.imput-container label{
+.input-container label{
     font-size: 1.4em;
     font-weight: 600;
     color: #515151;
 
 }
-.imput-container input{
+.input-container input{
     padding: 0.8rem;
     width: 24em;
     border: 1px solid #FFFFFF;

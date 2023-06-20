@@ -10,14 +10,69 @@
 import HeaderComponent from "./components/Header.vue";
 // import CarrouselComponent from "./components/CarrouselComponent.vue";
 import FooterComponent from "./components/footer.vue";
+import axios from "axios"
+import { baseApiUrl,userKey } from "@/global";
+import { mapMutations } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
+  // name: "App",
+  // components: {
+  //   HeaderComponent,
+  //   // CarrouselComponent,
+  //   FooterComponent,
+  // }
   name: "App",
   components: {
     HeaderComponent,
     // CarrouselComponent,
     FooterComponent,
+  },
+  data(){
+    return{
+      validatingToken: true
+    }
+  },
+  methods:{
+
+    ...mapMutations(['setIsLoggedIn']),
+    ...mapState(['isLoggedIn']),
+
+     async validateToken(){
+      this.validatingToken = true;
+
+      const json = localStorage.getItem(userKey)
+      const userData= JSON.parse(json)
+      this.$store.commit('setUser',null)
+      // console.log(userData)
+      if(!userData){
+        this.validatingToken = false
+        console.log("não validou")
+        return;
+      }
+      const url = `${baseApiUrl}/validateToken`
+      const res = await axios.post(url,userData)
+        // console.log(res.data)
+      if(res.data){
+        this.$store.commit('setUser',userData)
+        console.log("validado")
+        this.setIsLoggedIn(true)
+        return;
+      }else {
+        localStorage.removeItem(userKey)
+        this.$router.push('/login')
+        
+      }
+      this.validatingToken = false
+     }
+  },
+  mounted(){
+    this.validateToken()
+    
   }
+  
+
+
 };
 </script>
 

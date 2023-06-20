@@ -7,18 +7,18 @@
                     <div class="col" style="padding: 0 2rem">
                         <label class="lblInput">E-mail:</label>
                         <input id="email" type="text" class="inputText" placeholder="Digite seu e-mail"
-                            v-model="email"/>
+                            v-model="user.email"/>
                     </div>
 
                     <div class="col" style="padding: 0 2rem">
                         <label class="lblInput">Senha:</label>
                         <input id="senha" type="password" class="inputText" placeholder="Digite sua senha"
-                            v-model="password"/>
+                            v-model="user.password"/>
                     </div>
                 </div>
 
                 <div class="row" style="justify-content: center">
-                    <button @click="login()">Login</button>
+                    <button @click="signin">Login</button>
 
                     <button>Cancelar</button>
                 </div>
@@ -36,7 +36,10 @@
   
 <script>
 
-  import { useCookies } from "vue3-cookies";
+    import axios from 'axios'
+    import { baseApiUrl,userKey } from '@/global'  
+    import { useCookies } from "vue3-cookies";
+    import { mapMutations } from 'vuex';
 
   export default {
     setup() {
@@ -47,23 +50,45 @@
     },
     data() {
         return {
-            email: "",
-            password: "",
+            // email: "",
+            // password: "",
+            user:{}
         }
     },
     methods: {
-        login: function() { 
-            console.log(this.$cookies);
-            if(!(this.email == "" || this.password == "")){
-                this.makeCookie(this.email);
-                this.$router.back();
-            }
+        // login: function() { 
+        //     console.log(this.$cookies);
+        //     if(!(this.email == "" || this.password == "")){
+        //         this.makeCookie(this.email);
+        //         this.$router.back();
+        //     }
+        // },
+        // makeCookie: function(email) { 
+        //     this.cookies.set('loggedIn', 'true', { expires: '1h' }); 
+        //     this.cookies.set('loggedUser_name',"Carlo", { expires: '1h' }); 
+        //     this.cookies.set('loggedUser_email', email, { expires: '1h' });
+        // },
+        reset(){
+              this.user = {}
         },
-        makeCookie: function(email) { 
-            this.cookies.set('loggedIn', 'true', { expires: '1h' }); 
-            this.cookies.set('loggedUser_name',"Carlo", { expires: '1h' }); 
-            this.cookies.set('loggedUser_email', email, { expires: '1h' });
-        },
+
+        ...mapMutations(['setIsLoggedIn']),
+
+        signin(){
+            const url = `${baseApiUrl}/signin`
+            axios.post(url, this.user)
+                .then(res=>{
+                    this.$store.commit('setUser',res.data)
+                    localStorage.setItem(userKey, JSON.stringify(res.data))
+                    this.$router.push('/')
+                    console.log("entrou")
+                    this.setIsLoggedIn(true)
+                })
+                .catch((e=>{
+                   alert(e.response.data)
+                   console.log("erro")
+                }))
+        }
     },
 }
 </script>

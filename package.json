@@ -13,6 +13,7 @@
     "@capacitor/cli": "^4.6.3",
     "@capacitor/core": "^4.6.3",
     "@ngx-rocket/scripts": "^5.2.3",
+    "axios": "^1.4.0",
     "cocoapods": "^0.0.0",
     "cordova": "^11.1.0",
     "core-js": "^3.8.3",

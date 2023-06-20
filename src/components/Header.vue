@@ -23,7 +23,7 @@
           <p>Bem-vindo, <span>{{this.user_name}}</span></p>
           <div class="cart-info-email">
             <p>{{this.user_email}}</p>
-            <p @click="logOut()">Sair</p>
+            <p @click.prevent="logOut">Sair</p>
           </div>
         </div>
 
@@ -48,13 +48,15 @@
   
   <script>
   
-  import { useCookies } from "vue3-cookies";
+  // import { useCookies } from "vue3-cookies";
+  import { mapState } from 'vuex';
+  import { userKey } from '@/global';
 
   export default {
     name: "HeaderComponent",
     setup() {
-      const { cookies } = useCookies();
-      return { cookies };
+      // const { cookies } = useCookies();
+      // return { cookies };
     },
     data(){
       return {
@@ -66,27 +68,61 @@
     beforeRouteUpdate() {
         console.log(this.$route)
     },
+    computed:{
+      ...mapState(['user']),
+      ...mapState(['isLoggedIn'])
+    },
     methods: {
-      getCookie: function() { 
-
-            if(this.cookies.isKey('loggedIn')) {
-                this.loggedIn = true;
-                this.user_name = this.cookies.get('loggedUser_name');
-                this.user_email = this.cookies.get('loggedUser_email');
-              } 
-
-          },
-
-      makeCookie: function() { this.cookies.set('loggedIn', true, { expires: '1h' }); },//7
+      logOut(){
+        localStorage.removeItem(userKey)
+        this.$store.commit('setUser',null)
+        this.loggedIn=false
+        this.$router.push('/login')
+      },
+      // getCookie: function() { 
+        
+              //       if(this.cookies.isKey('loggedIn')) {
+              //           this.loggedIn = true;
+              //           this.user_name = this.cookies.get('loggedUser_name');
+              //           this.user_email = this.cookies.get('loggedUser_email');
+              //         } 
+        
+              //     },
+        
+              
+        
+                  //   if(this.cookies.isKey('loggedIn')) {
+                  //       this.loggedIn = true;
+                  //       this.user_name = this.cookies.get('loggedUser_name');
+                  //       this.user_email = this.cookies.get('loggedUser_email');
+                  //     } 
+        
+                  // },
       
-      logOut: function(){
-        this.loggedIn = false;
-        this.cookies.remove('loggedIn');
-        this.cookies.remove('reloaded');
-      }
+          setHeaderData: function(){
+            const json = localStorage.getItem(userKey)
+            const userData= JSON.parse(json)
+            console.log(userData)
+            if(userData){
+              this.loggedIn=true
+              this.user_name = userData.name
+              this.user_email = userData.email
+            }
+
+          },    
+ 
+              
+        
+
+      // makeCookie: function() { this.cookies.set('loggedIn', true, { expires: '1h' }); },//7
+      
     },
     beforeMount() {
-      this.getCookie()
+      // this.getCookie()
+      // this.getUserData()
+    },
+    mounted() {
+     this.setHeaderData()
     },
     beforeRouteLeave (to, from) {
       console.log('A')  

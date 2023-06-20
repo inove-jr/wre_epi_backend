@@ -3,12 +3,24 @@
     <CarrouselComponent id="carrousel" />
     <BotaoFaleConosco/>
     <section id="campoSessoes">
-      <div>
+      <!-- <div>
         <SessaoProdutos class="sessao" :nomeSessao="sessao" :listaProdutos="produtos"/>
         <br>
       </div> 
       <div>
         <SessaoProdutos class="sessao" :nomeSessao="sessao" :listaProdutos="produtos"/>
+        <br>
+      </div> -->
+      <div class="sessao">
+        <SessaoProdutos :nomeSessao="sessao1" :listaProdutos="produtos1"/>
+        <br>
+      </div>
+      <div class="sessao">
+        <SessaoProdutos :nomeSessao="sessao2" :listaProdutos="produtos2"/>
+        <br>
+      </div>
+      <div class="sessao">
+        <SessaoProdutos :nomeSessao="sessao3" :listaProdutos="produtos3"/>
         <br>
       </div>
     </section>
@@ -21,8 +33,10 @@ import BotaoFaleConosco from '@/components/BotaoFaleConosco.vue';
 import HeaderComponent from "../components/Header.vue";
 import CarrouselComponent from "../components/CarrouselComponent.vue";
 import FooterComponent from "../components/footer.vue";
+import { baseApiUrl } from '@/global';
+import axios from "axios"
   
-  import { useCookies } from "vue3-cookies";
+import { useCookies } from "vue3-cookies";
 export default {
   components: { 
     SessaoProdutos, 
@@ -32,56 +46,103 @@ export default {
     FooterComponent,
   },
     setup() {
-      const { cookies } = useCookies();
-      return { cookies };
+      // const { cookies } = useCookies();
+      // return { cookies };
     },
     data(){
       return{
-        produtos:[
-            {nome: "Nome do produto 1 - Capacete do tipo",
-            preco: 100.00,
-            parcelas: 4,
-            imagem: "/img/produto.svg",
-            },
-            {nome: "Nome do produto 2 - Capacete do tipo",
-            preco: 200.00,
-            parcelas: 4,
-            imagem: "/img/produto.svg",
-            },
-            {nome: "Nome do produto 3 - Capacete do tipo",
-            preco: 300.00,
-            parcelas: 4,
-            imagem: "/img/produto.svg",
-            },
-            {nome: "Nome do produto 4 - Capacete do tipo",
-            preco: 400.00,
-            parcelas: 4,
-            imagem: "/img/produto.svg",
-            },
-            {nome: "Nome do produto 5 - Capacete do tipo",
-            preco: 500.00,
-            parcelas: 4,
-            imagem: "/img/produto.svg",
-            },
-            {nome: "Nome do produto 6 - Capacete do tipo",
-            preco: 600.00,
-            parcelas: 4,
-            imagem: "/img/produto.svg",
-            },
-            {nome: "Nome do produto 7 - Capacete do tipo",
-            preco: 700.00,
-            parcelas: 4,
-            imagem: "/img/produto.svg",
-            },
-            {nome: "Nome do produto 8 - Capacete do tipo",
-            preco: 800.00,
-            parcelas: 4,
-            imagem: "/img/produto.svg",
-            }
-        ],
-        sessao: "Seção...",
+        // produtos:[
+        //     {nome: "Nome do produto 1 - Capacete do tipo",
+        //     preco: 100.00,
+        //     parcelas: 4,
+        //     imagem: "/img/produto.svg",
+        //     },
+        //     {nome: "Nome do produto 2 - Capacete do tipo",
+        //     preco: 200.00,
+        //     parcelas: 4,
+        //     imagem: "/img/produto.svg",
+        //     },
+        //     {nome: "Nome do produto 3 - Capacete do tipo",
+        //     preco: 300.00,
+        //     parcelas: 4,
+        //     imagem: "/img/produto.svg",
+        //     },
+        //     {nome: "Nome do produto 4 - Capacete do tipo",
+        //     preco: 400.00,
+        //     parcelas: 4,
+        //     imagem: "/img/produto.svg",
+        //     },
+        //     {nome: "Nome do produto 5 - Capacete do tipo",
+        //     preco: 500.00,
+        //     parcelas: 4,
+        //     imagem: "/img/produto.svg",
+        //     },
+        //     {nome: "Nome do produto 6 - Capacete do tipo",
+        //     preco: 600.00,
+        //     parcelas: 4,
+        //     imagem: "/img/produto.svg",
+        //     },
+        //     {nome: "Nome do produto 7 - Capacete do tipo",
+        //     preco: 700.00,
+        //     parcelas: 4,
+        //     imagem: "/img/produto.svg",
+        //     },
+        //     {nome: "Nome do produto 8 - Capacete do tipo",
+        //     preco: 800.00,
+        //     parcelas: 4,
+        //     imagem: "/img/produto.svg",
+        //     }
+        // ],
+        // sessao: "Seção...",
+        sessao1: "Capacetes de Proteção",
+        sessao2: "Visores de Proteção",
+        sessao3: "Luvas de Proteção",
+        produtos1:[],        
+        produtos2:[],
+        produtos3:[],
+        info:[]
       }
     },
+    methods: {
+          
+          async getItemsSection1(categoryId){
+          const url = `${baseApiUrl}/categories/${categoryId}/products`
+          await axios.get(url).then(response => {
+            //console.log(response.data) 
+            this.produtos1=response.data;
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        },
+          async getItemsSection2(categoryId){
+          const url = `${baseApiUrl}/categories/${categoryId}/products`
+          await axios.get(url).then(response => {
+            //console.log(response.data)
+            this.produtos2=response.data;
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        },
+          async getItemsSection3(categoryId){
+          const url = `${baseApiUrl}/categories/${categoryId}/products`
+          await axios.get(url).then(response => {
+            //console.log(response.data)
+            this.produtos3=response.data;
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
+    },
+    mounted() {
+      
+      this.getItemsSection1(1);
+      this.getItemsSection2(3);
+      this.getItemsSection3(4);
+      
+      }
 }
 </script>
 
