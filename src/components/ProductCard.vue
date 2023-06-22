@@ -10,13 +10,13 @@
         <div class="row center">
             <div class="col">
                 <span>à vista</span>
-                <span class="preco">R$ {{ produto.price.toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}</span>
+                <span class="preco" v-if="produto.price !==null && produto.price !==undefined ">R$ {{ produto.price.toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}</span>
             </div>
         </div>
 
         <div class="row center">
             <span>
-                x{{produto.parcelas}} de
+               4 x de
                 <span style="font-weight: bold">
                     R$ {{ (produto.price/4).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}
                 </span>
@@ -25,7 +25,7 @@
         </div>
             
         <div class="row center">
-            <button  @click="$router.push( { name: 'product', params: { id:0} })">Comprar</button>
+            <button  @click="$router.push( { name: 'product', params: { id:this.produto.id} })">Comprar</button>
         </div>
     </div>
 </template>
@@ -45,6 +45,9 @@ export default {
         }
     },
     methods:{
+        showId: function(){
+            console.log(produto.id)
+        }
     }
 }
 

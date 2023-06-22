@@ -26,16 +26,12 @@
 
           <div class="columns col">
             <div class="text">
-              <h2 class="padText">Nome Produto</h2>
+              <h2 class="padText">{{ this.produto.name }}</h2>
 
               <div class="padText">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                quae ab illo inventore veritatis et quasi architecto beatae
-                vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-                voluptas sit aspernatur aut odit aut fugit, sed quia
-                consequuntur magni dolores eos qui ratione voluptatem sequi
-                nesciunt.
+                <span v-if="produto.short_description !==null && produto.short_description!=undefined">
+                  {{ this.produto.short_description }}
+                </span>
               </div>
             </div>
 
@@ -47,10 +43,12 @@
       </div>
 
       <div class="whiteBox productBuy col">
-        <h2>R$ 400,00</h2>
+        <h2  v-if="produto.short_description !==null && produto.short_description!=undefined">R$ {{produto.price.toLocaleString("pt-BR", { minimumFractionDigits: 2})}}</h2>
 
         <p class="paragrafo1">
-          <i class="far fa-credit-card"></i> x4 de R$50,00 s/ juros
+          <i class="far fa-credit-card"></i> x4 de <span style="font-weight: bold">
+                    R$ {{ (produto.price/4).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}
+                </span> s/ juros
         </p>
 
         <a href="#">Outras formas de pagamento </a>
@@ -122,29 +120,7 @@
       <h3>Descrição:</h3>
       <div class="descricao">
         <p class="padText">
-          Descrição longa: Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit. Quisque bibendum eros nec finibus lobortis. Quisque ultricies
-          nec lorem vitae tincidunt. Vivamus aliquam, nisi posuere maximus
-          ullamcorper, lectus magna ultricies eros, et molestie tortor dui at
-          nulla. In hac habitasse platea dictumst. Nam ornare elementum arcu
-          tincidunt laoreet. In hac habitasse platea dictumst. Nam ornare
-          elementum arcu tincidunt laoreet.<br /><br />
-
-          Descrição rápida: Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit. Quisque bibendum eros nec finibus lobortis. Quisque ultricies
-          nec lorem vitae tincidunt. Vivamus aliquam, nisi posuere maximus
-          ullamcorper, lectus magna ultricies eros, et molestie tortor dui at
-          nulla. In hac habitasse platea dictumst. Nam ornare elementum arcu
-          tincidunt laoreet. In hac habitasse platea dictumst. Nam ornare
-          elementum arcu tincidunt laoreet.<br /><br />
-
-          Descrição rápida: Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit. Quisque bibendum eros nec finibus lobortis. Quisque ultricies
-          nec lorem vitae tincidunt. Vivamus aliquam, nisi posuere maximus
-          ullamcorper, lectus magna ultricies eros, et molestie tortor dui at
-          nulla. In hac habitasse platea dictumst. Nam ornare elementum arcu
-          tincidunt laoreet. In hac habitasse platea dictumst. Nam ornare
-          elementum arcu tincidunt laoreet.<br /><br />
+         {{ produto.long_description }}
         </p>
         <div class="video-detalhado">
           <h2>Vídeo com descrição detalhada:</h2>
@@ -159,6 +135,9 @@
 <script>
 import SessaoProdutos from "@/components/sessaoProdutos.vue";
 import VideoEmbed from "../components/VideoEmbed.vue";
+import { baseApiUrl } from '@/global';
+import axios from "axios";
+
 export default {
   components: {
     VideoEmbed,
@@ -168,14 +147,12 @@ export default {
     /* bigImage: String,
       otherImages: Array*/
   },
-  mounted() {
-    //console.log(this.$route.params.id);
-  },
   data() {
     return {
       bigImage: "/img/prod1.svg",
       otherImages: ["/img/prod1.svg", "/img/prod2.svg", "/img/prod3.svg"],
       count: 1,
+      produto:{},
       produtos: [
         {
           nome: "Nome do produto 1 - Capacete do tipo",
@@ -245,7 +222,22 @@ export default {
         this.count = 1;
       }
       input.value = this.count;
+    },
+    async getItemDetails() {
+      const id= this.$route.params.id
+      const url = `${baseApiUrl}/products/${id}`
+      await axios.get(url).then(
+        response => {
+          [this.produto] = response.data
+          console.log(this.produto.name);
+        }
+      ).catch(error => {
+        console.log(error)
+      })
     }
+  },
+  mounted() {
+    this.getItemDetails();
   },
 };
 </script>

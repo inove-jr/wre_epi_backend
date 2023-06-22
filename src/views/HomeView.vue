@@ -106,9 +106,9 @@ export default {
     methods: {
           
           async getItemsSection1(categoryId){
-          const url = `${baseApiUrl}/categories/${categoryId}/products`
+          const url = `${baseApiUrl}/categories/${categoryId}/products-cart`
           await axios.get(url).then(response => {
-            //console.log(response.data) 
+            console.log(response.data) 
             this.produtos1=response.data;
           })
           .catch(error => {
@@ -116,7 +116,7 @@ export default {
           })
         },
           async getItemsSection2(categoryId){
-          const url = `${baseApiUrl}/categories/${categoryId}/products`
+          const url = `${baseApiUrl}/categories/${categoryId}/products-cart`
           await axios.get(url).then(response => {
             //console.log(response.data)
             this.produtos2=response.data;
@@ -126,7 +126,7 @@ export default {
           })
         },
           async getItemsSection3(categoryId){
-          const url = `${baseApiUrl}/categories/${categoryId}/products`
+          const url = `${baseApiUrl}/categories/${categoryId}/products-cart`
           await axios.get(url).then(response => {
             //console.log(response.data)
             this.produtos3=response.data;
