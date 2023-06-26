@@ -102,47 +102,6 @@
     </section> 
 </template>
 
-<style scoped>
-  .lblInput {
-    text-align: left;
-    font-family: 'Inter', sans-serif;
-    font-size: 1.2rem;
-    margin: 1rem 0 0.5rem 0;
-    color: #515151;
-  }
-
-  #formStance{
-    flex-wrap: wrap-reverse;
-  }
-
-  #save_endereco{
-    margin-left: 4rem;
-    margin-top:10rem;
-    align-items: end;
-  }
-  .paddingForm {
-    margin: 0rem 0.5rem 0.5rem 0.5rem
-  }
-  #cep {
-    width: 16rem;
-  }
-  #cpf {
-    max-width: 15rem;
-  }
-  #numero {
-    max-width: 10rem;
-  }
-  #uf {
-    max-width: 10rem;
-  }
-  #lblDados {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.6rem;
-    color: #521717;
-    white-space: nowrap;
-  }
-</style>
-  
 <script>
 import CartItem from '@/components/cartItem.vue';
 
@@ -248,8 +207,46 @@ import CartItem from '@/components/cartItem.vue';
     components: { CartItem }
 }
 </script>
-  
+
 <style scoped>
+  .lblInput {
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    margin: 1rem 0 0.5rem 0;
+    color: #515151;
+  }
+
+  #formStance{
+    flex-wrap: wrap-reverse;
+  }
+
+  #save_endereco{
+    margin-left: 4rem;
+    margin-top:10rem;
+    align-items: end;
+  }
+  .paddingForm {
+    margin: 0rem 0.5rem 0.5rem 0.5rem
+  }
+  #cep {
+    width: 16rem;
+  }
+  #cpf {
+    max-width: 15rem;
+  }
+  #numero {
+    max-width: 10rem;
+  }
+  #uf {
+    max-width: 10rem;
+  }
+  #lblDados {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.6rem;
+    color: #521717;
+    white-space: nowrap;
+  }
 section{
   margin: 2rem 5rem;
 } #listItem {

@@ -51,6 +51,105 @@
     </section>
 </template>
 
+<script>
+import CartItemrResume from '@/components/cartItemrResume.vue';
+import PopUp from '@/components/PopUp.vue';
+
+export default {
+    name: "ConfirmBuy",
+    components:{
+        PopUp,
+        CartItemrResume
+    },
+    beforeMount(){
+        this.calcTotal()
+    
+        this.endereco = "Rua Tal..."
+        this.numero = 0
+        this.complemento = "CASA"
+        this.bairro = "Centro"
+        this.cidade = "Lugar Nenhuma"
+        this.uf = "PE"
+    },
+    data() {
+        return {
+            formSee: false,
+            listTest: [
+              {nome: "Nome do produto 1 - Capacete do tipo",
+                quantity: 2,
+                preco: 100.00,
+                parcelas: 4,
+                imagem: "/img/produto.svg",
+                atributs:  {cor: 'tal',
+              tamanho: 12}
+              },
+              {nome: "Nome do produto 2 - Capacete do tipo",
+                quantity: 3,
+                preco: 200.00,
+                parcelas: 4,
+                imagem: "/img/produto.svg",
+                atributs:  {
+                  
+                }
+              },
+              {nome: "Nome do produto 3 - Capacete do tipo",
+                quantity: 2,
+                preco: 300.00,
+                parcelas: 4,
+                imagem: "/img/produto.svg",
+                atributs:  {
+              tamanho: 12}
+              },
+              {nome: "Nome do produto 4 - Capacete do tipo",
+                quantity: 1,
+                preco: 400.00,
+                parcelas: 4,
+                imagem: "/img/produto.svg",
+                atributs: {cor: 'tal',
+              tamanho: 12}
+              },
+            ],
+            som: 0,
+            type: "",
+            endereco: "",
+            numero: "",
+            complemento: "",
+            bairro: "",
+            cidade: "",
+            uf: "",
+            nome: 'Alan',
+            email: '',
+            tel: ''
+        };
+    },
+    components: { CartItemrResume, PopUp },
+    methods: {
+        calcTotal() {
+            this.som = 0
+            this.listTest.forEach(element => {
+              this.som = this.som + element.preco*element.quantity
+            //  console.log(element.preco)
+            });
+        },
+        remove(index){
+          this.listTest.splice(index,1)
+        },
+        change(formato){
+            let formasDePagamento = ['credit','boleto','pix']
+
+            this.type = formasDePagamento[formato-1]
+            this.formSee = !this.formSee
+            console.log(this.
+            formSee)
+
+        },
+        close(){
+            this.formSee = false;
+        }
+    },
+}
+</script>
+
 <style scoped>
 .title{
     text-align: left;
@@ -197,101 +296,3 @@
 
 </style>
 
-<script>
-import CartItemrResume from '@/components/cartItemrResume.vue';
-import PopUp from '@/components/PopUp.vue';
-
-export default {
-    name: "ConfirmBuy",
-    components:{
-        PopUp,
-        CartItemrResume
-    },
-    beforeMount(){
-        this.calcTotal()
-    
-        this.endereco = "Rua Tal..."
-        this.numero = 0
-        this.complemento = "CASA"
-        this.bairro = "Centro"
-        this.cidade = "Lugar Nenhum"
-        this.uf = "PE"
-    },
-    data() {
-        return {
-            formSee: false,
-            listTest: [
-              {nome: "Nome do produto 1 - Capacete do tipo",
-                quantity: 2,
-                preco: 100.00,
-                parcelas: 4,
-                imagem: "/img/produto.svg",
-                atributs:  {cor: 'tal',
-              tamanho: 12}
-              },
-              {nome: "Nome do produto 2 - Capacete do tipo",
-                quantity: 3,
-                preco: 200.00,
-                parcelas: 4,
-                imagem: "/img/produto.svg",
-                atributs:  {
-                  
-                }
-              },
-              {nome: "Nome do produto 3 - Capacete do tipo",
-                quantity: 2,
-                preco: 300.00,
-                parcelas: 4,
-                imagem: "/img/produto.svg",
-                atributs:  {
-              tamanho: 12}
-              },
-              {nome: "Nome do produto 4 - Capacete do tipo",
-                quantity: 1,
-                preco: 400.00,
-                parcelas: 4,
-                imagem: "/img/produto.svg",
-                atributs: {cor: 'tal',
-              tamanho: 12}
-              },
-            ],
-            som: 0,
-            type: "",
-            endereco: "",
-            numero: "",
-            complemento: "",
-            bairro: "",
-            cidade: "",
-            uf: "",
-            nome: 'Alan',
-            email: '',
-            tel: ''
-        };
-    },
-    components: { CartItemrResume, PopUp },
-    methods: {
-        calcTotal() {
-            this.som = 0
-            this.listTest.forEach(element => {
-              this.som = this.som + element.preco*element.quantity
-            //  console.log(element.preco)
-            });
-        },
-        remove(index){
-          this.listTest.splice(index,1)
-        },
-        change(formato){
-            let formasDePagamento = ['credit','boleto','pix']
-
-            this.type = formasDePagamento[formato-1]
-            this.formSee = !this.formSee
-            console.log(this.
-            formSee)
-
-        },
-        close(){
-            this.formSee = false;
-        }
-    },
-}
-</script>
