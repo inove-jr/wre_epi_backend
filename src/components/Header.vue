@@ -102,7 +102,7 @@
           setHeaderData: function(){
             const json = localStorage.getItem(userKey)
             const userData= JSON.parse(json)
-            console.log(userData)
+            //console.log(userData)
             if(userData){
               this.loggedIn=true
               this.user_name = userData.name

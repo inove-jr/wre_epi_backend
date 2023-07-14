@@ -1,37 +1,29 @@
 <template>
     <div class="cartItem">
         <div class="prod-image">
-            <img :src=this.item.imagem>
+            <img :src=this.item.imageUrl>
         </div>
         <div class="nameItem">
             <p class="label">Produto</p>
-            <p class="Value">{{this.item.nome}}</p> 
+            <p class="Value">{{this.item.name}}</p> 
         </div>
         <div class="quantity">
             <p class="label">Quantidade:</p>
             <div class="controlQuantity">
-                <button class="inputButton" @click="sub()">
+                <!-- <button class="inputButton" @click="sub(),triggerEvent()">
                 -
-                </button>
-                <p class="inputText">{{this.item.quantity}}</p>
-                <button class="inputButton" @click="add()">
+                </button> -->
+                <input type="text" class="quantityInput" v-model="item.quantity">
+                <button @click="confirm(),triggerEvent(),calcTotal()">Confirmar</button>
+                <!-- <p class="inputText">{{this.item.quantity}}</p> -->
+                <!-- <button class="inputButton" @click="add(),triggerEvent()">
                     +
-                </button>
+                </button> -->
             </div>
-        </div>
-        <div class="atributs">
-            <p class="label">Atributos:</p>
-            <div class="Value" v-if="Object.keys(this.item.atributs) != 0">
-                <p v-for="(value, index) in Object.entries(this.item.atributs)" :key="index">
-                    {{value[0]}}: {{value[1]}}
-                </p>
-            </div>
-            <p v-else> - </p>
-            
         </div>
         <div class="price">
             <p class="label">Valor</p>
-            <p class="Value">R${{ (this.item.preco*this.item.quantity).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}</p> 
+            <p class="Value">R${{ (this.item.price*this.item.quantity).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}</p> 
         </div>
         
         <div>
@@ -41,35 +33,131 @@
 </template>
 <script>
 import "/src/assets/main.css"
+import axios from 'axios'
+import { baseApiUrl } from '@/global'
 export default {
     name: "CartItem",
     mounted(){
-        //console.log(this.item.key);
+        this.getItems()
+        console.log(this.totalPrice)
+        console.log(this.item)
     },
-    props:{
-        item:{
-            nome: String,
-            quantity: Number,
-            preco: Number,
-            parcelas: Number,
-            imagem: String,
-            atributs: {
-                cor: String,
-                tamanho: Number, 
-                tipo: String
-            }
+    data(){
+        return{
+            info:{},
+            totalPrice:0,
+            som:0,
+            cartItemInfo:{},
+            itemData:[],
+            total:0
+            
         }
     },
+    watch: {
+    flagComponentePai: {
+      deep: true,
+      handler() {
+        // Lógica para atualizar o componente filho quando as propriedades forem alteradas
+        // Pode ser deixado vazio se você não precisar de nenhuma ação adicional aqui
+      }
+        }
+    }
+    ,
+    props:{
+        item:{
+            name: String,
+            quantity: Number,
+            price: Number,
+            //parcelas: Number,
+            imageUrl: String,
+            // atributs: {
+            //     cor: String,
+            //     tamanho: Number
+            // }
+        },
+        flagComponentePai:0
+    },
     methods:{
+        confirm(){
+            this.atualizarItem()
+            this.getItems()
+        },
+        async atualizarItem(){
+            const url = `${baseApiUrl}/cart/update`;
+            this.cartItemInfo.client_id= this.item.client_id;
+            this.cartItemInfo.product_id=this.item.product_id;
+            this.cartItemInfo.quantity=this.item.quantity; 
+            console.log(this.cartItemInfo)
+                axios.put(url, this.cartItemInfo)
+                .then(res =>{
+                    console.log(res)
+                    return;
+                }).catch((e=>{
+                        alert(e.response)
+                        return;
+            }))
+        },
         add(){
             this.item.quantity = this.item.quantity+1;
+            console.log(this.item.quantity)
+            this.atualizarItem();   
         },
         sub(){
            if(this.item.quantity>1){
                 this.item.quantity = this.item.quantity-1;
+                console.log(this.item.quantity)
            }
-        }
-    }
+           console.log(this.info)
+           this.atualizarItem()
+        },
+        triggerEvent(){
+            this.$emit('atualizar-carrinho');
+            
+        },
+        async getItems(){
+            const url=`${baseApiUrl}/products/`+this.item.product_id
+          axios.get(url).then(res =>{
+            this.info={...res.data}
+            this.item.name= this.info[0].name
+            this.item.price= this.info[0].price
+            this.item.imagem=this.info[0].imageUrl
+            
+          const newItem = {
+            name: this.item.name,
+            price: this.item.price,
+            quantity: this.item.quantity
+          };
+
+          this.itemData.push(newItem);
+
+          console.log(this.itemData);
+
+          this.totalPrice = this.itemData.reduce(
+            (accumulator, item) => accumulator + item.price * item.quantity,
+            0
+          );
+
+
+          console.log(this.totalPrice);
+
+
+            // console.log(this.item.price,this.item.quantity)
+            
+        // this.calcTotal();
+        }).catch((e=>{console.error(e)}))
+        },
+        calcTotal(){
+            // let totalPrice=0
+            // console.log(this.itemData)
+            // Object.values(this.itemData).forEach(item => {
+            // totalPrice += item.price * item.quantity;
+            // console.log(totalPrice)
+            // });
+            // // this.totalPrice +=price*quantity
+            // // console.log(this.totalPrice)
+            // console.log(this.itemData)
+        },
+    },
 }
 </script>
 <style scoped>
@@ -116,6 +204,41 @@ hr{
     justify-content: center;
     align-items: center;
     margin: 0vw 2vw 0vw 8vw;
+}
+
+.quantityInput{
+    height: 2.5rem;
+    width: 5rem;
+    border-radius: 0.5rem;
+    border: solid white 1px;
+    background-color: #EEEEEE;
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+    padding: 0.8rem 1.2rem;
+    font-size: 1.4rem;
+    font-family: 'Inter', sans-serif;
+    /* font-weight: 500; */
+}
+
+.removeButton{
+  flex-grow: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0rem 4vw 0rem 6vw;
+  
+}
+
+.removeButton button{
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 100%;
+  font-size: 1.5vw;
+  font-weight: bold;
+  border: 0px;
+  background-color: #e8e8e8;
+  justify-content: center;
+  margin: auto;
+  width: 2vw;
+  height: 2vw;
 }
 .controlQuantity{
     display: flex;

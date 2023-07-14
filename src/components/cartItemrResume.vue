@@ -5,13 +5,13 @@
         </div>
         <div class="nameItem">
             <p class="label">Produto</p>
-            <p class="Value">{{this.item.nome}}</p> 
+            <p class="Value">{{this.item.name}}</p> 
         </div>
         <div class="quantity">
             <p class="label">Quantidade:</p>
             <p >{{this.item.quantity}}</p>
         </div>
-        <div class="atributs">
+        <!-- <div class="atributs">
             <p class="label">Atributos:</p>
             <div class="Value" v-if="Object.keys(this.item.atributs) != 0">
                 <p v-for="(value, index) in Object.entries(this.item.atributs)" :key="index">
@@ -20,10 +20,10 @@
             </div>
             <p v-else> - </p>
             
-        </div>
+        </div> -->
         <div class="price">
             <p class="label">Valor</p>
-            <p class="Value">R${{ (this.item.preco*this.item.quantity).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</p> 
+            <p class="Value">R${{ (this.item.price*this.item.quantity).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}</p> 
         </div>
         
         <div>
@@ -33,23 +33,28 @@
 </template>
 <script>
 import "/src/assets/main.css"
+import axios from "axios"
+import { baseApiUrl } from "@/global"
 export default {
     name: "CartItemResume",
+    beforeMount() {
+        this.getItems()
+    },
     mounted(){
         //console.log(this.item.key);
+        console.log(this.item.key)
     },
     props:{
         item:{
-            nome: String,
+            name: String,
             quantity: Number,
-            preco: Number,
-            parcelas: Number,
+            price: Number,
+            //parcelas: Number,
             imagem: String,
-            atributs: {
-                cor: String,
-                tamanho: Number, 
-                tipo: String
-            }
+            // atributs: {
+            //     cor: String,
+            //     tamanho: Number
+            // }
         }
     },
     methods:{
@@ -60,6 +65,23 @@ export default {
            if(this.item.quantity>1){
                 this.item.quantity = this.item.quantity-1;
            }
+        },
+        getItems(){
+            const url=`${baseApiUrl}/products/`+this.item.product_id
+                axios.get(url).then(res =>{
+                    this.info={...res.data}
+                    this.item.name= this.info[0].name
+                    this.item.price= this.info[0].price
+                    this.item.imagem=this.info[0].imageUrl
+                    
+                    Object.values(this.info).forEach(value => {
+                        // this.totalPrice+=this.value.price*this.value.quantity;
+                        // console.log(value)
+                        // console.log(this.item)
+                    });
+                    // console.log(this.totalPrice)
+
+                }).catch((e=>{console.error(e)}))
         }
     }
 }

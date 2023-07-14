@@ -24,10 +24,15 @@
                 </div>
 
                 <div class="lblTextInf">
+                    <span>Esqueceu sua senha?</span>
+                    <router-link to="/password-recovery">
+                    <a href="">Recuperar conta</a>
+                    </router-link>
+                    <br/>
                     <span>Não possui uma conta? </span>
                     <router-link to="/cadastro">
                     <a href="">Cadastre-se</a>
-                    </router-link>
+                </router-link>
                 </div>
             </div>
         </section>

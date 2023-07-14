@@ -44,7 +44,8 @@ export default {
       const json = localStorage.getItem(userKey)
       const userData= JSON.parse(json)
       this.$store.commit('setUser',null)
-      // console.log(userData)
+      //console.log(userData)
+
       if(!userData){
         this.validatingToken = false
         console.log("não validou")
@@ -53,6 +54,7 @@ export default {
       const url = `${baseApiUrl}/validateToken`
       const res = await axios.post(url,userData)
         // console.log(res.data)
+        console.log()
       if(res.data){
         this.$store.commit('setUser',userData)
         console.log("validado")
@@ -61,12 +63,11 @@ export default {
       }else {
         localStorage.removeItem(userKey)
         this.$router.push('/login')
-        
       }
       this.validatingToken = false
      }
   },
-  mounted(){
+  beforeMount(){
     this.validateToken()
     
   }

@@ -18,6 +18,7 @@ export default createStore({
     },
     setIsLoggedIn(state,value){
       state.isLoggedIn = value;
+      // console.log(state.isLoggedIn)
       localStorage.setItem('isLoggedIn', value)
     }
   },

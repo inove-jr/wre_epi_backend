@@ -9,6 +9,8 @@ import UserView from '../views/UserView.vue'
 import UserData from '../components/UserPageForms/UserData.vue'
 import ProductCadForm from '../components/UserPageForms/ProductCadForm.vue'
 import SectionCadForm from '../components/UserPageForms/SectionCadForm.vue'
+import PasswordRecovery from '../views/PasswordRecovery.vue'
+import ChangePassword from '../views/ChangePassword.vue'
 
 const routes = [
   {
@@ -30,6 +32,16 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  },
+  {
+    path: '/password-recovery',
+    name: 'passwordRecovery',
+    component: PasswordRecovery
+  },
+  {
+    path: '/change-password/:token',
+    name: 'changePassword',
+    component: ChangePassword
   },
   {
     path: '/cadastro',

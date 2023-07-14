@@ -2,67 +2,67 @@
     <section class="col">
         <div class="whiteBox row" style="flex-wrap: wrap; padding: 1rem 0rem 2rem 0rem;">
           <div style="padding: 1rem 3rem 1rem 3rem">
-            <label id="lblDados">Dados Pessoais:</label>
+            <label id="lblDados">Endereço:</label>
           </div>
 
           <div class="row" id="formStance">
             <div class="row" style="padding-left: 1rem; flex-wrap: wrap; max-width: 70rem">
-              <div class="col paddingForm">
+              <!-- <div class="col paddingForm">
                 <label class="lblInput">Nome:</label>
                 <input id="nome" type="text" class="inputText" v-model="this.name"/>
-              </div>
+              </div> -->
 
-              <div class="col paddingForm">
+              <!-- <div class="col paddingForm">
                 <label class="lblInput">Empresa:</label>
                 <input id="empresa" type="text" class="inputText" v-model="this.empresa"/>
-              </div>
+              </div> -->
 
-              <div class="col paddingForm">
+              <!-- <div class="col paddingForm">
                 <label class="lblInput">CPF:</label>
                 <input id="cpf" type="text" class="inputText" v-model="this.cpf"/>
-              </div>
+              </div> -->
 
               <div class="col paddingForm">
-                <label class="lblInput">Endereço:</label>
-                <input id="endereco" type="text" class="inputText" v-model="this.endereco_form.endereco"/>
+                <label class="lblInput">Rua:</label>
+                <input id="endereco" type="text" class="inputText" v-model="endereco.street"/>
               </div>
 
               <div class="col paddingForm">
                 <label class="lblInput">Número:</label>
-                <input id="numero" type="text" class="inputText" v-model="this.endereco_form.numero"/>
+                <input id="numero" type="text" class="inputText" v-model="endereco.number"/>
               </div>
 
               <div class="col paddingForm">
                 <label class="lblInput">Complemento:</label>
-                <input id="complemento" type="text" class="inputText" v-model="this.endereco_form.complemento"/>
+                <input id="complemento" type="text" class="inputText" v-model="endereco.complement"/>
               </div>
 
               <div class="col paddingForm">
                 <label class="lblInput">Bairro:</label>
-                <input id="bairro" type="text" class="inputText" v-model="this.endereco_form.bairro"/>
+                <input id="bairro" type="text" class="inputText" v-model="endereco.district"/>
               </div>
 
               <div class="col paddingForm">
                 <label class="lblInput">Cidade:</label>
-                <input id="cidade" type="text" class="inputText" v-model="this.endereco_form.cidade"/>
+                <input id="cidade" type="text" class="inputText" v-model="endereco.city"/>
               </div>
 
               <div class="col paddingForm">
-                <label class="lblInput">UF:</label>
-                <input id="uf" type="text" class="inputText" v-model="this.endereco_form.uf"/>
+                <label class="lblInput">Estado:</label>
+                <input id="uf" type="text" class="inputText" v-model="endereco.state"/>
               </div>
             </div>
 
             <div class="paddingForm">
               <div class="col" style="padding-left: 1rem">
                 <label class="lblInput">CEP:</label>
-                <input id="cep" type="text" class="inputText" v-model="this.endereco_form.cep"/>
+                <input id="cep" type="text" class="inputText" v-model="endereco.zipCode"/>
               </div>
             </div>
 
             <div class="paddingForm">
               <div class="col" id="save_endereco">
-                <button class="endSave">Salvar Endereço</button>
+                <button class="endSave" @click="saveAddress()">Salvar Endereço</button>
               </div>
             </div>
           </div>
@@ -74,14 +74,13 @@
        <p>Itens:</p>
       </div>
       <div class="itemCart" v-for="(item, index) in listProducts" :key="index">
-        
+
         <div class="rowItem">
           <div class="removeButton">
-            <button @click="remove(index), calcTotal()">X</button>
+            <button @click="remove(index)">X</button>
           </div>
-
           <div class="itemInfo">
-            <CartItem @click="calcTotal()" :item=item></CartItem>
+            <CartItem :item=item  @atualizar-carrinho="atualizarCarrinho"></CartItem>
           </div> 
           
         </div>
@@ -104,21 +103,24 @@
 
 <script>
 import CartItem from '@/components/cartItem.vue';
+import axios from 'axios'
+import { baseApiUrl, userKey } from '@/global'
 
   export default {
-    beforeMount(){
-      this.calcTotal()
-      this.getInfo()
-    },
+    components: { CartItem },
     data() {
         return {
+            chaveComponenteFilho:0,
             listProducts: [],
             som: 0,
             name: '',
             empresa: '',
             cpf: '',
+            endereco:{},
+            user:{},
+            totalPrice:0,
             endereco_form: {
-                endereco: '',
+                rua: '',
                 numero: 0,
                 cidade: '',
                 bairro: '',
@@ -138,73 +140,143 @@ import CartItem from '@/components/cartItem.vue';
         };
     },
     methods: {
-        calcTotal() {
-            this.som = 0
-            this.listProducts.forEach(element => {
-              this.som = this.som + element.preco*element.quantity
-            //  console.log(element.preco)
-            });
-        },
         remove(index){
+          console.log(index)
+          console.log(this.listProducts[index].product_id)
+          const url = `${baseApiUrl}/cart`;
+          
+          const dataToBeDeleted ={} 
+          dataToBeDeleted.client_id= this.listProducts[index].client_id;
+          dataToBeDeleted.product_id=this.listProducts[index].product_id;
+          console.log(dataToBeDeleted)
+          axios.delete(url, {data:{client_id:dataToBeDeleted.client_id, product_id:dataToBeDeleted.product_id}})
+          .then(res =>{
+            console.log(res)
+            return;
+          }).catch((e=>{
+            alert(e.response)
+            return;
+          }))
           this.listProducts.splice(index,1)
+          this.calcTotal()
+          // this.atualizarCarrinho()
+          },
+        async saveAddress(){
+          const json = localStorage.getItem(userKey);
+          const userData = JSON.parse(json);
+          const addressData = await this.getAddress(userData.id);
+          console.log(addressData.id)
+
+          console.log(this.endereco)
+          const url = `${baseApiUrl}/address/`+addressData.id
+          console.log(url)
+          console.log(this.endereco)
+                  axios.put(url, this.endereco).then(res =>{
+                      alert("Endereço Salvo Com Sucesso!!")
+                      // return;
+                  }).catch((e=>{
+                      alert(e.response)
+                      return;
+                  }))
+
         },
-        getInfo(){
-          
-          this.name = "Juselino Carandino Justiniano"
-            this.email = "Juseli.randino.tiniano@somemail.com.br"
-            this.date = "2022-02-02"
-            this.empresa = "MeCompre Inc."
-            this.cpf = "123.456.789-99"
-          
-          this.listProducts = [
-              {nome: "Nome do produto 1 - Capacete do tipo",
-                quantity: 2,
-                preco: 100.00,
-                parcelas: 4,
-                imagem: "/img/produto.svg",
-                atributs:  {cor: 'tal',
-              tamanho: 12}
-              },
-              {nome: "Nome do produto 2 - Capacete do tipo",
-                quantity: 3,
-                preco: 200.00,
-                parcelas: 4,
-                imagem: "/img/produto.svg",
-                atributs:  {
-                  
-                }
-              },
-              {nome: "Nome do produto 3 - Capacete do tipo",
-                quantity: 2,
-                preco: 300.00,
-                parcelas: 4,
-                imagem: "/img/produto.svg",
-                atributs:  {
-              tamanho: 12}
-              },
-              {nome: "Nome do produto 4 - Capacete do tipo",
-                quantity: 1,
-                preco: 400.00,
-                parcelas: 4,
-                imagem: "/img/produto.svg",
-                atributs: {cor: 'tal',
-              tamanho: 12}
-              },
-            ],
-          this.endereco_saved = {
-                endereco: 'Rua Dos Tolos',
-                numero: 0,
-                cidade: 'Lugar Nenhum',
-                bairro: 'Vazio',
-                complemento: 'Casa',
-                uf: 'ND',
-                cep: '000.000.000-99'
+        async getAddress(userId) {
+          try {
+            const url = `${baseApiUrl}/address/` + userId;
+            const response = await axios.get(url);
+            // console.log(response.data)
+            return response.data;
+          } catch (error) {
+            console.error(error);
+            throw error;
           }
-            
-           this.endereco_form = this.endereco_saved
+        },
+
+        async getUser(userId) {
+          try {
+            const url = `${baseApiUrl}/users/` + userId;
+            const response = await axios.get(url);
+            return response.data;
+          } catch (error) {
+            console.error(error);
+            throw error;
+          }
+        },
+        async getCart(userId) {
+          try {
+            const url = `${baseApiUrl}/cart/` + userId;
+            const response = await axios.get(url)
+            console.log(response.data);
+            return response.data;
+          } catch (error) {
+            console.error(error);
+            throw error;
+          }
+        },
+        async getInfo() {
+        try {
+          // console.log("entrou o get info")
+          const json = localStorage.getItem(userKey);
+          const userData = JSON.parse(json);
+
+          const addressData = await this.getAddress(userData.id);
+          this.endereco = { ...addressData };
+          this.endereco_form.rua = this.endereco.street;
+          this.endereco_form.cep = this.endereco.zipCode;
+          this.endereco_form.cidade = this.endereco.city;
+          this.endereco_form.uf = this.endereco.state;
+          this.endereco_form.bairro = this.endereco.district;
+          this.endereco_form.complemento = this.endereco.complement;
+          this.endereco_form.numero = this.endereco.number;
+
+          const userInfo = await this.getUser(userData.id);
+          this.user = { ...userInfo };
+          this.name = this.user.name;
+          this.cpf = this.user.cpf;
+          console.log(this.listProducts)
+          const cartData = await this.getCart(userData.id);
+          this.listProducts = cartData 
+          console.log(cartData);
+          Object.entries(this.listProducts).forEach(([key, value]) => {
+                this.som +=value.price * value.quantity
+              });
+          // console.log(this.som);
+        
+
+        } catch (error) {
+          console.error(error);
         }
+      },
+      async atualizarCarrinho() {
+          this.calcTotal()
+          console.log(this.som)
+          
+      },
+      calcTotal() {
+        console.log("entrou")
+              this.som = 0
+              // console.log(this.listProducts)
+              Object.entries(this.listProducts).forEach(([key, value]) => {
+                this.som +=value.price * value.quantity
+              });
+              console.log(this.som);
+          }
     },
-    components: { CartItem }
+    async beforeMount(){
+      await this.getInfo()
+      // console.log(this.listProducts)
+                      
+    },
+    mounted() {
+      // console.log(this.endereco_form)
+      setTimeout(() => {     //Por algum motivo o calculo do valor total dos itens no carrinho não é corretamente exibido quando a pagina é carregada, como se os dados necessarios para o calculo
+          this.calcTotal();   //não tivessem sido recebidos no momento que é realizado o calculo, mesmo utilizando o async/await, mesmo garantindo que os dados utilizados no calculo já tinham sido 
+                              //recebidos(usando um if para garantir que os mesmos não fossem nulos por exemplo), mas continuava não exibindo corretamente, porém ao clicar no botão para aumentar,
+                              // ou diminuir a quantidade de um produto o valor passava a ser exibido corretamente, o erro foi somente corrigido ao adicionar o setTimeout de 100ms para chamar a função responsavel
+                              // pelo calculo do valor total dos itens, não é uma solução ideal, mas está funcionando.
+        }, 800)
+    },
+   
 }
 </script>
 
@@ -239,7 +311,7 @@ import CartItem from '@/components/cartItem.vue';
     max-width: 10rem;
   }
   #uf {
-    max-width: 10rem;
+    max-width: 14rem;
   }
   #lblDados {
     font-family: 'Inter', sans-serif;

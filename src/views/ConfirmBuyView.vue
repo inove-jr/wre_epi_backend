@@ -5,7 +5,7 @@
                 <span>RESUMO DA COMPRA:</span>
                 <hr>
             </div>
-            <div class="itemCart" v-for="(item, index) in listTest" :key="index">
+            <div class="itemCart" v-for="(item, index) in listProducts" :key="index">
         
                 <CartItemrResume class="itemInfo" @click="calcTotal()" :item=item></CartItemrResume>
 
@@ -16,15 +16,15 @@
                
                 <img class="mapIcon">
                 <div class="col" id="endereço-data" style="padding: 0.6rem; flex-wrap: wrap;">
-                    <span id="endereco">Endereço: {{ this.endereco }}</span>
+                    <span id="endereco">Rua: {{endereco.street }}</span>
                     <div class="row num-com">    
-                        <span id="numero">Número: {{ this.numero }}</span>
-                        <span id="complemento">Complemento: {{ this.complemento }}</span>
+                        <span id="numero">Número: {{ endereco.number }}</span>
+                        <span id="complemento">Complemento: {{ endereco.complement }}</span>
                     </div>
-                    <span id="bairro">Bairro: {{ this.bairro }}</span>
+                    <span id="bairro">Bairro: {{ endereco.district }}</span>
                     <div class="row">    
-                        <span id="cidade">Cidade: {{ this.cidade }}</span>
-                        <span id="uf">UF: {{ this.uf }}</span>
+                        <span id="cidade">Cidade: {{ endereco.city }}</span>
+                        <span id="uf">Estado: {{ endereco.state }}</span>
                     </div>
 
                     <div style="width: 100%; text-align: center;">
@@ -54,6 +54,8 @@
 <script>
 import CartItemrResume from '@/components/cartItemrResume.vue';
 import PopUp from '@/components/PopUp.vue';
+import axios from "axios"
+import { baseApiUrl,userKey } from '@/global';
 
 export default {
     name: "ConfirmBuy",
@@ -64,54 +66,60 @@ export default {
     beforeMount(){
         this.calcTotal()
     
-        this.endereco = "Rua Tal..."
-        this.numero = 0
-        this.complemento = "CASA"
-        this.bairro = "Centro"
-        this.cidade = "Lugar Nenhuma"
-        this.uf = "PE"
+        // this.endereco = "Rua Tal..."
+        // this.numero = 0
+        // this.complemento = "CASA"
+        // this.bairro = "Centro"
+        // this.cidade = "Lugar Nenhuma"
+        // this.uf = "PE"
+        this.getInfo();
+        setTimeout((()=>{
+            console.log(this.listProducts)
+
+        }),800)
     },
     data() {
         return {
             formSee: false,
-            listTest: [
-              {nome: "Nome do produto 1 - Capacete do tipo",
-                quantity: 2,
-                preco: 100.00,
-                parcelas: 4,
-                imagem: "/img/produto.svg",
-                atributs:  {cor: 'tal',
-              tamanho: 12}
-              },
-              {nome: "Nome do produto 2 - Capacete do tipo",
-                quantity: 3,
-                preco: 200.00,
-                parcelas: 4,
-                imagem: "/img/produto.svg",
-                atributs:  {
+            // listTest: [
+            //   {nome: "Nome do produto 1 - Capacete do tipo",
+            //     quantity: 2,
+            //     preco: 100.00,
+            //     parcelas: 4,
+            //     imagem: "/img/produto.svg",
+            //     atributs:  {cor: 'tal',
+            //   tamanho: 12}
+            //   },
+            //   {nome: "Nome do produto 2 - Capacete do tipo",
+            //     quantity: 3,
+            //     preco: 200.00,
+            //     parcelas: 4,
+            //     imagem: "/img/produto.svg",
+            //     atributs:  {
                   
-                }
-              },
-              {nome: "Nome do produto 3 - Capacete do tipo",
-                quantity: 2,
-                preco: 300.00,
-                parcelas: 4,
-                imagem: "/img/produto.svg",
-                atributs:  {
-              tamanho: 12}
-              },
-              {nome: "Nome do produto 4 - Capacete do tipo",
-                quantity: 1,
-                preco: 400.00,
-                parcelas: 4,
-                imagem: "/img/produto.svg",
-                atributs: {cor: 'tal',
-              tamanho: 12}
-              },
-            ],
+            //     }
+            //   },
+            //   {nome: "Nome do produto 3 - Capacete do tipo",
+            //     quantity: 2,
+            //     preco: 300.00,
+            //     parcelas: 4,
+            //     imagem: "/img/produto.svg",
+            //     atributs:  {
+            //   tamanho: 12}
+            //   },
+            //   {nome: "Nome do produto 4 - Capacete do tipo",
+            //     quantity: 1,
+            //     preco: 400.00,
+            //     parcelas: 4,
+            //     imagem: "/img/produto.svg",
+            //     atributs: {cor: 'tal',
+            //   tamanho: 12}
+            //   },
+            // ],
+            listProducts:[],
             som: 0,
             type: "",
-            endereco: "",
+            endereco: {},
             numero: "",
             complemento: "",
             bairro: "",
@@ -126,10 +134,10 @@ export default {
     methods: {
         calcTotal() {
             this.som = 0
-            this.listTest.forEach(element => {
-              this.som = this.som + element.preco*element.quantity
-            //  console.log(element.preco)
-            });
+            // this.listTest.forEach(element => {
+            //   this.som = this.som + element.preco*element.quantity
+            // //  console.log(element.preco)
+            // });
         },
         remove(index){
           this.listTest.splice(index,1)
@@ -145,7 +153,68 @@ export default {
         },
         close(){
             this.formSee = false;
-        }
+        },
+        async getAddress(userId) {
+            try {
+            const url = `${baseApiUrl}/address/` + userId;
+            const response = await axios.get(url);
+            console.log(response.data)
+            return response.data;
+            } catch (error) {
+            console.error(error);
+            throw error;
+            }
+        },
+
+        async getUser(userId) {
+            try {
+            const url = `${baseApiUrl}/users/` + userId;
+            const response = await axios.get(url);
+            return response.data;
+            } catch (error) {
+            console.error(error);
+            throw error;
+            }
+        },
+        
+        async getCart(userId) {
+            try {
+            const url = `${baseApiUrl}/cart/` + userId;
+            const response = await axios.get(url)
+            console.log(response.data);
+            return response.data;
+            } catch (error) {
+            console.error(error);
+            throw error;
+            }
+        },
+        async getInfo() {
+            try {
+                console.log("entrou o get info")
+                const json = localStorage.getItem(userKey);
+                const userData = JSON.parse(json);
+
+                const addressData = await this.getAddress(userData.id);
+                this.endereco = { ...addressData };
+
+                const userInfo = await this.getUser(userData.id);
+                this.user = { ...userInfo };
+                this.name = this.user.name;
+                this.cpf = this.user.cpf;
+
+                const cartData = await this.getCart(userData.id);
+                this.listProducts = cartData 
+                console.log(this.listProducts);
+                Object.entries(this.listProducts).forEach(([key, value]) => {
+                    this.som +=value.price * value.quantity
+                    });
+                console.log(this.som);
+            
+
+            } catch (error) {
+                console.error(error);
+            }
+    },
     },
 }
 </script>
