@@ -227,7 +227,7 @@
     color: #ffffff;
     font-size: 1.6rem;
   
-    padding: 1.1rem 2.7rem 0.7rem;
+    padding: 0.6rem 2.7rem 0.7rem;
   
     display: flex;
     justify-content: space-between;
@@ -235,8 +235,8 @@
   
   .cart-info {
     width: 15.3rem;
-  
     text-align: left;
+    font-size: 10pt;
   }
   
   .cart-info span {
