@@ -25,12 +25,15 @@
         </div>
             
         <div class="row center">
-            <button  @click="$router.push( { name: 'product', params: { id:this.produto.id} })">Comprar</button>
+            <button  @click="$router.push( { name: 'product', params: { id:this.produto.id} }), addToCart()">Comprar</button>
         </div>
     </div>
 </template>
 <script>
+import { baseApiUrl,userKey } from '@/global'
+import axios from "axios"
 export default {
+    
     name: "ProductCard",
     props:{
         produto:{
@@ -47,7 +50,31 @@ export default {
     methods:{
         showId: function(){
             console.log(produto.id)
+        },
+        async addToCart(){
+            const json = localStorage.getItem(userKey);
+            const userData = JSON.parse(json);
+            console.log(userData.id)
+            console.log(this.produto.id)
+
+            const productToAdd={}
+
+            productToAdd.product_id=this.produto.id
+            productToAdd.quantity=1
+
+            console.log(productToAdd)
+            const url = `${baseApiUrl}/cart/`+userData.id
+            console.log(url)
+          
+            axios.post(url, productToAdd).then(res =>{
+                alert("Item Adicionado ao carrinho de compras")
+                // return;
+            }).catch((e=>{
+                alert(e.response)
+                return;
+                }))
         }
+
     }
 }
 
