@@ -10,15 +10,13 @@
         <div class="quantity">
             <p class="label">Quantidade:</p>
             <div class="controlQuantity">
-                <!-- <button class="inputButton" @click="sub(),triggerEvent()">
-                -
-                </button> -->
-                <input type="text" class="quantityInput" v-model="item.quantity">
-                <button @click="confirm(),triggerEvent(),calcTotal()">Confirmar</button>
-                <!-- <p class="inputText">{{this.item.quantity}}</p> -->
-                <!-- <button class="inputButton" @click="add(),triggerEvent()">
-                    +
-                </button> -->
+
+                <input class="quantityInput" type="number" v-model="this.item.quantity" 
+                 oninput="if(this.value>99){this.value='99';}else if(this.value<0){this.value='0';}">
+                <button class="inputButton updateButton" @click="confirm(),triggerEvent(),calcTotal()">
+                    Atualizar Quantidade
+                </button>
+
             </div>
         </div>
         <div class="price">
@@ -68,12 +66,7 @@ export default {
             name: String,
             quantity: Number,
             price: Number,
-            //parcelas: Number,
             imageUrl: String,
-            // atributs: {
-            //     cor: String,
-            //     tamanho: Number
-            // }
         },
         flagComponentePai:0
     },
@@ -164,6 +157,9 @@ export default {
 hr{
     display: none;
 }
+.prod-image{
+    margin: auto;
+}
 
 .prod-image img{
     max-height: 5rem;
@@ -200,7 +196,7 @@ hr{
     display: flex;
     flex-direction: column;
     text-align: center;
-    width: 5rem;
+    width: 16rem;
     justify-content: center;
     align-items: center;
     margin: 0vw 2vw 0vw 8vw;
@@ -213,10 +209,16 @@ hr{
     border: solid white 1px;
     background-color: #EEEEEE;
     box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
-    padding: 0.8rem 1.2rem;
+    padding: 1.2rem 1.3rem 1.2rem 1.3rem;
+    text-align: center;
+    margin: 1rem;
     font-size: 1.4rem;
     font-family: 'Inter', sans-serif;
     /* font-weight: 500; */
+}
+.quantityInput::-webkit-outer-spin-button,
+.quantityInput::-webkit-inner-spin-button{
+  -webkit-appearance: none;
 }
 
 .removeButton{
@@ -245,6 +247,9 @@ hr{
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+.inputButton{
+    font-size: 10pt;
 }
 /*
 .controlQuantity button{
@@ -282,6 +287,7 @@ hr{
 .price{
     text-align: left;
     display: flex;
+    width: 16rem;
     flex-direction: column;
     flex-wrap: nowrap;
     margin: 0;
