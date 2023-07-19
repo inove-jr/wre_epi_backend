@@ -9,18 +9,8 @@
         </div>
         <div class="quantity">
             <p class="label">Quantidade:</p>
-            <p >{{this.item.quantity}}</p>
+            <p style="margin-top: 0.6rem;">{{this.item.quantity}}</p>
         </div>
-        <!-- <div class="atributs">
-            <p class="label">Atributos:</p>
-            <div class="Value" v-if="Object.keys(this.item.atributs) != 0">
-                <p v-for="(value, index) in Object.entries(this.item.atributs)" :key="index">
-                    {{value[0]}}: {{value[1]}}
-                </p>
-            </div>
-            <p v-else> - </p>
-            
-        </div> -->
         <div class="price">
             <p class="label">Valor</p>
             <p class="Value">R${{ (this.item.price*this.item.quantity).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}</p> 
@@ -171,6 +161,7 @@ hr{
 .price{
     text-align: left;
     display: flex;
+    width: 16rem;
     flex-direction: column;
     flex-wrap: nowrap;
     margin: 0;
