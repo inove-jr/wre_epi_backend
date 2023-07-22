@@ -12,6 +12,7 @@ import SectionCadForm from '../components/UserPageForms/SectionCadForm.vue'
 import PasswordRecovery from '../views/PasswordRecovery.vue'
 import ChangePassword from '../views/ChangePassword.vue'
 
+
 const routes = [
   {
     path: '/',
@@ -60,23 +61,23 @@ const routes = [
     props: true
   },
   {
-    path: '/perfil',
-    name: 'perfil',
+    path: "/perfil",
     component: UserView,
     children: [
       {
-        path: '',
-        name: 'userPefil',
+        path: "/perfil/:userId",
+        name: "userPefil",
         component: UserData,
+        props: true,
       },
       {
-        path: 'produt-cad',
-        name: 'productCad',
+        path: "/perfil/produt-cad",
+        name: "productCad",
         component: ProductCadForm,
       },
       {
-        path: 'section-cad',
-        name: 'sectionCad',
+        path: "/perfil/section-cad",
+        name: "sectionCad",
         component: SectionCadForm,
       },
     ]

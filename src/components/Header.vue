@@ -19,11 +19,23 @@
   
       <div class="header__cart">
 
-        <div v-if="loggedIn === true"  class="cart-info">
+        <!-- <div v-if="loggedIn === true"  class="cart-info">
           <p>Bem-vindo, <span>{{this.user_name}}</span></p>
           <div class="cart-info-email">
             <p>{{this.user_email}}</p>
             <p @click.prevent="logOut">Sair</p>
+          </div>
+        </div> -->
+
+        <div v-if="loggedIn === true"  class="cart-info">
+          <p>Bem-vindo,        
+            <RouterLink :to="{name: 'userPefil', params:{userId: 1}}" class="log-camp">
+              <span>{{this.user_name}}</span>
+            </RouterLink>
+            </p>
+          <div class="cart-info-email">
+            <p>{{this.user_email}}</p>
+            <p @click="logOut()">Sair</p>
           </div>
         </div>
 
