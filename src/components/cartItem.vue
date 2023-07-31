@@ -178,6 +178,8 @@ hr{
     flex-direction: column;
     white-space: nowrap;
     justify-content: baseline;
+    width: 26rem;
+    text-wrap: wrap;
 }
 
 .label{
@@ -343,7 +345,7 @@ hr{
         text-align: center;
     }
     .controlQuantity .inputButton{
-        width: 4rem;
+        font-size: 10pt;
     }
     .atributs p{
         text-transform: capitalize;
