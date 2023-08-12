@@ -16,15 +16,15 @@
                
                 <img class="mapIcon">
                 <div class="col" id="endereço-data" style="padding: 0.6rem; flex-wrap: wrap;">
-                    <span id="endereco">Rua: {{endereco.street }}</span>
+                    <span id="endereco"><b> Endereço: </b>{{endereco.street }}</span>
+                    <span id="bairro"><b>Bairro: </b>{{ endereco.district }}</span>
                     <div class="row num-com">    
-                        <span id="numero">Número: {{ endereco.number }}</span>
-                        <span id="complemento">Complemento: {{ endereco.complement }}</span>
+                        <span id="numero"><b> Número: </b>{{ endereco.number }}</span>
+                        <span id="complemento"><b> Complemento: </b>{{ endereco.complement }}</span>
                     </div>
-                    <span id="bairro">Bairro: {{ endereco.district }}</span>
-                    <div class="row">    
-                        <span id="cidade">Cidade: {{ endereco.city }}</span>
-                        <span id="uf">Estado: {{ endereco.state }}</span>
+                    <div class="row" style="flex-wrap: wrap;">    
+                        <span id="cidade"><b> Cidade: </b>{{ endereco.city }}</span>
+                        <span id="uf"><b> Estado: </b>{{ endereco.state }}</span>
                     </div>
 
                     <div style="width: 100%; text-align: center;">
@@ -271,19 +271,21 @@ export default {
     min-width: 100%;
 }
 #numero{
-    min-width: 32%;
+    min-width: 25%;
 }
 #complemento{
-    min-width: 60%;
+    min-width: 50%;
+    margin-inline: auto;
 }
 #bairro{
     min-width: 100%;
 }
 #cidade{
-    min-width: 70%;
+    min-width: 30%;
 }
 #uf{
     min-width: 30%;
+    margin-inline: auto;
 }
 
 #endereço-data{
