@@ -2,28 +2,41 @@
   <main>
     <CarrouselComponent id="carrousel" />
     <BotaoFaleConosco/>
-    <section id="campoSessoes">
-      <!-- <div>
-        <SessaoProdutos class="sessao" :nomeSessao="sessao" :listaProdutos="produtos"/>
-        <br>
-      </div> 
-      <div>
-        <SessaoProdutos class="sessao" :nomeSessao="sessao" :listaProdutos="produtos"/>
-        <br>
-      </div> -->
-      <div class="sessao">
-        <SessaoProdutos :nomeSessao="sessao1" :listaProdutos="produtos1"/>
-        <br>
+        
+    <div style="display: flex; flex-direction: row;">
+    
+      <div class="banner">
+
       </div>
-      <div class="sessao">
-        <SessaoProdutos :nomeSessao="sessao2" :listaProdutos="produtos2"/>
-        <br>
+
+      <section id="campoSessoes">
+        <!-- <div>
+          <SessaoProdutos class="sessao" :nomeSessao="sessao" :listaProdutos="produtos"/>
+          <br>
+        </div> 
+        <div>
+          <SessaoProdutos class="sessao" :nomeSessao="sessao" :listaProdutos="produtos"/>
+          <br>
+        </div> -->
+        <div class="sessao">
+          <SessaoProdutos :nomeSessao="sessao1" :listaProdutos="produtos1"/>
+          <br>
+        </div>
+        <div class="sessao">
+          <SessaoProdutos :nomeSessao="sessao2" :listaProdutos="produtos2"/>
+          <br>
+        </div>
+        <div class="sessao">
+          <SessaoProdutos :nomeSessao="sessao3" :listaProdutos="produtos3"/>
+          <br>
+        </div>
+      </section>
+    
+      <div class="banner">
+
       </div>
-      <div class="sessao">
-        <SessaoProdutos :nomeSessao="sessao3" :listaProdutos="produtos3"/>
-        <br>
-      </div>
-    </section>
+    
+    </div>
   </main>
 </template>
 
@@ -157,6 +170,13 @@ export default {
   }
   .sessao{
     margin: auto;
+  }  
+
+  .banner{
+    background-color: aqua;
+    height: 60rem;
+    width: 12rem;
+    margin: auto;
   }
 
   @media(max-width: 720px){
@@ -175,6 +195,9 @@ export default {
       display: flex;
       flex-direction: unset;
       flex-wrap: wrap;
+    }    
+    .banner{
+      display: none;  
     }
   }
 </style>
