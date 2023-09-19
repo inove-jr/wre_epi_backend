@@ -173,7 +173,8 @@ export default {
   }  
 
   .banner{
-    background-color: aqua;
+    background-image: url('../assets/istockphoto-1027797478-1024x1024.jpg');
+    background-size: 12rem 60rem;
     height: 60rem;
     width: 12rem;
     margin: auto;
