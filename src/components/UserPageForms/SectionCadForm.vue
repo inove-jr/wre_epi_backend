@@ -57,8 +57,8 @@ export default {
     height: 4rem;
     border-radius: 0.5rem;
     border: none;
-    background-color: rgb(0, 167, 0);
-    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem green, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+    background-color: #d6ac00;
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #a38200, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
     padding: 0.8rem 1.2rem;
     font-size: 1.6rem;
     font-family: 'Inter', sans-serif;
@@ -68,8 +68,8 @@ export default {
 }
 
 .submit:active{
-    background-color: rgb(0, 208, 0);
-    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(1, 158, 1), 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+    background-color: #eccc48;
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #a38200, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
 }
 
 .input-camp{

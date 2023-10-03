@@ -327,8 +327,8 @@ section{
 
 .confirmBuy{
   border-radius: 0.5rem;
-    background-color: rgb(0, 167, 0);
-    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem green, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+    background-color: #d6ac00;
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #a38200, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
     height: 4rem;
     width: 100%;
     padding: 0.8rem 1.2rem;
@@ -341,14 +341,14 @@ section{
 }
 
 .confirmBuy:active{
-    background-color: rgb(0, 208, 0);
-    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(1, 158, 1), 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+    background-color: #eccc48;
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #a38200, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
 }
 
 .endSave{
     border-radius: 0.5rem;
-    background-color: rgb(0, 167, 0);
-    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem green, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+    background-color: #d6ac00;
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #a38200, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
     height: 4rem;
     width: 100%;
     padding: 0.8rem 1.2rem;
@@ -362,8 +362,8 @@ section{
 
 
 .endSave:active{
-    background-color: rgb(0, 208, 0);
-    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(1, 158, 1), 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+    background-color: #eccc48;
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #a38200, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
 }
 
 .label-itens{

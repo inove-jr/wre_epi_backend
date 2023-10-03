@@ -11,6 +11,9 @@
                 <RouterLink :to="{name:'sectionCad'}">
                     <img v-if="this.isAdmin" class="icon" src="../assets/section-add.svg" alt="Adição de Seção" title="Adição de Seção">
                 </RouterLink>
+                <RouterLink :to="{name:'bannerConfig'}">
+                    <img v-if="this.isAdmin" class="icon" src="../assets/banner.svg" alt="Configuração dos Banners" title="Configuração dos Banners">
+                </RouterLink>
             </section>
             <section class="conteudo">
                 <RouterView></RouterView>
@@ -67,6 +70,7 @@
 .options a img{
     margin-block: auto;
     max-width: 100%;
+    min-width: 20px;
 }
 .icon{
     filter: drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.6));
@@ -104,8 +108,22 @@
 
 @media screen and (max-width: 800px) {
     .info{
-        height: 84vmax;
+        height: 120vmax;
     }
 }
+
+
+
+@media screen and (max-width: 675px) {
+    
+    .info{
+        height: 120vmax;
+    }
+    .data{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
 
 </style>
