@@ -29,7 +29,7 @@
   </script>
 <style scoped>
 .popup{
-    width: 36rem;
+    width: 41rem;
     padding: 3rem;
     border-radius: 6px;
     margin: auto;

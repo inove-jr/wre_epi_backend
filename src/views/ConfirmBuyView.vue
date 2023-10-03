@@ -324,7 +324,7 @@ export default {
 }
 
 .forma-pagamento h3{
-    margin-left: 30%;
+    margin-left: 0%;
 }
 
 .options button{
@@ -332,6 +332,7 @@ export default {
     border: none;
     margin-inline: 3.4rem;
     margin-block: 2rem;
+    cursor: pointer;
 }
 
 .options button img{

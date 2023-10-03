@@ -235,6 +235,7 @@ input::-webkit-inner-spin-button {
   display: flex;
   gap: 1rem;
   text-align: left;
+  align-items: flex-end;
 }
 .form-container{
   font-size: 11pt;
