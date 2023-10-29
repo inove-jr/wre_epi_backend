@@ -39,7 +39,7 @@
               >
                 <option value="" disabled selected>Parcelas</option>
                 <option
-                  v-for="n in 12"
+                  v-for="n in 10"
                   :value="n"
                   :key="n"
                 >

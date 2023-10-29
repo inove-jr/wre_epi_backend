@@ -1,7 +1,7 @@
 <template>
     <section class="popup">
 
-        <CreditForm v-if="this.type=='credit'" :price="100.0"/>
+        <CreditForm v-if="this.type=='credit'" :price="this.totalValue"/>
         <BoletoForm v-if="this.type=='boleto'" :N="this.nome" :E="this.email"/>
         <PixForm v-if="this.type=='pix'" :N="this.nome" :E="this.email" :T="this.tel"/>
 
@@ -19,11 +19,13 @@
             PixForm,
             BoletoForm
         },
-        props:['type', 'nome',  'email', 'tel'],
+        props:['type', 'nome',  'email', 'tel','totalValue'],
         data() {
           return {
           }
-        }
+        },
+        mounted() {
+        console.log(this.totalValue)}
     }
 
   </script>

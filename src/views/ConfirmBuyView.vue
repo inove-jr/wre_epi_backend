@@ -6,17 +6,18 @@
                 <hr>
             </div>
             <div class="itemCart" v-for="(item, index) in listProducts" :key="index">
-        
-                <CartItemrResume class="itemInfo" @click="calcTotal()" :item=item></CartItemrResume>
-
+                <CartItemrResume class="itemInfo" :item=item></CartItemrResume>
             </div>
+            <hr>
+            <p class="priceLabel">Total:{{this.som}}</p>
+
         </section>
         <div class="data-resume">
             <section class="endereco">
                
                 <img class="mapIcon">
                 <div class="col" id="endereço-data" style="padding: 0.6rem; flex-wrap: wrap;">
-                    <span id="endereco"><b> Endereço: </b>{{endereco.street }}</span>
+                    <span id="endereco"><b> Endereço: </b>{{ endereco.street }}</span>
                     <span id="bairro"><b>Bairro: </b>{{ endereco.district }}</span>
                     <div class="row num-com">    
                         <span id="numero"><b> Número: </b>{{ endereco.number }}</span>
@@ -46,7 +47,7 @@
         <section class="overlay_blur" v-if="this.formSee" @click="close()">
         </section>
         <section class="overlay" v-if="this.formSee">
-            <PopUp  :type="this.type" :nome="this.nome" :email="this.email" :tel="this.tel"></PopUp>
+            <PopUp  :type="this.type" :nome="this.nome" :email="this.email" :tel="this.tel" :totalValue="this.som"></PopUp>
         </section>
     </section>
 </template>
@@ -117,7 +118,7 @@ export default {
             //   },
             // ],
             listProducts:[],
-            som: 0,
+            som: this.total,
             type: "",
             endereco: {},
             numero: "",
@@ -216,10 +217,18 @@ export default {
             }
     },
     },
+    props:['total'],
+    mounted(){
+        console.log(this.total)
+    }
 }
 </script>
 
 <style scoped>
+.priceLabel{
+    font-size: 2rem;
+    margin: 0rem 0rem 0rem 30rem;
+}
 .title{
     text-align: left;
     padding: 1rem;

@@ -179,7 +179,6 @@ hr{
     white-space: nowrap;
     justify-content: baseline;
     width: 26rem;
-    text-wrap: wrap;
 }
 
 .label{

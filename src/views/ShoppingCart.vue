@@ -93,8 +93,8 @@
           </p>
           <p>R$ {{som}}</p>
         </div>
-        <!----<RouterLink to="/confirm"> -->
-        <RouterLink to="/confirm" :produtos="listProducts" >
+        <!----<RouterLink to="/confirm">  passar o valor total da compra pelo router link-->
+        <RouterLink to="/confirm" :produtos="listProducts" :total="this.som" >
           <button class="confirmBuy">Confimar compra</button>
         </RouterLink>
       </div>
@@ -138,6 +138,9 @@ import { baseApiUrl, userKey } from '@/global'
                 cep: ''
             },
         };
+    },
+    props:{
+        total:Number
     },
     methods: {
         remove(index){
@@ -261,6 +264,7 @@ import { baseApiUrl, userKey } from '@/global'
                 this.som +=value.price * value.quantity
               });
               console.log(this.som);
+
           }
     },
     async beforeMount(){
