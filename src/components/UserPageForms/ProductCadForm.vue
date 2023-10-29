@@ -39,8 +39,8 @@
             </h1>
 
             <content>
-                <span v-if="this.prod.idProduto" id="id-produto">
-                    #{{ this.prod.idProduto }}
+                <span v-if="this.prod.id" id="id-produto">
+                    #{{ this.prod.id }}
                 </span>
 
                 <form class="form" action="">
@@ -48,7 +48,7 @@
                         <small>
                             Título:
                         </small>
-                        <input class="inputText" v-model="this.prod.nome"/>
+                        <input class="inputText" v-model="this.prod.name"/>
 
                         <small>
                             Valor (R$):
@@ -56,17 +56,17 @@
                         <input class="inputText" type="number" placeholder='0.00' step=".01" pattern="^\d*(\.\d{0,2})?$"
                                @keydown="$event => ['e', 'E', '+', '-'].includes($event.key) && $event.preventDefault()"
                                @change="$event => $event.target.value = parseFloat($event.target.value).toFixed(2)"
-                               v-model="this.prod.valor"/>
+                               v-model="this.prod.price"/>
                         <small>
                             Descrição curta:
                         </small>
-                        <textarea class="inputText" v-model="this.prod.descricaoCurta"></textarea>
+                        <textarea class="inputText" v-model="this.prod.short_description"></textarea>
                     </div>
 
                     <small>
                         Descrição longa:
                     </small>
-                    <textarea class="inputText" v-model="this.prod.descricaoLonga"></textarea>
+                    <textarea class="inputText" v-model="this.prod.long_description"></textarea>
                     
                     <div class="prod-images">
                         <section class="input-image">
@@ -85,12 +85,12 @@
                     <small>
                         Link de vídeo curto:
                     </small>
-                    <input class="inputText" v-model="this.prod.linkVideoCurto"/>
+                    <input class="inputText" v-model="this.prod.shortVideoUrl"/>
 
                     <small>
                         Link de vídeo longo:
                     </small>
-                    <input class="inputText" v-model="this.prod.linkVideoLongo"/>
+                    <input class="inputText" v-model="this.prod.LongVideoUrl"/>
 
                     <div class="row" style="justify-content: space-between;">
                         <div class="col" style="width: 48%;">
@@ -100,13 +100,13 @@
                             <input type="number" class="inputText"  min="0" max="99" 
                                oninput="if(this.value>99){this.value='99';}else if(this.value<0){this.value='0';}"
                                @keydown="$event => ['e', 'E', '+', '-'].includes($event.key) && $event.preventDefault()"
-                               v-model="this.prod.quantidade"/>
+                               v-model="this.prod.stock"/>
                         </div>
                         <div class="col" style="width: 48%;">
                             <small>
                                 Categorias:
                             </small>
-                            <select class="inputText" v-model="this.prod.categoria">
+                            <select class="inputText" v-model="this.prod.categoryId">
                                 <option disabled value="">Selecione uma categoria...</option>
                                 <option v-for="option in categorias" :value="option">{{option}}</option>
                             </select>
@@ -114,7 +114,7 @@
                     </div>
 
                     <div class="row submit-container">
-                        <button class="purpleButton" :disabled="!this.prod.idProduto" @click="saveExist">Salvar Modificações</button>
+                        <button class="purpleButton" :disabled="!this.prod.id" @click="saveExist">Salvar Modificações</button>
                         <button class="purpleButton" @click="saveNew">Adicionar novo produto</button>
                     </div>
                 </form>
@@ -123,6 +123,8 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
+import { baseApiUrl } from '@/global';
 export default {
     name: 'ProductCadForm',
     beforeMount(){
@@ -134,18 +136,7 @@ export default {
             produtos: [],
             categorias: [],
             picsLimit: 6,
-            prod:{
-                idProduto: null,
-                nome: '',
-                valor: null,
-                descricaoCurta: '',
-                descricaoLonga: '',
-                linkVideoCurto: '',
-                linkVideoLongo: '',
-                quantidade: 0,
-                categoria: '',
-                prodPics: [],
-            },
+            prod:{},
             prodIndex: null
         }
     },
@@ -291,6 +282,18 @@ export default {
             }else{
                 alert("Dados Insuficientes para cadastrar produto!")
             }
+        },
+        async getItemDetails() {
+            const id= this.$route.params.id
+            const url = `${baseApiUrl}/products/${id}`
+            await axios.get(url).then(
+                response => {
+                this.produto = response.data
+                console.log(this.produto.name);
+                }
+            ).catch(error => {
+                console.log(error)
+            })
         }
     },
 }

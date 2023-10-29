@@ -144,8 +144,6 @@ export default {
     SessaoProdutos,
   },
   props: {
-    /* bigImage: String,
-      otherImages: Array*/
   },
   data() {
     return {
@@ -153,56 +151,7 @@ export default {
       otherImages: ["/img/prod1.svg", "/img/prod2.svg", "/img/prod3.svg"],
       count: 1,
       produto:{},
-      produtos: [
-        {
-          nome: "Nome do produto 1 - Capacete do tipo",
-          preco: 100.0,
-          parcelas: 4,
-          imagem: "/img/produto.svg",
-        },
-        {
-          nome: "Nome do produto 2 - Capacete do tipo",
-          preco: 200.0,
-          parcelas: 4,
-          imagem: "/img/produto.svg",
-        },
-        {
-          nome: "Nome do produto 3 - Capacete do tipo",
-          preco: 300.0,
-          parcelas: 4,
-          imagem: "/img/produto.svg",
-        },
-        {
-          nome: "Nome do produto 4 - Capacete do tipo",
-          preco: 400.0,
-          parcelas: 4,
-          imagem: "/img/produto.svg",
-        },
-        {
-          nome: "Nome do produto 5 - Capacete do tipo",
-          preco: 500.0,
-          parcelas: 4,
-          imagem: "/img/produto.svg",
-        },
-        {
-          nome: "Nome do produto 6 - Capacete do tipo",
-          preco: 600.0,
-          parcelas: 4,
-          imagem: "/img/produto.svg",
-        },
-        {
-          nome: "Nome do produto 7 - Capacete do tipo",
-          preco: 700.0,
-          parcelas: 4,
-          imagem: "/img/produto.svg",
-        },
-        {
-          nome: "Nome do produto 8 - Capacete do tipo",
-          preco: 800.0,
-          parcelas: 4,
-          imagem: "/img/produto.svg",
-        },
-      ],
+      produtos:{},
       sessao: "Produtos similares...",
     };
   },
@@ -229,12 +178,22 @@ export default {
       await axios.get(url).then(
         response => {
           [this.produto] = response.data
-          console.log(this.produto.name);
+          this.getItemsSection(this.produto.categoryId)
         }
       ).catch(error => {
         console.log(error)
       })
-    }
+    },
+    async getItemsSection(categoryId){
+          const url = `${baseApiUrl}/categories/${categoryId}/products-cart`
+          await axios.get(url).then(response => {
+            console.log(response.data) 
+            this.produtos=response.data;
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        },
   },
   mounted() {
     this.getItemDetails();

@@ -2,7 +2,7 @@
     <div>
         <div class="info">
             <section class="options">
-                <RouterLink :to="{name:'userPefil'}">
+                <RouterLink :to="{name:'userPefil', params:{userId: userId }}">
                   <img class="icon" src="../assets/user.svg" alt="Perfil" title="Perfil" >
                 </RouterLink>
                 <RouterLink :to="{name:'productCad'}">
@@ -20,18 +20,29 @@
 </template>
   
 <script>
+import { mapState } from 'vuex';
+  import { userKey } from '@/global';
 
   export default {
     mounted() {
+    },
+    beforeMount(){
+        this.getUserData()
     },
     data() {
         return {
             email: "",
             password: "",
             isAdmin: true,
+            userId:0
         }
     },
     methods: {
+        getUserData() {
+            const json = localStorage.getItem(userKey);
+            const userData = JSON.parse(json);
+            this.userid=userData.id;
+        },
     },
 }
 </script>

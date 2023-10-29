@@ -74,8 +74,8 @@
                             <div class="col" style="padding-left: 1rem; flex-wrap:wrap; row-gap: 1rem;">
                                 <div class="row form-row">
                                     <div class="col paddingForm">
-                                        <label class="lblInput">Endereço:</label>
-                                        <input id="endereco" type="text" class="inputText" v-model="this.endereco_form.endereco"/>
+                                        <label class="lblInput">Rua:</label>
+                                        <input id="endereco" type="text" class="inputText" v-model="this.endereco_form.rua"/>
                                     </div>
                                     <div class="col paddingForm">
                                         <label class="lblInput">Número:</label>
@@ -125,12 +125,16 @@
             </section>
 </template>
 <script>
+import { mapState } from 'vuex';
+  import { userKey,baseApiUrl } from '@/global';
+  import axios from "axios"
 
 
 export default {
     name: 'UserData',
     beforeMount(){
-        this.getData()
+        // this.getData()
+        this.getInfo()
     },  
     data() {
         return {
@@ -146,22 +150,22 @@ export default {
                 imageFile: ''
             },*/
             endereco_form: {
-                endereco: '',
-                numero: 0,
-                cidade: '',
-                bairro: '',
-                complemento: '',
-                uf: '',
-                cep: ''
+                // endereco: '',
+                // numero: 0,
+                // cidade: '',
+                // bairro: '',
+                // complemento: '',
+                // uf: '',
+                // cep: ''
             },
             endereco_saved: {
-                endereco: '',
-                numero: 0,
-                cidade: '',
-                bairro: '',
-                complemento: '',
-                uf: '',
-                cep: ''
+                // endereco: '',
+                // numero: 0,
+                // cidade: '',
+                // bairro: '',
+                // complemento: '',
+                // uf: '',
+                // cep: ''
             },
             editing: false,
             invalidCpf: false,
@@ -280,6 +284,58 @@ export default {
             input.value = input.value.replace(/^([\d]{3})([\d]{3})([\d]{3})([\d]{2})$/, "$1.$2.$3-$4");
             return input.value
         },
+        async getAddress(userId) {
+          try {
+            const url = `${baseApiUrl}/address/` + userId;
+            const response = await axios.get(url);
+            // console.log(response.data)
+            return response.data;
+          } catch (error) {
+            console.error(error);
+            throw error;
+          }
+        },
+
+        async getUser(userId) {
+          try {
+            const url = `${baseApiUrl}/users/` + userId;
+            const response = await axios.get(url);
+            return response.data;
+          } catch (error) {
+            console.error(error);
+            throw error;
+          }
+        },
+        async getInfo() {
+        try {
+          // console.log("entrou o get info")
+          const json = localStorage.getItem(userKey);
+          const userData = JSON.parse(json);
+
+          const addressData = await this.getAddress(userData.id);
+          this.endereco = { ...addressData };
+          this.endereco_form.rua = this.endereco.street;
+          this.endereco_form.cep = this.endereco.zipCode;
+          this.endereco_form.cidade = this.endereco.city;
+          this.endereco_form.uf = this.endereco.state;
+          this.endereco_form.bairro = this.endereco.district;
+          this.endereco_form.complemento = this.endereco.complement;
+          this.endereco_form.numero = this.endereco.number;
+
+          const userInfo = await this.getUser(userData.id);
+          this.user = { ...userInfo };
+          console.log(this.user)
+          this.name = this.user.name;
+          this.cpf = this.user.cpf;
+          this.email = this.user.email;
+          this.empresa = this.user.empresa;
+          // console.log(this.som);
+        
+
+        } catch (error) {
+          console.error(error);
+        }
+      },
     },
 }
 </script>

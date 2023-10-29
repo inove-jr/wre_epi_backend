@@ -64,7 +64,7 @@ export default {
     },
     data(){
       return{
-        // produtos:[
+        // produtos1:[
         //     {nome: "Nome do produto 1 - Capacete do tipo",
         //     preco: 100.00,
         //     parcelas: 4,
@@ -175,8 +175,8 @@ export default {
   .banner{
     background-image: url('../assets/istockphoto-1027797478-1024x1024.jpg');
     background-size: 12rem 60rem;
-    height: 60rem;
-    width: 12rem;
+    height: 65rem;
+    width: 25rem;
     margin: auto;
   }
 

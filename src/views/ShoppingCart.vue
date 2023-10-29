@@ -214,39 +214,40 @@ import { baseApiUrl, userKey } from '@/global'
           }
         },
         async getInfo() {
-        try {
-          // console.log("entrou o get info")
-          const json = localStorage.getItem(userKey);
-          const userData = JSON.parse(json);
+  try {
+    const json = localStorage.getItem(userKey);
+    const userData = JSON.parse(json);
 
-          const addressData = await this.getAddress(userData.id);
-          this.endereco = { ...addressData };
-          this.endereco_form.rua = this.endereco.street;
-          this.endereco_form.cep = this.endereco.zipCode;
-          this.endereco_form.cidade = this.endereco.city;
-          this.endereco_form.uf = this.endereco.state;
-          this.endereco_form.bairro = this.endereco.district;
-          this.endereco_form.complemento = this.endereco.complement;
-          this.endereco_form.numero = this.endereco.number;
+    // Realizando as chamadas em paralelo usando Promise.all
+    const [addressData, userInfo, cartData] = await Promise.all([
+      this.getAddress(userData.id),
+      this.getUser(userData.id),
+      this.getCart(userData.id),
+    ]);
 
-          const userInfo = await this.getUser(userData.id);
-          this.user = { ...userInfo };
-          this.name = this.user.name;
-          this.cpf = this.user.cpf;
-          console.log(this.listProducts)
-          const cartData = await this.getCart(userData.id);
-          this.listProducts = cartData 
-          console.log(cartData);
-          Object.entries(this.listProducts).forEach(([key, value]) => {
-                this.som +=value.price * value.quantity
-              });
-          // console.log(this.som);
-        
+    this.endereco = { ...addressData };
+    this.endereco_form.rua = this.endereco.street;
+    this.endereco_form.cep = this.endereco.zipCode;
+    this.endereco_form.cidade = this.endereco.city;
+    this.endereco_form.uf = this.endereco.state;
+    this.endereco_form.bairro = this.endereco.district;
+    this.endereco_form.complemento = this.endereco.complement;
+    this.endereco_form.numero = this.endereco.number;
 
-        } catch (error) {
-          console.error(error);
-        }
-      },
+    this.user = { ...userInfo };
+    this.name = this.user.name;
+    this.cpf = this.user.cpf;
+
+    this.listProducts = cartData;
+
+    this.som = 0;
+    Object.entries(this.listProducts).forEach(([key, value]) => {
+      this.som += value.price * value.quantity;
+    });
+  } catch (error) {
+    console.error(error);
+  }
+},
       async atualizarCarrinho() {
           this.calcTotal()
           console.log(this.som)

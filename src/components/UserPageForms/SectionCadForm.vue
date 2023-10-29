@@ -3,24 +3,36 @@
             <form class="catForm">
                 <div class="nameCat">
                     <label for="nomeCategoria">Nome da Categoria</label>
-                    <input class="input-camp" type="text" name="nomeCategoria">
+                    <input class="input-camp" type="text" name="nomeCategoria" v-model="category.name" required>
                 </div>
-                <div class="descCat">
+                <!-- <div class="descCat">
                     <label for="decricaoCategoria">Descrição</label>
                     <textarea class="input-camp" name="decricaoCategoria"></textarea>
-                </div>
-                <button class="submit" @onClick="saveCategoria()">Salvar</button>
+                </div> -->
+                <button class="submit" @click="saveCategory()">Salvar</button>
             </form>
         </div>
 </template>
 <script>
+import axios from "axios"
+import { baseApiUrl } from "@/global";
 export default {
     name: 'SectionCadForm',
     data() {
         return {
+            category:{}
         }
     },
     methods: {
+        saveCategory(){
+            const url = `${baseApiUrl}/categories`
+            console.log(this.category)
+            axios.post(url,this.category).then(res=>{
+                console.data(res)
+            }).catch((e=>{
+                    alert(e.response.data)
+            }))
+        }
     },
 }
 </script>
