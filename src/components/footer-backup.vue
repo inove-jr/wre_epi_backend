@@ -24,7 +24,7 @@
   body{ background-color:  #FFFFFF; 
   
   }
-  .footer{background-color: #02589a ;
+  .footer{background-color: #3A9E3E ;
     color: #FFFFFF;
     padding: 12px;
 

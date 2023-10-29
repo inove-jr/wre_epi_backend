@@ -112,7 +112,7 @@ export default {
         color: white;
         font-size: 2rem;
         font-weight: bold;
-        background-color: #0a260b;
+        background-color: #0c0a26;
         border: none;
         border-radius: 0.5rem;
         padding: 0.3rem 2rem 0.6rem 2rem;
@@ -122,7 +122,7 @@ export default {
     }
 
     button:hover{
-        background-color: #2A732A;
+        background-color: #102c91;
     }
     .card{
         max-width: 24rem;

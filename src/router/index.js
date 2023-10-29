@@ -9,9 +9,9 @@ import UserView from '../views/UserView.vue'
 import UserData from '../components/UserPageForms/UserData.vue'
 import ProductCadForm from '../components/UserPageForms/ProductCadForm.vue'
 import SectionCadForm from '../components/UserPageForms/SectionCadForm.vue'
+import BannerConfigForm from '../components/UserPageForms/BannerConfigForm.vue'
 import PasswordRecovery from '../views/PasswordRecovery.vue'
 import ChangePassword from '../views/ChangePassword.vue'
-
 
 const routes = [
   {
@@ -71,14 +71,19 @@ const routes = [
         props: true,
       },
       {
-        path: "/perfil/produt-cad",
+        path: "/perfil/produt-cad/:userId",
         name: "productCad",
         component: ProductCadForm,
       },
       {
-        path: "/perfil/section-cad",
+        path: "/perfil/section-cad/:userId",
         name: "sectionCad",
         component: SectionCadForm,
+      },
+      {
+        path: "/perfil/banners/:userId",
+        name: "bannerConfig",
+        component: BannerConfigForm,
       },
     ]
   }

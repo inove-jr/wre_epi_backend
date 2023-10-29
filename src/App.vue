@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="screen">
     <HeaderComponent :key="$route.fullPath"/>
     <router-view/>
     <FooterComponent class="footer"/>
@@ -78,6 +78,10 @@ export default {
 </script>
 
 <style>
+.screen{
+  display: flex;
+  flex-direction: column;
+}
 body {
   margin: 0;
 }
@@ -101,7 +105,7 @@ body {
 }
 .footer {
   position: relative;
-  background-color: #3a9e3e;
+  background-color: #02589a;
   color: #ffffff;
 }
 

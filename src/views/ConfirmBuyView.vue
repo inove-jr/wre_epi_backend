@@ -297,8 +297,8 @@ export default {
 
 .endereco-change{
   border-radius: 0.5rem;
-    background-color: rgb(0, 167, 0);
-    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem green, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+    background-color: #d6ac00;
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #a38200, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
     height: 3.4rem;
     margin-top: 1rem;
     padding: 0.8rem 1.2rem;
@@ -311,20 +311,20 @@ export default {
 }
 
 .endereco-change:active{
-    background-color: rgb(0, 208, 0);
-    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(1, 158, 1), 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+    background-color: #d6ac00;
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #a38200, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
 }
 .forma-pagamento{
     font-size: 16pt;
     text-transform: uppercase;
     color: whitesmoke;
     padding-block: 3rem;
-    background-color: rgba(8, 128, 8, 0.707);
+    background-color: #02589a;
     border-radius: 0 0 2rem 0;
 }
 
 .forma-pagamento h3{
-    margin-left: 30%;
+    margin-left: 0%;
 }
 
 .options button{
@@ -332,6 +332,7 @@ export default {
     border: none;
     margin-inline: 3.4rem;
     margin-block: 2rem;
+    cursor: pointer;
 }
 
 .options button img{

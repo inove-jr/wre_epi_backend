@@ -116,7 +116,7 @@
     font-weight: 700;
     text-align: center;
     padding-bottom: 1rem;
-    color: #0A260B;
+    color: #0a0d26;
 }
 .input-container{
     display: flex;
@@ -133,7 +133,7 @@
 }
 .input-container input{
     padding: 0.8rem;
-    width: 24em;
+    width: 48rem;
     border: 1px solid #FFFFFF;
     background-color: #EEE;
     box-shadow: inset 0 0.1rem 0.4rem 0.2rem rgba(0, 0, 0, 0.25);
@@ -147,7 +147,7 @@
     padding-top: 2em;
 }
 .submit{
-    background: #0A260B;
+    background: #d6ac00;
     color: white;
     border-radius: 0.4rem;
     font-size: 2em;
@@ -157,7 +157,7 @@
     padding-inline: 1.8rem;
 }
 .submit:hover{
-    box-shadow: inset 0 0.1rem 2rem 0.4rem #2eff389e;
-    border-color: #2eff389e;
+    box-shadow: inset 0 0.1rem 2rem 0.4rem #ffcc00;
+    border-color: #ffffff9e;
 }
 </style>

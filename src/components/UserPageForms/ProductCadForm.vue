@@ -436,7 +436,7 @@ textarea{
     min-height: 3rem;
     padding: 0.5rem 2rem 0.5rem 2rem;
     border-radius: 0.4rem;
-    background-image: linear-gradient(#D852B2, #9C4483);
+    background-image: linear-gradient(#bfc42d, #9f9a10);
     box-shadow: 0rem 0.1rem 0.4rem 0rem rgb(0, 0, 0, 0.25);
     font-size: 14pt;
     font-family: Lato;
@@ -446,7 +446,7 @@ textarea{
 }
 
 .submit-container button:active {
-    background-image: linear-gradient(#9C4483, #D852B2);
+    background-image: linear-gradient(#a4a631, #d6d852);
 }
 
 .submit-container button:disabled {

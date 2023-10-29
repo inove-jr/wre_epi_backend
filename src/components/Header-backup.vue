@@ -2,7 +2,11 @@
     <section class="header">
       <router-link to="/">
         <div class="header__logo">
-          <img src="../assets/logobranca.png" alt="Imagem do logo da empresa" />
+          <img src="../assets/Logomarca.png" alt="Imagem do logo da empresa" />
+          <div class="logo__title">
+            <h1>wre epi</h1>
+            <h3>A vida é sua, a segurança é nossa</h3>
+          </div>
         </div>
       </router-link>
   
@@ -146,17 +150,16 @@
     width: 100%;
     height: 9rem;
   
-    background-color: #02589a;
+    background-color: #3a9e3e;
     font-family: 'Lato';
   }
   
   .header__logo {
     display: flex;
   
-    margin-left: 1.2rem;
+    margin-left: 7.2rem;
   
-    padding-top: 1.0rem;
-
+    padding-top: 1.9rem;
   
     /* border: 1px solid green; */
   }
@@ -167,8 +170,8 @@
     color: rgb(148, 171, 150);
   }
   .header__logo img {
-  /*  width: 4.6rem;*/
-    height: 6.8rem;
+    width: 4.6rem;
+    height: 4.3rem;
   }
   
   .logo__title {
@@ -229,7 +232,7 @@
     width: 20%;
     height: 6.3rem;
   
-    background: #02589a;
+    background: #318234;
     box-shadow: 0 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
     border-radius: 0 0 0 2.5rem;
   
@@ -277,7 +280,7 @@
     width: 5.778rem;
     height: 4.8rem;
   
-    background: #1e1d53;
+    background: #1d531f;
     border-radius: 1rem;
   
     border: none;
@@ -292,7 +295,7 @@
   
     width: 1.422rem;
     height: 1.6rem;
-    background: #1e1d53;
+    background: #0a260b;
     border-radius: 0.5rem;
   
     color: #ffffff;
@@ -321,7 +324,7 @@
       width: 5rem;
       height: 4rem;
   
-      background: #1e1d53;
+      background: #1d531f;
       border-radius: 1rem;
   
       border: none;
@@ -357,7 +360,7 @@
     }
   
     .header__logo img {
-     /* width: 4.5rem;*/
+      width: 4.5rem;
       height: 4rem;
     }
   
@@ -389,7 +392,7 @@
     }
     
     .header__logo img {
-     /* width: 4.6rem;*/
+      width: 4.6rem;
       height: 4.3rem;
     }
     .header__searchbar {
@@ -397,7 +400,7 @@
       margin-top: 1rem;
       padding: 2rem;
       justify-content: center;
-      background-color: #02589a;
+      background-color: #318234;
     }
     
     .searchbar {

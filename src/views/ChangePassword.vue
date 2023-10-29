@@ -67,7 +67,7 @@
     font-weight: 700;
     text-align: center;
     padding-bottom: 1rem;
-    color: #0A260B;
+    color: #0a0e26;
 }
 .input-container{
     display: flex;
@@ -102,7 +102,7 @@
     width: fit-content;
 }
 .submit{
-    background: #0A260B;
+    background: #d6ac00;
     color: white;
     border-radius: 0.4rem;
     font-size: 2em;
@@ -112,7 +112,6 @@
     padding-inline: 1.8rem;
 }
 .submit:hover{
-    box-shadow: inset 0 0.1rem 2rem 0.4rem #2eff389e;
-    border-color: #2eff389e;
+    box-shadow: inset 0 0.1rem 2rem 0.4rem #ffff009e;
 }
 </style>

@@ -45,7 +45,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #1D531F;
+    background: #1e1d53;
     z-index: 3;   
     cursor: pointer;
     overflow: hidden;
@@ -100,7 +100,7 @@ span{
 #activate-div:checked ~ label #faleConosco #faleText{
     display: flex;
     background-color: #F3FFF7;
-    color: #6F8674;
+    color: #6f7d86;
     font-size: 1.4em;
     padding: 1em;
     margin: 0.1em;
@@ -108,7 +108,7 @@ span{
 #activate-div:checked ~ label #faleConosco #faleOpcoes{
     display: flex;
     flex-direction: column;
-    background-color: #CCEBD4;
+    background-color: #fff2bc;
     color:white;
     font-size: 1.4em;
     padding: 1em;
@@ -117,7 +117,7 @@ span{
     border-radius: 0 0 0 0.6em;
 }
 #activate-div:checked ~ label #faleConosco #faleOpcoes button{
-    background-color: #4BBF49;
+    background-color: #4978bf;
     margin: 0.2em;
     padding: 0.6em;
     color:white;
@@ -127,7 +127,7 @@ span{
     cursor: pointer;
 }
 #activate-div:checked ~ label #faleConosco #faleOpcoes button:hover{
-    background-color: #57dc55;
+    background-color: #5577dc;
 }
 
 @media(max-width: 720px){

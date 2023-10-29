@@ -107,10 +107,10 @@
           <hr />
         </div>
 
-        <button id="comprar" style="width: 170px; height: 50px" inline="center">
+        <button id="comprar" inline="center">
           Comprar
         </button>
-        <button id="comprarata" style="width: 191px; height: 34px">
+        <button id="comprarata">
           Comprar em atacado
         </button>
       </div>
@@ -335,7 +335,7 @@ export default {
 
 .detail h3 {
   width: 8em;
-  color: #521717;
+  color: black;
 }
 .descricao {
   display: flex;
@@ -503,7 +503,9 @@ input[type="number"] {
 
 #comprar {
   margin-top: 12px;
-  background: linear-gradient(180deg, #d852b2 0%, #9c4483 100%);
+  background: linear-gradient(180deg, #d6ac00 0%, #997a01 100%);
+  width: 20rem; 
+  height: 5rem;
   border: none;
   border-radius: 10px;
   color: rgba(255, 255, 255, 1);
@@ -515,16 +517,25 @@ input[type="number"] {
   font-weight: 700;
 }
 
+#comprar:hover {
+  background: linear-gradient(180deg, #997a01 0%, #d6ac00 100%);
+}
+
 #comprarata {
-  background: rgba(10, 38, 11, 1);
+  width: 20rem; 
+  height: 5rem;
+  background: rgb(15, 10, 38);
   border: none;
   border-radius: 8px;
-  width: 191px;
   color: rgba(255, 255, 255, 1);
   font-size: 20px;
   font-family: "Lato";
   font-style: normal;
   font-weight: 700;
+}
+
+#comprarata:hover {
+  background: linear-gradient(180deg, #5036c5 0%, #32199d 100%);
 }
 
 @media only screen and (max-width: 820px) {

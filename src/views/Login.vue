@@ -108,7 +108,8 @@
         color: white;
         font-size: 2rem;
         font-family: Lato;
-        background-color: #0a260b;
+        /*background-color: #0a260b;*/
+        background-color: #8f7200;
         border: none;
         margin: 1rem;
         border-radius: 0.5rem;
@@ -117,7 +118,8 @@
         transition: 0.05s ease-in-out;
     }
     button:hover {
-        background-color: #2A732A;
+        /*background-color: #2A732A;*/
+        background-color: #d6ac00;
     }
     .lblInput {
         text-align: left;
