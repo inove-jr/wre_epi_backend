@@ -2,8 +2,8 @@
     <section class="popup">
 
         <CreditForm v-if="this.type=='credit'" :price="this.totalValue"/>
-        <BoletoForm v-if="this.type=='boleto'" :N="this.nome" :E="this.email"/>
-        <PixForm v-if="this.type=='pix'" :N="this.nome" :E="this.email" :T="this.tel"/>
+        <BoletoForm v-if="this.type=='boleto'" :price="this.totalValue"/>
+        <PixForm v-if="this.type=='pix'" :price="this.totalValue"/>
 
     </section>
 </template>
