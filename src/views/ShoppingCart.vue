@@ -94,7 +94,7 @@
           <p>R$ {{som}}</p>
         </div>
         <!----<RouterLink to="/confirm">  passar o valor total da compra pelo router link-->
-        <RouterLink to="/confirm" :produtos="listProducts" :total="this.som" >
+        <RouterLink to="/confirm">
           <button class="confirmBuy">Confimar compra</button>
         </RouterLink>
       </div>

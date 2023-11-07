@@ -34,13 +34,22 @@
                 </div>
    
             </section>
-
             <section class="forma-pagamento">
                 <h3>Escolha o método de pagamento</h3>
-                <div class="options">
-                    <button @click="change(1)" class="metodo-cartao"><img src="\img\1034362_payment_bank_card_credit_finance_icon.png" alt="CARTÃO"></button>
-                    <button @click="change(2)" class="metodo-boleto"><img src="\img\365593_boleto_business_buy_card_cash_icon.png" alt="BOLETO"></button>
-                    <button @click="change(3)" class="metodo-pix"><img src="\img\8666421_pix_icon.png" alt="PIX"></button>                
+                <div class="options" v-bind:class="{ deactive: listProducts.length==0, blur: formSee}">
+                    <div @click="change(1)">
+                        <button class="metodo-cartao"><img src="\img\1034362_payment_bank_card_credit_finance_icon.png" alt="CARTÃO"></button>
+                        <h3>Cartão</h3>
+                    </div>
+                    <div @click="change(2)">
+                        <button class="metodo-boleto"><img src="\img\365593_boleto_business_buy_card_cash_icon.png" alt="BOLETO"></button>
+                        <h3>Boleto</h3>
+                    </div>
+                    <div @click="change(3)">
+                        <button class="metodo-pix"><img src="\img\8666421_pix_icon.png" alt="PIX"></button>   
+                        <h3>PIX</h3>
+                    </div>
+                    <div class="paypal" ref="paypal"> </div> 
                 </div>
             </section>
         </div>
@@ -65,7 +74,6 @@ export default {
         CartItemrResume
     },
     beforeMount(){
-        this.calcTotal()
     
         // this.endereco = "Rua Tal..."
         // this.numero = 0
@@ -74,51 +82,62 @@ export default {
         // this.cidade = "Lugar Nenhuma"
         // this.uf = "PE"
         this.getInfo();
+        this.calcTotal();
+
         setTimeout((()=>{
             console.log(this.listProducts)
 
         }),800)
+
+        const script = document.createElement("script");
+        script.src =
+          "https://www.paypal.com/sdk/js?currency=BRL&client-id=ARTNZxkNzeMEJFwpV6A3kf7OXIprruE6aBU5PY7s5sT0RpoO8o4vXRKhjvg3uNb9hIvtQutOpMwhvsvw";
+        script.addEventListener("load", this.setLoaded);
+        document.body.appendChild(script);
+    },
+    mounted: function() {
     },
     data() {
         return {
             formSee: false,
-            // listTest: [
-            //   {nome: "Nome do produto 1 - Capacete do tipo",
-            //     quantity: 2,
-            //     preco: 100.00,
-            //     parcelas: 4,
-            //     imagem: "/img/produto.svg",
-            //     atributs:  {cor: 'tal',
-            //   tamanho: 12}
-            //   },
-            //   {nome: "Nome do produto 2 - Capacete do tipo",
-            //     quantity: 3,
-            //     preco: 200.00,
-            //     parcelas: 4,
-            //     imagem: "/img/produto.svg",
-            //     atributs:  {
-                  
-            //     }
-            //   },
-            //   {nome: "Nome do produto 3 - Capacete do tipo",
-            //     quantity: 2,
-            //     preco: 300.00,
-            //     parcelas: 4,
-            //     imagem: "/img/produto.svg",
-            //     atributs:  {
-            //   tamanho: 12}
-            //   },
-            //   {nome: "Nome do produto 4 - Capacete do tipo",
-            //     quantity: 1,
-            //     preco: 400.00,
-            //     parcelas: 4,
-            //     imagem: "/img/produto.svg",
-            //     atributs: {cor: 'tal',
-            //   tamanho: 12}
-            //   },
-            // ],
+            paidFor: false,
+            /*listProducts: [
+               {nome: "Nome do produto 1 - Capacete do tipo",
+                 quantity: 2,
+                 price: 100.00,
+                 parcelas: 4,
+                 imagem: "/img/produto.svg",
+                 atributs:  {cor: 'tal',
+               tamanho: 12}
+               },
+               {nome: "Nome do produto 2 - Capacete do tipo",
+                 quantity: 3,
+                 price: 200.00,
+                 parcelas: 4,
+                 imagem: "/img/produto.svg",
+                 atributs:  {
+            
+                 }
+               },
+               {nome: "Nome do produto 3 - Capacete do tipo",
+                 quantity: 2,
+                 price: 300.00,
+                 parcelas: 4,
+                 imagem: "/img/produto.svg",
+                 atributs:  {
+               tamanho: 12}
+               },
+               {nome: "Nome do produto 4 - Capacete do tipo",
+                 quantity: 1,
+                 price: 400.00,
+                 parcelas: 4,
+                 imagem: "/img/produto.svg",
+                 atributs: {cor: 'tal',
+               tamanho: 12}
+               },
+             ],*/
             listProducts:[],
-            som: this.total,
+            som: 0,
             type: "",
             endereco: {},
             numero: "",
@@ -134,11 +153,14 @@ export default {
     components: { CartItemrResume, PopUp },
     methods: {
         calcTotal() {
-            this.som = 0
-            // this.listTest.forEach(element => {
-            //   this.som = this.som + element.preco*element.quantity
-            // //  console.log(element.preco)
-            // });
+            if(this.listProducts.length == 0){
+                return 
+            }
+            console.log(this.listProducts)
+            
+            this.listProducts.forEach(product => {
+                this.som = this.som + product.price*product.quantity
+             });
         },
         remove(index){
           this.listTest.splice(index,1)
@@ -148,6 +170,7 @@ export default {
 
             this.type = formasDePagamento[formato-1]
             this.formSee = !this.formSee
+            
             console.log(this.
             formSee)
 
@@ -155,6 +178,52 @@ export default {
         close(){
             this.formSee = false;
         },
+        setLoaded: function() {
+          this.loaded = true;
+          window.paypal
+            .Buttons({
+              createOrder: (data, actions) => {
+                return actions.order.create({
+                  purchase_units: [
+                    {items: this.listProducts.map((product) => {
+                        return {name: product.nome,
+                                quantity: product.quantity,
+                                unit_amount: {
+                                    currency_code: "BRL",
+                                    value: product.price
+                                }
+                            };
+                    }),
+                      amount: {
+                        currency_code: "BRL",
+                        value: this.som,//Tem de ser igual ao somatorio dos (preço * quantidade) de cada produto
+                        breakdown: {
+                            item_total: {
+                                currency_code: "BRL",
+                                value: this.som
+                            }
+                              }
+                    }
+                }
+                  ]
+                });
+              },
+              onApprove: async (data, actions) => {
+                const order = await actions.order.capture();
+                
+                this.paidFor = true;
+
+                //console.log(order);
+                
+              },
+              onError: err => {
+                console.log(err);
+              }
+            })
+            .render(this.$refs.paypal);
+        },
+
+
         async getAddress(userId) {
             try {
             const url = `${baseApiUrl}/address/` + userId;
@@ -166,7 +235,6 @@ export default {
             throw error;
             }
         },
-
         async getUser(userId) {
             try {
             const url = `${baseApiUrl}/users/` + userId;
@@ -177,7 +245,6 @@ export default {
             throw error;
             }
         },
-        
         async getCart(userId) {
             try {
             const url = `${baseApiUrl}/cart/` + userId;
@@ -216,15 +283,16 @@ export default {
                 console.error(error);
             }
     },
-    },
-    props:['total'],
-    mounted(){
-        console.log(this.total)
     }
 }
 </script>
 
 <style scoped>
+
+.deactive{
+    filter: grayscale(1);
+    pointer-events: none;
+}
 .priceLabel{
     font-size: 2rem;
     margin: 0rem 0rem 0rem 30rem;
@@ -330,22 +398,56 @@ export default {
     padding-block: 3rem;
     background-color: #02589a;
     border-radius: 0 0 2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 2rem;
 }
 
 .forma-pagamento h3{
     margin-left: 0%;
 }
 
-.options button{
+.paypal{
+    margin: auto;
+    width: 100%;
+    background: none;
+}
+
+.options{
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5rem;
+    flex-wrap: wrap;
+    width: 70%;
+    margin: auto;
+    margin-inline: 2%;
+    justify-content: space-evenly;
+}
+.options div{
+    border-radius: 2rem;
+    padding: 2%;
+    background: #35b1e5;
+    display: flex;
+    align-items: center;
+    box-shadow: 0rem 0rem 0rem 0rem rgb(0, 0, 0, 0.25);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+.options div:hover{
+    box-shadow: 1rem 1rem 1rem 0rem rgb(0, 0, 0, 0.25);
+}
+
+
+.options div button{
     background: none;
     border: none;
     margin-inline: 3.4rem;
-    margin-block: 2rem;
-    cursor: pointer;
+    width: 3rem;
 }
 
-.options button img{
-    max-height: 6vmax;
+.options div button img{
+    max-height: 2vmax;
 }
 
 .overlay{
@@ -367,6 +469,9 @@ export default {
     opacity: 0;
     animation: show 0.4s ease-in-out;
     animation-fill-mode: forwards;
+}
+.blur{
+    filter: blur(6px);
 }
 
 @keyframes show{
