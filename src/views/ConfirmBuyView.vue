@@ -153,11 +153,11 @@ export default {
     components: { CartItemrResume, PopUp },
     methods: {
         calcTotal() {
-            if(this.listProducts.length == 0){
+            if((this.listProducts.length == 0) || (this.som > 0)){
                 return 
             }
-            console.log(this.listProducts)
-            
+            //console.log(this.listProducts)
+            this.som = 0;
             this.listProducts.forEach(product => {
                 this.som = this.som + product.price*product.quantity
              });
