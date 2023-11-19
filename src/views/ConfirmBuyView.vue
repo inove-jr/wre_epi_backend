@@ -5,7 +5,8 @@
                 <h2>Compra concluida com</h2>
                 <h1>SUCESSO!</h1>
             </div>
-            <div class="byPix" v-if="!byPix">
+            <div class="byPix" v-if="byPix">
+                <!--<iframe :src="payData" width="620" height="280" style="border: 2px black solid;"></iframe>-->
                 <div class="link-button">
                     <a :href="payData" target="_blank" style="padding: 2rem;font-size: 24pt;"><span>Abrir página de pagamento do PIX</span></a>
                 </div>
@@ -124,7 +125,7 @@ export default {
             byPix: false,
             byBoleto: false,
             payData: "",
-            listProducts: [
+            /*listProducts: [
                {nome: "Nome do produto 1 - Capacete do tipo",
                  quantity: 2,
                  price: 100.00,
@@ -158,8 +159,8 @@ export default {
                  atributs: {cor: 'tal',
                tamanho: 12}
                },
-             ],
-            //listProducts:[],
+             ],*/
+            listProducts:[],
             som: 0,
             type: "",
             endereco: {},
@@ -246,8 +247,6 @@ export default {
             })
             .render(this.$refs.paypal);
         },
-
-
         async getAddress(userId) {
             try {
             const url = `${baseApiUrl}/address/` + userId;

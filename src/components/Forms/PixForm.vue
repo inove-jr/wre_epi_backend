@@ -89,9 +89,9 @@ export default {
     };
   },
   methods: {
-    test(){
+    /*test(){
       this.$emit('emitType', [2,'https://sandbox.asaas.com/i/8986881833885483'])
-    },
+    },*/
     async submitCard(e) {
       e.preventDefault();
 
