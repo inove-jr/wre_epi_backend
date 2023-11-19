@@ -89,6 +89,9 @@ export default {
     };
   },
   methods: {
+    test(){
+      this.$emit('emitType', [2,'https://sandbox.asaas.com/i/8986881833885483'])
+    },
     async submitCard(e) {
       e.preventDefault();
 
@@ -119,6 +122,7 @@ export default {
       this.pixPayment(data)
       alert(`Pagamento Realizado Com sucesso!`);
       this.$emit('pagamentoConcluido');
+      this.$emit('emitType', [2,data])
 
 
     },

@@ -58,6 +58,10 @@ export default {
     };
   },
   methods: {
+    /*test(e) {
+      e.preventDefault();
+      this.$emit('emitType', [1,'https://sandbox.asaas.com/b/pdf/7395892015679778'])
+    },*/
     async submitCard(e) {
       e.preventDefault();
 
@@ -88,6 +92,7 @@ export default {
       this.bankSlipPayment(data)
       alert(` Pagamento Realizado Com sucesso!`);
       this.$emit('pagamentoConcluido');
+      this.$emit('emitType', [1,data])
 
 
     },

@@ -1,9 +1,9 @@
 <template>
     <section class="popup">
 
-        <CreditForm v-if="this.type=='credit'" :price="this.totalValue"/>
-        <BoletoForm v-if="this.type=='boleto'" :price="this.totalValue"/>
-        <PixForm v-if="this.type=='pix'" :price="this.totalValue"/>
+        <CreditForm v-if="this.type=='credit'" :price="this.totalValue" v-on:emitType="emitType"/>
+        <BoletoForm v-if="this.type=='boleto'" :price="this.totalValue" v-on:emitType="emitType"/>
+        <PixForm v-if="this.type=='pix'" :price="this.totalValue" v-on:emitType="emitType"/>
 
     </section>
 </template>
@@ -25,7 +25,25 @@
           }
         },
         mounted() {
-        console.log(this.totalValue)}
+          // console.log(this.totalValue)
+        },
+        methods:{
+          emitType(type){
+            //console.log('work')
+            //console.log(type)
+            switch (type[0]) {
+                case 1:
+                    this.$emit('paymentConcluded', [1,type[1].bankSlipUrl])
+                    break;
+                case 2:
+                    this.$emit('paymentConcluded', [2,type[1].invoiceUrl])
+                    break;
+                default:
+                    this.$emit('paymentConcluded', [3,type[1]])
+                    break;
+            }
+          }
+        }
     }
 
   </script>

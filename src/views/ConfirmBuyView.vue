@@ -1,5 +1,25 @@
 <template>
-    <section class="buy-sumary">
+    <section v-if="paidFor" class="compra-concluida">
+        <div class="conclusion-screen">
+            <div class="sucess-text">
+                <h2>Compra concluida com</h2>
+                <h1>SUCESSO!</h1>
+            </div>
+            <div class="byPix" v-if="!byPix">
+                <div class="link-button">
+                    <a :href="payData" target="_blank" style="padding: 2rem;font-size: 24pt;"><span>Abrir página de pagamento do PIX</span></a>
+                </div>
+            </div>
+            <div class="byBoleto" v-if="byBoleto">
+                <iframe :src="payData" width="620" height="280" style="border: 2px black solid;"></iframe>
+                <div class="link-button" @click="doAction">
+                    <a :href="payData" text="Baixar Boleto" download="boleto.pdf" target="_blank"></a>
+                </div>
+            </div>
+        </div>
+        <button>Continuar a comprar</button>
+    </section>
+    <section v-if="!paidFor" class="buy-sumary">
         <section class="resumo">
             <div class="title">
                 <span>RESUMO DA COMPRA:</span>
@@ -56,7 +76,7 @@
         <section class="overlay_blur" v-if="this.formSee" @click="close()">
         </section>
         <section class="overlay" v-if="this.formSee">
-            <PopUp  :type="this.type" :nome="this.nome" :email="this.email" :tel="this.tel" :totalValue="this.som"></PopUp>
+            <PopUp  :type="this.type" :nome="this.nome" :email="this.email" :tel="this.tel" :totalValue="this.som"  v-on:paymentConcluded="paymentConcluded"></PopUp>
         </section>
     </section>
 </template>
@@ -101,7 +121,10 @@ export default {
         return {
             formSee: false,
             paidFor: false,
-            /*listProducts: [
+            byPix: false,
+            byBoleto: false,
+            payData: "",
+            listProducts: [
                {nome: "Nome do produto 1 - Capacete do tipo",
                  quantity: 2,
                  price: 100.00,
@@ -135,8 +158,8 @@ export default {
                  atributs: {cor: 'tal',
                tamanho: 12}
                },
-             ],*/
-            listProducts:[],
+             ],
+            //listProducts:[],
             som: 0,
             type: "",
             endereco: {},
@@ -185,14 +208,15 @@ export default {
               createOrder: (data, actions) => {
                 return actions.order.create({
                   purchase_units: [
-                    {items: this.listProducts.map((product) => {
-                        return {name: product.nome,
-                                quantity: product.quantity,
-                                unit_amount: {
-                                    currency_code: "BRL",
-                                    value: product.price
-                                }
-                            };
+                    {
+                        items: this.listProducts.map((product) => {
+                            return {name: product.nome,
+                                    quantity: product.quantity,
+                                    unit_amount: {
+                                        currency_code: "BRL",
+                                        value: product.price
+                                    }
+                                };
                     }),
                       amount: {
                         currency_code: "BRL",
@@ -282,7 +306,22 @@ export default {
             } catch (error) {
                 console.error(error);
             }
-    },
+        },
+        paymentConcluded(type){
+            this.paidFor = true;
+            switch (type[0]) {
+                case 1:
+                    this.payData = type[1];
+                    this.byBoleto = true;
+                    break;
+                case 2:
+                    this.payData = type[1];
+                    this.byPix = true;
+                    break;
+                default:
+                    break;
+            }
+        },
     }
 }
 </script>
@@ -472,6 +511,83 @@ export default {
 }
 .blur{
     filter: blur(6px);
+}
+
+.compra-concluida{
+    height: 38.4vmax;
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 7rem;
+}
+
+.compra-concluida button{
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: #4978bf;
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #335485, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+    font-weight: 700;
+    font-size: 18pt;
+    text-transform: uppercase;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.compra-concluida button:hover{
+    background-color: #5b94e9;
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #2e5a9b, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+}
+
+.conclusion-screen{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 8rem;
+}
+
+.sucess-text{
+    font-size: 24pt;
+}
+.sucess-text h1{
+    font-size: 48pt;
+}
+
+.byBoleto{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 3rem;
+    font-size: 14pt;
+}
+
+.link-button{
+    display: flex;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: #4978bf;
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #335485, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+    font-weight: 700;
+    font-size: 18pt;
+    text-transform: uppercase;
+    color: white;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+}
+.link-button a{
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: white;
+}
+
+.link-button:hover{
+    background-color: #5b94e9;
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #2e5a9b, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
 }
 
 @keyframes show{

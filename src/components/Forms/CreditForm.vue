@@ -151,6 +151,9 @@ export default {
       console.log(data)
       alert(` Pagamento Realizado Com sucesso!`);
       this.$emit('pagamentoConcluido');
+      
+      this.$emit('emitType', [3,data])
+
       this.name = '';
       this.cardNumber = '';
       this.cvv = '';
