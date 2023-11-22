@@ -11,14 +11,17 @@
                     <a :href="payData" target="_blank" style="padding: 2rem;font-size: 24pt;"><span>Abrir página de pagamento do PIX</span></a>
                 </div>
             </div>
-            <div class="byBoleto" v-if="byBoleto">
+            <div class="byBoleto" v-if="!byBoleto">
                 <iframe :src="payData" width="620" height="280" style="border: 2px black solid;"></iframe>
                 <div class="link-button" @click="doAction">
                     <a :href="payData" text="Baixar Boleto" download="boleto.pdf" target="_blank"></a>
                 </div>
             </div>
         </div>
-        <button>Continuar a comprar</button>
+        <RouterLink :to="{name:'home'}">
+            <button class="continuar-comprar">Continuar a comprar</button>
+        </RouterLink>
+        
     </section>
     <section v-if="!paidFor" class="buy-sumary">
         <section class="resumo">
@@ -26,8 +29,10 @@
                 <span>RESUMO DA COMPRA:</span>
                 <hr>
             </div>
-            <div class="itemCart" v-for="(item, index) in listProducts" :key="index">
-                <CartItemrResume class="itemInfo" :item=item></CartItemrResume>
+            <div class="item-list"> 
+                <div class="itemCart" v-for="(item, index) in listProducts" :key="index">
+                    <CartItemrResume class="itemInfo" :item=item></CartItemrResume>
+                </div>
             </div>
             <hr>
             <p class="priceLabel">Total:{{this.som}}</p>
@@ -125,8 +130,8 @@ export default {
             byPix: false,
             byBoleto: false,
             payData: "",
-            /*listProducts: [
-               {nome: "Nome do produto 1 - Capacete do tipo",
+            listProducts: [
+               {name: "Nome do produto 1 - Capacete do tipo",
                  quantity: 2,
                  price: 100.00,
                  parcelas: 4,
@@ -134,7 +139,7 @@ export default {
                  atributs:  {cor: 'tal',
                tamanho: 12}
                },
-               {nome: "Nome do produto 2 - Capacete do tipo",
+               {name: "Nome do produto 2 - Capacete do tipo",
                  quantity: 3,
                  price: 200.00,
                  parcelas: 4,
@@ -143,7 +148,7 @@ export default {
             
                  }
                },
-               {nome: "Nome do produto 3 - Capacete do tipo",
+               {name: "Nome do produto 3 - Capacete do tipo",
                  quantity: 2,
                  price: 300.00,
                  parcelas: 4,
@@ -151,7 +156,7 @@ export default {
                  atributs:  {
                tamanho: 12}
                },
-               {nome: "Nome do produto 4 - Capacete do tipo",
+               {name: "Nome do produto 4 - Capacete do tipo",
                  quantity: 1,
                  price: 400.00,
                  parcelas: 4,
@@ -159,8 +164,8 @@ export default {
                  atributs: {cor: 'tal',
                tamanho: 12}
                },
-             ],*/
-            listProducts:[],
+             ],
+            //listProducts:[],
             som: 0,
             type: "",
             endereco: {},
@@ -211,7 +216,7 @@ export default {
                   purchase_units: [
                     {
                         items: this.listProducts.map((product) => {
-                            return {name: product.nome,
+                            return {name: product.name,
                                     quantity: product.quantity,
                                     unit_amount: {
                                         currency_code: "BRL",
@@ -513,7 +518,7 @@ export default {
 }
 
 .compra-concluida{
-    height: 38.4vmax;
+    height: 58.7rem;
     width: 90%;
     margin: auto;
     display: flex;
@@ -522,8 +527,9 @@ export default {
     gap: 7rem;
 }
 
-.compra-concluida button{
+.continuar-comprar{
     padding: 1rem;
+    width: 100%;
     border-radius: 0.5rem;
     background-color: #4978bf;
     box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #335485, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
@@ -535,7 +541,7 @@ export default {
     cursor: pointer;
 }
 
-.compra-concluida button:hover{
+.continuar-comprar:hover{
     background-color: #5b94e9;
     box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #2e5a9b, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
 }
@@ -549,10 +555,12 @@ export default {
 }
 
 .sucess-text{
-    font-size: 24pt;
+    font-size: 2vw;
+    font-weight: lighter;
 }
 .sucess-text h1{
-    font-size: 48pt;
+    font-size: 4vw;
+    font-weight: 700;
 }
 
 .byBoleto{
@@ -595,5 +603,84 @@ export default {
     100% {opacity: 1;}
 }
 
+@media screen and (max-width: 1050px) {
+    .byBoleto iframe{
+        width: 50rem;
+        height: 30rem;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .compra-concluida{
+        height: 48.7rem;
+        margin-block: 2rem;
+    }
+    .conclusion-screen{
+        flex-direction: column; 
+        align-items: none;
+        gap: 4rem;
+    }
+}
+
+@media screen and (max-width: 800px) {
+
+    .buy-sumary{
+        flex-direction: column;
+        align-items: center;
+    }
+    .resumo{
+        min-height: 20rem;
+        height: 100%;
+        width: 90%;
+        margin: 0;
+        border-radius: 2rem 2rem 0 0;
+    }
+    .data-resume{
+        margin: 0;
+        width: 90%;
+        border-radius: 0 0 2rem 2rem;
+        box-shadow: 0px 3px 0.5rem 0.26rem rgba(0, 0, 0, 0.468)
+    }
+    .forma-pagamento{
+        
+        border-radius: 0 0 2rem 2rem;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .sucess-text{
+        font-size: 2rem;
+    }
+    .sucess-text h1{
+        font-size: 4rem;
+    }
+    .byBoleto iframe{
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@media screen  and (max-width: 500px){
+    .priceLabel{
+        margin: 0rem 0rem 0rem 70%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+
+    .endereco-change{
+        height: 5.4rem;
+    }
+    .options{
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 370px) {
+
+    .compra-concluida{
+        margin-block: 4rem;
+    }
+}
 </style>
 

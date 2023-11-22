@@ -169,7 +169,7 @@ hr{
 @media (max-width: 720px) {
     .cartItem{
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         flex-wrap: nowrap;
         align-items: flex-start;
         font-size: 1rem;
@@ -231,9 +231,7 @@ hr{
         margin-top: 1vh;
     }
     hr{
-        display: block;
-        width:55vw;
-        border-top: 2px solid rgb(27, 27, 27);
+        display: none;
     }
 }
 </style>
