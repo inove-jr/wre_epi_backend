@@ -5,7 +5,7 @@
                 <h2>Compra concluida com</h2>
                 <h1>SUCESSO!</h1>
             </div>
-            <div class="byPix" v-if="byPix">
+            <div class="byPix" v-if="!byPix">
                 <!--<iframe :src="payData" width="620" height="280" style="border: 2px black solid;"></iframe>-->
                 <div class="link-button">
                     <a :href="payData" target="_blank" style="padding: 2rem;font-size: 24pt;"><span>Abrir página de pagamento do PIX</span></a>
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <hr>
-            <p class="priceLabel">Total:{{this.som}}</p>
+            <p class="priceLabel">Total: R$ {{(this.som).toLocaleString("pt-BR", { minimumFractionDigits: 2})}}</p>
 
         </section>
         <div class="data-resume">
@@ -63,15 +63,15 @@
             <section class="forma-pagamento">
                 <h3>Escolha o método de pagamento</h3>
                 <div class="options" v-bind:class="{ deactive: listProducts.length==0, blur: formSee}">
-                    <div @click="change(1)">
+                    <div class="option_no_def_button" @click="change(1)">
                         <button class="metodo-cartao"><img src="\img\1034362_payment_bank_card_credit_finance_icon.png" alt="CARTÃO"></button>
                         <h3>Cartão</h3>
                     </div>
-                    <div @click="change(2)">
+                    <div class="option_no_def_button" @click="change(2)">
                         <button class="metodo-boleto"><img src="\img\365593_boleto_business_buy_card_cash_icon.png" alt="BOLETO"></button>
                         <h3>Boleto</h3>
                     </div>
-                    <div @click="change(3)">
+                    <div class="option_no_def_button" @click="change(3)">
                         <button class="metodo-pix"><img src="\img\8666421_pix_icon.png" alt="PIX"></button>   
                         <h3>PIX</h3>
                     </div>
@@ -139,7 +139,7 @@ export default {
                  atributs:  {cor: 'tal',
                tamanho: 12}
                },
-               {name: "Nome do produto 2 - Capacete do tipo",
+               {name: "Nome do produto 2 - Capacete do",
                  quantity: 3,
                  price: 200.00,
                  parcelas: 4,
@@ -148,7 +148,7 @@ export default {
             
                  }
                },
-               {name: "Nome do produto 3 - Capacete do tipo",
+               {name: "Nome do produto 3 - Capacete do tipo Nome do produto 3 - Capacete do tipo",
                  quantity: 2,
                  price: 300.00,
                  parcelas: 4,
@@ -211,7 +211,9 @@ export default {
           this.loaded = true;
           window.paypal
             .Buttons({
-              createOrder: (data, actions) => {
+                fundingSource: window.paypal.FUNDING.PAYPAL,
+              
+                createOrder: (data, actions) => {
                 return actions.order.create({
                   purchase_units: [
                     {
@@ -337,8 +339,9 @@ export default {
     pointer-events: none;
 }
 .priceLabel{
+    text-align: end;
     font-size: 2rem;
-    margin: 0rem 0rem 0rem 30rem;
+    margin: 0rem 2rem 0rem 0rem;
 }
 .title{
     text-align: left;
@@ -467,8 +470,8 @@ export default {
     margin-inline: 2%;
     justify-content: space-evenly;
 }
-.options div{
-    border-radius: 2rem;
+.options .option_no_def_button{
+    border-radius: 5px;
     padding: 2%;
     background: #35b1e5;
     display: flex;
@@ -477,7 +480,7 @@ export default {
     transition: all 0.3s ease-in-out;
     cursor: pointer;
 }
-.options div:hover{
+.options .option_no_def_button:hover{
     box-shadow: 1rem 1rem 1rem 0rem rgb(0, 0, 0, 0.25);
 }
 
@@ -661,9 +664,6 @@ export default {
 }
 
 @media screen  and (max-width: 500px){
-    .priceLabel{
-        margin: 0rem 0rem 0rem 70%;
-    }
 }
 
 @media screen and (max-width: 450px) {

@@ -82,7 +82,9 @@ hr{
 }
 
 .prod-image img{
+    min-height: 5rem;
     max-height: 5rem;
+    min-width: 5rem;
     margin-right: 3rem;
 }
 .cartItem{
@@ -107,16 +109,26 @@ hr{
 }
 
 .Value{
+    min-width: 25rem;
+    max-width: 25rem;
+    text-wrap: balance;
     font-weight: bolder;
     padding-bottom: 2rem;
     font-size: 1.2vw;
+}
+
+.price .Value{
+    min-width: 8rem;
+    max-width: 8rem;
 }
 
 .quantity{
     display: flex;
     flex-direction: column;
     text-align: center;
-    width: 5rem;
+    min-width: 6rem;
+    max-width: 6rem;
+    text-wrap: balance;
     align-items: center;
     margin: 0vw 2vw 0vw 3vw;
 }
@@ -166,6 +178,15 @@ hr{
     flex-wrap: nowrap;
     margin: 0;
 }
+
+@media (max-width: 900px) {
+    
+.Value{
+    min-width: 20rem;
+    max-width: 20rem;
+}
+}
+
 @media (max-width: 720px) {
     .cartItem{
         display: flex;
@@ -234,4 +255,12 @@ hr{
         display: none;
     }
 }
+
+@media (max-width: 420px) {
+    
+    .Value{
+        min-width: 15rem;
+        max-width: 15rem;
+    }
+    }
 </style>
