@@ -667,6 +667,10 @@ export default {
 }
 
 @media screen and (max-width: 450px) {
+    
+    .resumo .itemInfo{
+        transform: scale(0.7);
+    }
 
     .endereco-change{
         height: 5.4rem;

@@ -177,6 +177,7 @@ hr{
     flex-direction: column;
     flex-wrap: nowrap;
     margin: 0;
+    margin-left: 1rem;
 }
 
 @media (max-width: 900px) {
