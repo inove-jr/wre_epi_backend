@@ -32,7 +32,6 @@ export default {
     },
     mounted(){
         //console.log(this.item.key);
-        console.log(this.item.key)
     },
     props:{
         item:{

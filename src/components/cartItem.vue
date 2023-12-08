@@ -37,8 +37,8 @@ export default {
     name: "CartItem",
     mounted(){
         this.getItems()
-        console.log(this.totalPrice)
-        console.log(this.item)
+        // console.log(this.totalPrice)
+        // console.log(this.item)
     },
     data(){
         return{
