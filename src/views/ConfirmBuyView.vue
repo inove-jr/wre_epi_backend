@@ -5,13 +5,13 @@
                 <h2>Compra concluida com</h2>
                 <h1>SUCESSO!</h1>
             </div>
-            <div class="byPix" v-if="!byPix">
+            <div class="byPix" v-if="byPix">
                 <!--<iframe :src="payData" width="620" height="280" style="border: 2px black solid;"></iframe>-->
                 <div class="link-button">
                     <a :href="payData" target="_blank" style="padding: 2rem;font-size: 24pt;"><span>Abrir página de pagamento do PIX</span></a>
                 </div>
             </div>
-            <div class="byBoleto" v-if="!byBoleto">
+            <div class="byBoleto" v-if="byBoleto">
                 <iframe :src="payData" width="620" height="280" style="border: 2px black solid;"></iframe>
                 <div class="link-button" @click="doAction">
                     <a :href="payData" text="Baixar Boleto" download="boleto.pdf" target="_blank"></a>

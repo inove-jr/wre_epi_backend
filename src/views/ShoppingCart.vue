@@ -240,7 +240,7 @@ import { baseApiUrl, userKey } from '@/global'
     this.user = { ...userInfo };
     this.name = this.user.name;
     this.cpf = this.user.cpf;
-
+    
     this.listProducts = cartData;
 
     this.som = 0;

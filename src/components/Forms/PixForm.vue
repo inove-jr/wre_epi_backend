@@ -115,6 +115,7 @@ export default {
       }
       data.total = this.price
       data.description = 'descrição'
+      data.client_id = userData.id
       console.log(data)
 
 
