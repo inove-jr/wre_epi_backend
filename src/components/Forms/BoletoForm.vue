@@ -29,10 +29,25 @@
           </div>
           
         -->
-    <h1>Confirmar Pagamento Via Boleto Bancário</h1>
+    <!-- <h1>Confirmar Pagamento Via Boleto Bancário</h1>
     <div style="width: 100%;">
-      <input type="submit" value="Confirmar" class="card-form__button" name="submit" @click="submitCard" />
+      <input type="submit" value="Confirmar" class="card-form__button" name="submit" @click="submitCard" />-->
       <!-- <input v-if="!(this.nome!='' && this.validM)" type="submit" value="Pagar" class="card-form__button disable" disabled /> -->
+    <!-- </div>-->
+    <div class="border_line">
+          <div class="border">
+            <h1>Confirmar Compra</h1>
+            <hr>
+            <span>Método de pagamento: <b> BOLETO </b></span>
+            <div class="show-total">
+              <span >Total: <b>R$ {{(this.price).toLocaleString("pt-BR", { minimumFractionDigits: 2})}}</b></span>
+              <!--<span style="opacity: 0.6;color: rgb(7, 114, 19);">A VISTA!</span>-->
+            </div>
+        
+            <div class="confirm-button-div">
+              <input type="submit" value="Finalizar Compra" class="card-form-button" name="submit" onclick="submitCard()" />
+            </div>
+            </div>
     </div>
 
   </form>
@@ -166,13 +181,64 @@ input::-webkit-inner-spin-button {
   text-align: left;
 }
 
-.form-container {
-  font-size: 11pt;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  row-gap: 2rem;
 
+.border_line{
+    margin: 1rem;
+    border: 4px solid rgb(6, 91, 124);
+    border-radius: 1rem;
+}
+.border{
+    padding: 5rem 3rem 5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 2rem;
+}
+.border hr{
+    width: 100%;
+    margin-block: -1rem;
+}
+.border h1{
+    margin: auto;
+    font-weight: 100;
+}
+
+.form-container {
+    font-size: 11pt;
+    width: 41rem;
+}
+.form-container span{
+    font-size: 16pt;
+}
+.show-total{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.confirm-button-div{
+  width: 100%;
+  padding-top: 2rem;
+}
+
+.card-form-button {
+    margin: auto;
+    width: 100%;
+    padding: 1rem;
+    text-transform: uppercase;
+    font-size: 14pt;
+    border-radius: 0.5rem;
+    background-color: rgb(1 173 239);
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(16, 79, 119), 0rem 0.1rem 0.3rem 0.2rem rgb(0, 0, 0, 0.25);
+    font-weight: 700;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+  
+.card-form-button:active {
+    background-color: rgb(61, 200, 255);
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(1 90 124), 0rem 0.1rem 0.3rem 0.2rem rgb(0, 0, 0, 0.25);
 }
 
 .popup {

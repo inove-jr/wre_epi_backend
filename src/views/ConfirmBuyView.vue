@@ -130,41 +130,41 @@ export default {
             byPix: false,
             byBoleto: false,
             payData: "",
-            // listProducts: [
-            //    {name: "Nome do produto 1 - Capacete do tipo",
-            //      quantity: 2,
-            //      price: 100.00,
-            //      parcelas: 4,
-            //      imagem: "/img/produto.svg",
-            //      atributs:  {cor: 'tal',
-            //    tamanho: 12}
-            //    },
-            //    {name: "Nome do produto 2 - Capacete do tipo",
-            //      quantity: 3,
-            //      price: 200.00,
-            //      parcelas: 4,
-            //      imagem: "/img/produto.svg",
-            //      atributs:  {
-            
-            //      }
-            //    },
-            //    {name: "Nome do produto 3 - Capacete do tipo",
-            //      quantity: 2,
-            //      price: 300.00,
-            //      parcelas: 4,
-            //      imagem: "/img/produto.svg",
-            //      atributs:  {
-            //    tamanho: 12}
-            //    },
-            //    {name: "Nome do produto 4 - Capacete do tipo",
-            //      quantity: 1,
-            //      price: 400.00,
-            //      parcelas: 4,
-            //      imagem: "/img/produto.svg",
-            //      atributs: {cor: 'tal',
-            //    tamanho: 12}
-            //    },
-            //  ],
+            /* listProducts: [
+                {name: "Nome do produto 1 - Capacete do tipo",
+                  quantity: 2,
+                  price: 100.00,
+                  parcelas: 4,
+                  imagem: "/img/produto.svg",
+                  atributs:  {cor: 'tal',
+                tamanho: 12}
+                },
+                {name: "Nome do produto 2 - Capacete do tipo",
+                  quantity: 3,
+                  price: 200.00,
+                  parcelas: 4,
+                  imagem: "/img/produto.svg",
+                  atributs:  {
+    
+                  }
+                },
+                {name: "Nome do produto 3 - Capacete do tipo",
+                  quantity: 2,
+                  price: 300.00,
+                  parcelas: 4,
+                  imagem: "/img/produto.svg",
+                  atributs:  {
+                tamanho: 12}
+                },
+                {name: "Nome do produto 4 - Capacete do tipo",
+                  quantity: 1,
+                  price: 400.00,
+                  parcelas: 4,
+                  imagem: "/img/produto.svg",
+                  atributs: {cor: 'tal',
+                tamanho: 12}
+                },
+              ],*/
             listProducts:[],
             som: 0,
             type: "",

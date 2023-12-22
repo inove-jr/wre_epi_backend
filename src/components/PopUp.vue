@@ -49,11 +49,10 @@
   </script>
 <style scoped>
 .popup{
-    width: 41rem;
-    padding: 3rem;
+    padding: 1rem;
     border-radius: 6px;
     margin: auto;
-    margin-left: 39vmax;
+    margin-left: 34vmax;
     box-shadow: 4px 4px 24px #000000;
     background-color: white;
     z-index: 5;

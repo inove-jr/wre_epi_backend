@@ -10,6 +10,7 @@ import UserData from '../components/UserPageForms/UserData.vue'
 import ProductCadForm from '../components/UserPageForms/ProductCadForm.vue'
 import SectionCadForm from '../components/UserPageForms/SectionCadForm.vue'
 import BannerConfigForm from '../components/UserPageForms/BannerConfigForm.vue'
+import ListaPedidios from '../components/ListPedidos.vue'
 import PasswordRecovery from '../views/PasswordRecovery.vue'
 import ChangePassword from '../views/ChangePassword.vue'
 
@@ -69,6 +70,11 @@ const routes = [
         name: "userPefil",
         component: UserData,
         props: true,
+      },
+      {
+        path: "/perfil/pedidos/:userId",
+        name: "listPedidos",
+        component: ListaPedidios,
       },
       {
         path: "/perfil/produt-cad/:userId",

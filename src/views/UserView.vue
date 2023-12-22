@@ -36,7 +36,7 @@ import { mapState } from 'vuex';
         return {
             email: "",
             password: "",
-            isAdmin: true,
+            isAdmin: false,
             userId:0
         }
     },

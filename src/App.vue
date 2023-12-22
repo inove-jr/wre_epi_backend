@@ -1,7 +1,9 @@
 <template>
   <div class="screen">
     <HeaderComponent :key="$route.fullPath"/>
-    <router-view/>
+    <div class="routerV">
+      <router-view/>
+    </div>
     <FooterComponent class="footer"/>
   </div>
 </template>
@@ -107,6 +109,9 @@ body {
   position: relative;
   background-color: #02589a;
   color: #ffffff;
+}
+.routerV{
+  min-height: 79vh;
 }
 
 @media(max-width: 720px){

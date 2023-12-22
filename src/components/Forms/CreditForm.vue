@@ -66,8 +66,8 @@
       </div>
     </div>
 
-    <div style="width: 100%;">
-      <input type="submit" value="Pagar" class="card-form__button" name="submit" @click="submitCard" />
+    <div class="confirm-button-div">
+      <input type="submit" value="Finalizar Compra" class="card-form-button" name="submit" @click="submitCard" />
       <!-- <input v-if="!this.isValid()" type="submit" value="Pagar" class="card-form__button disable" disabled /> -->
     </div>
 
@@ -289,6 +289,7 @@ input::-webkit-inner-spin-button {
 }
 
 .form-container {
+  padding: 2rem;
   font-size: 11pt;
   display: flex;
   flex-direction: column;
@@ -307,21 +308,29 @@ input::-webkit-inner-spin-button {
   z-index: 5;
 }
 
-.card-form__button {
-  margin: auto;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  background-color: rgb(0, 167, 0);
-  box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem green, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
-  font-weight: 700;
-  color: white;
-  border: none;
-  cursor: pointer;
+.confirm-button-div{
+  width: 100%;
+  padding-top: 1rem;
 }
 
-.card-form__button:active {
-  background-color: rgb(0, 208, 0);
-  box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(1, 158, 1), 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
+.card-form-button {
+    margin: auto;
+    width: 100%;
+    padding: 1rem;
+    text-transform: uppercase;
+    font-size: 14pt;
+    border-radius: 0.5rem;
+    background-color: rgb(1 173 239);
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(16, 79, 119), 0rem 0.1rem 0.3rem 0.2rem rgb(0, 0, 0, 0.25);
+    font-weight: 700;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+  
+.card-form-button:active {
+    background-color: rgb(61, 200, 255);
+    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(1 90 124), 0rem 0.1rem 0.3rem 0.2rem rgb(0, 0, 0, 0.25);
 }
 
 .disable {
