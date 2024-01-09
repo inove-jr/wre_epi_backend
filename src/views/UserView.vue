@@ -5,6 +5,9 @@
                 <RouterLink :to="{name:'userPefil', params:{userId: userId }}">
                   <img class="icon" src="../assets/user.svg" alt="Perfil" title="Perfil" >
                 </RouterLink>
+                <RouterLink v-if="!this.isAdmin" :to="{name:'listPedidos', params:{userId: 1}}">
+                    <img v-if="!this.isAdmin" class="icon" src="../assets/orders.svg" alt="Lista de pedidos" title="Lista de pedidos">
+                </RouterLink>
                 <RouterLink :to="{name:'productCad'}">
                     <img v-if="this.isAdmin" class="icon" src="../assets/prod-add.svg" alt="Adição de Produto" title="Adição de Produto">
                 </RouterLink>
@@ -23,7 +26,7 @@
 </template>
   
 <script>
-import { mapState } from 'vuex';
+  import { mapState } from 'vuex';
   import { userKey } from '@/global';
 
   export default {
@@ -119,7 +122,7 @@ import { mapState } from 'vuex';
 
 @media screen and (max-width: 800px) {
     .info{
-        height: 120vmax;
+        height: 84vmax;
     }
 }
 
@@ -128,7 +131,7 @@ import { mapState } from 'vuex';
 @media screen and (max-width: 675px) {
     
     .info{
-        height: 120vmax;
+        height: 84vmax;
     }
     .data{
         flex-direction: column;
