@@ -212,6 +212,15 @@ export default {
           window.paypal
             .Buttons({
                 fundingSource: window.paypal.FUNDING.PAYPAL,
+                
+                style:{
+                        label: 'paypal',
+                        size: 'responsive',    // small | medium | large | responsive            
+                        //shape: 'rect',     // pill | rect            
+                        //color: 'gold',     // gold | blue | silver | black            
+                        //fundingicons: true, // optional            
+                        //tagline: false
+                },
               
                 createOrder: (data, actions) => {
                 return actions.order.create({
