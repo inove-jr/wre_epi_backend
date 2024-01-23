@@ -134,6 +134,7 @@ export default {
       data.ccv = this.cvv;
       data.expireMonth = this.expireMonth;
       data.expireYear = this.expireYear;
+      data.client_id = userData.id
       console.log(data)
 
       // const data = {

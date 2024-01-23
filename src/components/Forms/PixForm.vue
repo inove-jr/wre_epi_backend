@@ -67,7 +67,7 @@
             </div>
         
             <div class="confirm-button-div">
-              <input type="submit" value="Finalizar Compra" class="card-form-button" name="submit" onclick="submitCard()" />
+              <input type="submit" value="Finalizar Compra" class="card-form-button" name="submit" @click="submitCard" />
             </div>
             </div>
     </div>

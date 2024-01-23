@@ -69,9 +69,15 @@ export default {
       this.validatingToken = false
      }
   },
-  beforeMount(){
-    this.validateToken()
-    
+  beforeRouteEnter(to, from, next) {
+    const appInstance = new this();
+
+    appInstance.validateToken()
+      .then(() => {
+        next(vm => {
+          vm.validatingToken = appInstance.validatingToken;
+        });
+      });
   }
   
 

@@ -8,7 +8,8 @@
             <div class="byPix" v-if="byPix">
                 <!--<iframe :src="payData" width="620" height="280" style="border: 2px black solid;"></iframe>-->
                 <div class="link-button">
-                    <a :href="payData" target="_blank" style="padding: 2rem;font-size: 24pt;"><span>Abrir página de pagamento do PIX</span></a>
+                    <a :href="payData" target="_blank" style="padding: 2rem;font-size: 24pt;"><span>Abrir página de
+                            pagamento do PIX</span></a>
                 </div>
             </div>
             <div class="byBoleto" v-if="byBoleto">
@@ -18,10 +19,10 @@
                 </div>
             </div>
         </div>
-        <RouterLink :to="{name:'home'}">
+        <RouterLink :to="{ name: 'home' }">
             <button class="continuar-comprar">Continuar a comprar</button>
         </RouterLink>
-        
+
     </section>
     <section v-if="!paidFor" class="buy-sumary">
         <section class="resumo">
@@ -29,60 +30,64 @@
                 <span>RESUMO DA COMPRA:</span>
                 <hr>
             </div>
-            <div class="item-list"> 
+            <div class="item-list">
                 <div class="itemCart" v-for="(item, index) in listProducts" :key="index">
                     <CartItemrResume class="itemInfo" :item=item></CartItemrResume>
                 </div>
             </div>
             <hr>
-            <p class="priceLabel">Total: R$ {{(this.som).toLocaleString("pt-BR", { minimumFractionDigits: 2})}}</p>
+            <p class="priceLabel">Total: R$ {{ (this.som).toLocaleString("pt-BR", { minimumFractionDigits: 2 }) }}</p>
 
         </section>
         <div class="data-resume">
             <section class="endereco">
-               
+
                 <img class="mapIcon">
                 <div class="col" id="endereço-data" style="padding: 0.6rem; flex-wrap: wrap;">
                     <span id="endereco"><b> Endereço: </b>{{ endereco.street }}</span>
                     <span id="bairro"><b>Bairro: </b>{{ endereco.district }}</span>
-                    <div class="row num-com">    
+                    <div class="row num-com">
                         <span id="numero"><b> Número: </b>{{ endereco.number }}</span>
                         <span id="complemento"><b> Complemento: </b>{{ endereco.complement }}</span>
                     </div>
-                    <div class="row" style="flex-wrap: wrap;">    
+                    <div class="row" style="flex-wrap: wrap;">
                         <span id="cidade"><b> Cidade: </b>{{ endereco.city }}</span>
                         <span id="uf"><b> Estado: </b>{{ endereco.state }}</span>
                     </div>
 
                     <div style="width: 100%; text-align: center;">
-                        <button class="endereco-change" @click="this.$router.push({name: 'cart'});">Escolher outro endereço</button>
+                        <button class="endereco-change" @click="this.$router.push({ name: 'cart' });">Escolher outro
+                            endereço</button>
                     </div>
                 </div>
-   
+
             </section>
             <section class="forma-pagamento">
                 <h3>Escolha o método de pagamento</h3>
-                <div class="options" v-bind:class="{ deactive: listProducts.length==0, blur: formSee}">
+                <div class="options" v-bind:class="{ deactive: listProducts.length == 0, blur: formSee }">
                     <div class="option_no_def_button" @click="change(1)">
-                        <button class="metodo-cartao"><img src="\img\1034362_payment_bank_card_credit_finance_icon.png" alt="CARTÃO"></button>
+                        <button class="metodo-cartao"><img src="\img\1034362_payment_bank_card_credit_finance_icon.png"
+                                alt="CARTÃO"></button>
                         <h3>Cartão</h3>
                     </div>
                     <div class="option_no_def_button" @click="change(2)">
-                        <button class="metodo-boleto"><img src="\img\365593_boleto_business_buy_card_cash_icon.png" alt="BOLETO"></button>
+                        <button class="metodo-boleto"><img src="\img\365593_boleto_business_buy_card_cash_icon.png"
+                                alt="BOLETO"></button>
                         <h3>Boleto</h3>
                     </div>
                     <div class="option_no_def_button" @click="change(3)">
-                        <button class="metodo-pix"><img src="\img\8666421_pix_icon.png" alt="PIX"></button>   
+                        <button class="metodo-pix"><img src="\img\8666421_pix_icon.png" alt="PIX"></button>
                         <h3>PIX</h3>
                     </div>
-                    <div class="paypal" ref="paypal"> </div> 
+                    <div class="paypal" ref="paypal"> </div>
                 </div>
             </section>
         </div>
         <section class="overlay_blur" v-if="this.formSee" @click="close()">
         </section>
         <section class="overlay" v-if="this.formSee">
-            <PopUp  :type="this.type" :nome="this.nome" :email="this.email" :tel="this.tel" :totalValue="this.som"  v-on:paymentConcluded="paymentConcluded"></PopUp>
+            <PopUp :type="this.type" :nome="this.nome" :email="this.email" :tel="this.tel" :totalValue="this.som"
+                v-on:paymentConcluded="paymentConcluded"></PopUp>
         </section>
     </section>
 </template>
@@ -91,16 +96,16 @@
 import CartItemrResume from '@/components/cartItemrResume.vue';
 import PopUp from '@/components/PopUp.vue';
 import axios from "axios"
-import { baseApiUrl,userKey,clientID } from '@/global';
+import { baseApiUrl, userKey, clientID } from '@/global';
 
 export default {
     name: "ConfirmBuy",
-    components:{
+    components: {
         PopUp,
         CartItemrResume
     },
-    beforeMount(){
-    
+    beforeMount() {
+
         // this.endereco = "Rua Tal..."
         // this.numero = 0
         // this.complemento = "CASA"
@@ -117,11 +122,11 @@ export default {
 
         const script = document.createElement("script");
         script.src =
-          "https://www.paypal.com/sdk/js?currency=BRL&client-id="+clientID;
+            "https://www.paypal.com/sdk/js?currency=BRL&client-id=AUKCNaeSeEWq2Z6SDzilgg66vCHVVlDWtgvlWoSQGE84tBZ_qaFzl4CAqxzRLz5CFoicyVxQIW36tqbv";
         script.addEventListener("load", this.setLoaded);
         document.body.appendChild(script);
     },
-    mounted: function() {
+    mounted: function () {
     },
     data() {
         return {
@@ -165,7 +170,7 @@ export default {
                 tamanho: 12}
                 },
               ],*/
-            listProducts:[],
+            listProducts: [],
             som: 0,
             type: "",
             endereco: {},
@@ -182,108 +187,144 @@ export default {
     components: { CartItemrResume, PopUp },
     methods: {
         calcTotal() {
-            if((this.listProducts.length == 0) || (this.som > 0)){
-                return 
+            if ((this.listProducts.length == 0) || (this.som > 0)) {
+                return
             }
             //console.log(this.listProducts)
             this.som = 0;
             this.listProducts.forEach(product => {
-                this.som = this.som + product.price*product.quantity
-             });
+                this.som = this.som + product.price * product.quantity
+            });
         },
-        remove(index){
-          this.listTest.splice(index,1)
+        remove(index) {
+            this.listTest.splice(index, 1)
         },
-        change(formato){
-            let formasDePagamento = ['credit','boleto','pix']
+        change(formato) {
+            let formasDePagamento = ['credit', 'boleto', 'pix']
 
-            this.type = formasDePagamento[formato-1]
+            this.type = formasDePagamento[formato - 1]
             this.formSee = !this.formSee
-            
+
             console.log(this.
-            formSee)
+                formSee)
 
         },
-        close(){
+        close() {
             this.formSee = false;
         },
-        setLoaded: function() {
-          this.loaded = true;
-          window.paypal
-            .Buttons({
-                fundingSource: window.paypal.FUNDING.PAYPAL,
-              
-                createOrder: (data, actions) => {
-                return actions.order.create({
-                  purchase_units: [
-                    {
-                        items: this.listProducts.map((product) => {
-                            return {name: product.name,
-                                    quantity: product.quantity,
-                                    unit_amount: {
-                                        currency_code: "BRL",
-                                        value: product.price
-                                    }
-                                };
-                    }),
-                      amount: {
-                        currency_code: "BRL",
-                        value: this.som,//Tem de ser igual ao somatorio dos (preço * quantidade) de cada produto
-                        breakdown: {
-                            item_total: {
-                                currency_code: "BRL",
-                                value: this.som
-                            }
-                              }
-                    }
-                }
-                  ]
-                });
-              },
-              onApprove: async (data, actions) => {
-                const order = await actions.order.capture();
-                
-                this.paidFor = true;
+        setLoaded: function () {
+            this.loaded = true;
+            window.paypal
+                .Buttons({
+                    fundingSource: window.paypal.FUNDING.PAYPAL,
 
-                console.log(order);
-                
-              },
-              onError: err => {
-                console.log(err);
-              }
-            })
-            .render(this.$refs.paypal);
+                    createOrder: (data, actions) => {
+                        return actions.order.create({
+                            purchase_units: [
+                                {
+                                    items: this.listProducts.map((product) => {
+                                        return {
+                                            name: product.name,
+                                            quantity: product.quantity,
+                                            unit_amount: {
+                                                currency_code: "BRL",
+                                                value: product.price
+                                            }
+                                        };
+                                    }),
+                                    amount: {
+                                        currency_code: "BRL",
+                                        value: this.som,//Tem de ser igual ao somatorio dos (preço * quantidade) de cada produto
+                                        breakdown: {
+                                            item_total: {
+                                                currency_code: "BRL",
+                                                value: this.som
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            intent: "CAPTURE"
+                        });
+                    },
+                    //   onApprove: async (data, actions) => {
+
+                    //     let bodyData={}
+                    //     const orderId = (await actions.order.capture());
+                    //     const json = localStorage.getItem(userKey);
+                    //     const client_id = JSON.parse(json).id;
+                    //     //fazer função no backend para tratar as informações de pedido assim como no asaas pelo lado do servidor e não no front
+                    //     //enviar somente o id do pagamento/transação
+                    //     bodyData.client_id = client_id;
+                    //     bodyData.order_id = orderId.id; 
+                    //     // //cartão teste:4032035738409440
+                    //     // this.paidFor = true;
+
+                    //     this.saveOrderDetails(bodyData)
+
+                    //     // console.log(orderId);
+
+
+                    //   },
+
+                    onApprove: async (data, actions) => {
+                        const json = localStorage.getItem(userKey)
+                        const client_id = JSON.parse(json).id
+                        // Order is captured on the server
+
+                        const body = {
+                            client_id: client_id
+                        }
+
+                        const url = `${baseApiUrl}/${data.orderID}/capture-paypal-order`;
+                        axios.post(url,body ,{
+                            headers: {
+                                "Content-Type": "application/json"
+                            }
+                        })
+                            .then((response) => response.data).then(
+                                alert("Pagamento Realizado com Sucesso")
+                            );
+
+
+
+                    },
+                    onError: err => {
+                        console.log(err);
+                    }
+                })
+                .render(this.$refs.paypal);
         },
         async getAddress(userId) {
             try {
-            const url = `${baseApiUrl}/address/` + userId;
-            const response = await axios.get(url);
-            console.log(response.data)
-            return response.data;
+                const url = `${baseApiUrl}/address/` + userId;
+                const response = await axios.get(url);
+                console.log(response.data)
+                return response.data;
             } catch (error) {
-            console.error(error);
-            throw error;
+                console.error(error);
+                throw error;
             }
         },
         async getUser(userId) {
             try {
-            const url = `${baseApiUrl}/users/` + userId;
-            const response = await axios.get(url);
-            return response.data;
+                const url = `${baseApiUrl}/users/` + userId;
+                const response = await axios.get(url);
+                return response.data;
             } catch (error) {
-            console.error(error);
-            throw error;
+                console.error(error);
+                throw error;
             }
         },
         async getCart(userId) {
             try {
-            const url = `${baseApiUrl}/cart/` + userId;
-            const response = await axios.get(url)
-            console.log(response.data);
-            return response.data;
+                const url = `${baseApiUrl}/cart/` + userId;
+                const response = await axios.get(url)
+                console.log(response.data);
+                return response.data;
             } catch (error) {
-            console.error(error);
-            throw error;
+                console.error(error);
+                throw error;
             }
         },
         async getInfo() {
@@ -300,19 +341,19 @@ export default {
                 this.cpf = this.user.cpf;
 
                 const cartData = await this.getCart(userData.id);
-                this.listProducts = cartData 
+                this.listProducts = cartData
                 console.log(this.listProducts);
                 Object.entries(this.listProducts).forEach(([key, value]) => {
-                    this.som +=value.price * value.quantity
-                    });
+                    this.som += value.price * value.quantity
+                });
                 console.log(this.som);
-            
+
 
             } catch (error) {
                 console.error(error);
             }
         },
-        paymentConcluded(type){
+        paymentConcluded(type) {
             this.paidFor = true;
             switch (type[0]) {
                 case 1:
@@ -327,33 +368,46 @@ export default {
                     break;
             }
         },
+        async saveOrderDetails(data) {
+            try {
+                const url = `${baseApiUrl}/save-order-details`;
+                console.log(data, url);
+                await axios.post(url, data)
+
+            } catch (error) {
+
+            }
+        }
     }
 }
 </script>
 
 <style scoped>
-
-.deactive{
+.deactive {
     filter: grayscale(1);
     pointer-events: none;
 }
-.priceLabel{
+
+.priceLabel {
     text-align: end;
     font-size: 2rem;
     margin: 0rem 2rem 0rem 0rem;
 }
-.title{
+
+.title {
     text-align: left;
     padding: 1rem;
     font-size: 1.4rem;
 }
-.buy-sumary{
+
+.buy-sumary {
     display: flex;
     flex-direction: row;
     margin-block: 5.1vw;
     margin-inline: 1rem;
 }
-.resumo{
+
+.resumo {
     width: 50%;
     margin: 1rem 0rem 1rem 1rem;
     border-radius: 2rem 0 0 2rem;
@@ -361,25 +415,26 @@ export default {
     box-shadow: 0 0 0.5rem 0.3rem rgba(0, 0, 0, 0.468);
 }
 
-.resumo .itemInfo{
-   transform: scale(0.8);
-   margin-left: 0;
+.resumo .itemInfo {
+    transform: scale(0.8);
+    margin-left: 0;
 }
 
-.itemInfo .quantity{
+.itemInfo .quantity {
     color: aliceblue;
 }
-.data-resume{
+
+.data-resume {
     flex-direction: column;
     width: 50%;
-    
+
     margin: 1rem 1rem 1rem 0rem;
     border-radius: 0 2rem 2rem 0;
     background-color: whitesmoke;
     box-shadow: 3px 0 0.5rem 0.3rem rgba(0, 0, 0, 0.468);
 }
 
-.endereco{
+.endereco {
     background-color: rgb(245, 245, 245);
     font-size: 1.4rem;
     display: flex;
@@ -389,36 +444,41 @@ export default {
     border-radius: 0 2rem 0 0;
 }
 
-#endereco{
+#endereco {
     min-width: 100%;
 }
-#numero{
+
+#numero {
     min-width: 25%;
 }
-#complemento{
+
+#complemento {
     min-width: 50%;
     margin-inline: auto;
 }
-#bairro{
+
+#bairro {
     min-width: 100%;
 }
-#cidade{
+
+#cidade {
     min-width: 30%;
 }
-#uf{
+
+#uf {
     min-width: 30%;
     margin-inline: auto;
 }
 
-#endereço-data{
+#endereço-data {
     gap: 1rem;
     width: 80%;
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
 
-.endereco-change{
-  border-radius: 0.5rem;
+.endereco-change {
+    border-radius: 0.5rem;
     background-color: #d6ac00;
     box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #a38200, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
     height: 3.4rem;
@@ -432,11 +492,12 @@ export default {
     cursor: pointer;
 }
 
-.endereco-change:active{
+.endereco-change:active {
     background-color: #d6ac00;
     box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #a38200, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
 }
-.forma-pagamento{
+
+.forma-pagamento {
     font-size: 16pt;
     text-transform: uppercase;
     color: whitesmoke;
@@ -449,17 +510,17 @@ export default {
     row-gap: 2rem;
 }
 
-.forma-pagamento h3{
+.forma-pagamento h3 {
     margin-left: 0%;
 }
 
-.paypal{
+.paypal {
     margin: auto;
     width: 100%;
     background: none;
 }
 
-.options{
+.options {
     display: flex;
     flex-direction: column;
     row-gap: 1.5rem;
@@ -469,7 +530,8 @@ export default {
     margin-inline: 2%;
     justify-content: space-evenly;
 }
-.options .option_no_def_button{
+
+.options .option_no_def_button {
     border-radius: 5px;
     padding: 2%;
     background: #35b1e5;
@@ -479,30 +541,32 @@ export default {
     transition: all 0.3s ease-in-out;
     cursor: pointer;
 }
-.options .option_no_def_button:hover{
+
+.options .option_no_def_button:hover {
     box-shadow: 1rem 1rem 1rem 0rem rgb(0, 0, 0, 0.25);
 }
 
 
-.options div button{
+.options div button {
     background: none;
     border: none;
     margin-inline: 3.4rem;
     width: 3rem;
 }
 
-.options div button img{
+.options div button img {
     max-height: 2vmax;
 }
 
-.overlay{
+.overlay {
     position: fixed;
     z-index: 4;
     opacity: 0;
     animation: show 0.4s ease-in-out;
     animation-fill-mode: forwards;
 }
-.overlay_blur{
+
+.overlay_blur {
     position: fixed;
     background-color: rgba(0, 0, 0, 0.555);
     backdrop-filter: blur(6px);
@@ -515,11 +579,12 @@ export default {
     animation: show 0.4s ease-in-out;
     animation-fill-mode: forwards;
 }
-.blur{
+
+.blur {
     filter: blur(6px);
 }
 
-.compra-concluida{
+.compra-concluida {
     height: 58.7rem;
     width: 90%;
     margin: auto;
@@ -529,7 +594,7 @@ export default {
     gap: 7rem;
 }
 
-.continuar-comprar{
+.continuar-comprar {
     padding: 1rem;
     width: 100%;
     border-radius: 0.5rem;
@@ -543,12 +608,12 @@ export default {
     cursor: pointer;
 }
 
-.continuar-comprar:hover{
+.continuar-comprar:hover {
     background-color: #5b94e9;
     box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #2e5a9b, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
 }
 
-.conclusion-screen{
+.conclusion-screen {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -556,16 +621,17 @@ export default {
     gap: 8rem;
 }
 
-.sucess-text{
+.sucess-text {
     font-size: 2vw;
     font-weight: lighter;
 }
-.sucess-text h1{
+
+.sucess-text h1 {
     font-size: 4vw;
     font-weight: 700;
 }
 
-.byBoleto{
+.byBoleto {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -573,7 +639,7 @@ export default {
     font-size: 14pt;
 }
 
-.link-button{
+.link-button {
     display: flex;
     padding: 1rem;
     border-radius: 0.5rem;
@@ -587,38 +653,44 @@ export default {
     text-decoration: none;
     cursor: pointer;
 }
-.link-button a{
+
+.link-button a {
     width: 100%;
     height: 100%;
     text-decoration: none;
     color: white;
 }
 
-.link-button:hover{
+.link-button:hover {
     background-color: #5b94e9;
     box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #2e5a9b, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
 }
 
-@keyframes show{
-    0% {opacity: 0;}
-    
-    100% {opacity: 1;}
+@keyframes show {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 @media screen and (max-width: 1050px) {
-    .byBoleto iframe{
+    .byBoleto iframe {
         width: 50rem;
         height: 30rem;
     }
 }
 
 @media screen and (max-width: 850px) {
-    .compra-concluida{
+    .compra-concluida {
         height: 48.7rem;
         margin-block: 2rem;
     }
-    .conclusion-screen{
-        flex-direction: column; 
+
+    .conclusion-screen {
+        flex-direction: column;
         align-items: none;
         gap: 4rem;
     }
@@ -626,62 +698,67 @@ export default {
 
 @media screen and (max-width: 800px) {
 
-    .buy-sumary{
+    .buy-sumary {
         flex-direction: column;
         align-items: center;
     }
-    .resumo{
+
+    .resumo {
         min-height: 20rem;
         height: 100%;
         width: 90%;
         margin: 0;
         border-radius: 2rem 2rem 0 0;
     }
-    .data-resume{
+
+    .data-resume {
         margin: 0;
         width: 90%;
         border-radius: 0 0 2rem 2rem;
         box-shadow: 0px 3px 0.5rem 0.26rem rgba(0, 0, 0, 0.468)
     }
-    .forma-pagamento{
-        
+
+    .forma-pagamento {
+
         border-radius: 0 0 2rem 2rem;
     }
 }
 
 @media screen and (max-width: 550px) {
-    .sucess-text{
+    .sucess-text {
         font-size: 2rem;
     }
-    .sucess-text h1{
+
+    .sucess-text h1 {
         font-size: 4rem;
     }
-    .byBoleto iframe{
+
+    .byBoleto iframe {
         width: 100%;
         height: 100%;
     }
 }
 
-@media screen  and (max-width: 500px){
-}
+@media screen and (max-width: 500px) {}
 
 @media screen and (max-width: 450px) {
-    
-    .resumo .itemInfo{
+
+    .resumo .itemInfo {
         transform: scale(0.7);
     }
 
-    .endereco-change{
+    .endereco-change {
         height: 5.4rem;
     }
-    .options{
+
+    .options {
         width: 90%;
     }
 }
 
 @media screen and (max-width: 370px) {
 
-    .compra-concluida{
+    .compra-concluida {
         margin-block: 4rem;
     }
 }
