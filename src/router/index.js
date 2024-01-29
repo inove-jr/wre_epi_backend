@@ -13,12 +13,19 @@ import BannerConfigForm from '../components/UserPageForms/BannerConfigForm.vue'
 import ListaPedidios from '../components/ListPedidos.vue'
 import PasswordRecovery from '../views/PasswordRecovery.vue'
 import ChangePassword from '../views/ChangePassword.vue'
+import SearchView from "../views/SearchView.vue"
 
 const routes = [
   {
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: "/search?:query",
+    name: "search",
+    component: SearchView,
+    props: true
   },
   {
     path: '/product/:id',
