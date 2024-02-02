@@ -5,13 +5,22 @@
           <img src="../assets/logobranca.png" alt="Imagem do logo da empresa" />
         </div>
       </router-link>
-  
+
       <div class="header__searchbar">
+        <input class="searchbar" type="text" placeholder="Pesquisar produtos" @input="event => this.query = event.target.value"/>
+        <button class="searchbar-button" v-bind:class="{ disabled: disallowSearch }">
+          <router-link  :to="{name:'search', params:{query: this.query}}">
+            <img src="../assets/lupa.png" alt="Ícone de busca(lupa)" />
+          </router-link>
+        </button>
+      </div>
+  
+      <!--<div class="header__searchbar">
         <input class="searchbar" type="text" placeholder="Pesquisar produtos" />
         <button class="searchbar-button">
           <img src="../assets/lupa.png" alt="Ícone de busca(lupa)" />
         </button>
-      </div>
+      </div>-->
   
       <div class="header__cart">
 
@@ -70,7 +79,9 @@
       return {
         loggedIn: false,
         user_name: String,
-        user_email: String
+        user_email: String,
+        query: "NULL",
+        allowSearch: true
       }
     },
     beforeRouteUpdate() {
@@ -78,7 +89,10 @@
     },
     computed:{
       ...mapState(['user']),
-      ...mapState(['isLoggedIn'])
+      ...mapState(['isLoggedIn']),
+      disallowSearch(){
+        return this.query === "NULL";
+      }
     },
     methods: {
       logOut(){
@@ -148,6 +162,10 @@
   
     background-color: #02589a;
     font-family: 'Lato';
+  }
+
+  .disabled{
+    pointer-events: none;
   }
   
   .header__logo {
