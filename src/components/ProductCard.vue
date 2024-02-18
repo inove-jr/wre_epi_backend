@@ -1,5 +1,5 @@
 <template>
-    <div class="whiteBox card">
+    <div class="whiteBox card" @click="goToProductPage()">
         <div class="row center">
             <span class="nome">{{ produto.name }}</span>
         </div>
@@ -32,6 +32,7 @@
 <script>
 import { baseApiUrl,userKey } from '@/global'
 import axios from "axios"
+import { RouterLink, useRouter } from 'vue-router';
 export default {
     
     name: "ProductCard",
@@ -73,6 +74,13 @@ export default {
                 alert(e.response)
                 return;
                 }))
+        },
+
+        goToProductPage(){
+            console.log(this.produto.id)
+            const router = useRouter();
+
+            this.$router.push({ name: 'product', params: { id: this.produto.id } });
         }
 
     }
