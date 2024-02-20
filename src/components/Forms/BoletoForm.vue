@@ -56,6 +56,8 @@
 
 import axios from 'axios'
 import { userKey, baseApiUrl } from '@/global';
+import { mapActions } from 'vuex';
+
 export default {
   name: 'BoletoForm',
   components: {
@@ -73,6 +75,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['updatePaymentUrl']),
     /*test(e) {
       e.preventDefault();
       this.$emit('emitType', [1,'https://sandbox.asaas.com/b/pdf/7395892015679778'])
@@ -105,7 +108,10 @@ export default {
 
 
       console.log(data)
-      this.bankSlipPayment(data)
+      const paymentURL= await this.bankSlipPayment(data)
+      console.log(paymentURL)
+      this.updatePaymentUrl(paymentURL);
+
       alert(` Pagamento Realizado Com sucesso!`);
       this.$emit('pagamentoConcluido');
       this.$emit('emitType', [1,data])
@@ -125,7 +131,8 @@ export default {
     async bankSlipPayment(data) {
       try {
         const url = `${baseApiUrl}/bankSlip-payment`;
-        await axios.post(url, data);
+        const response = await axios.post(url, data);
+        return response.data
       } catch (error) {
         console.error(error);
         throw error;

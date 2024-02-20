@@ -76,6 +76,7 @@
 <script>
 import axios from 'axios'
 import { userKey, baseApiUrl } from '@/global';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'CreditForm',
@@ -97,6 +98,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['updatePaymentUrl']),
     async submitCard(e) {
       e.preventDefault();
 

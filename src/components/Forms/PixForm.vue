@@ -1,61 +1,5 @@
 <template>
   <form class="form-container">
-
-    <!--
-
-        <div class="card-input">
-          <label for="name" class="card-input__label">
-            Nome
-          </label>
-          <input
-          id="name"
-          class="card-input__input"
-          v-model="this.nome"
-          autocomplete="off"
-          />
-        </div>
-        
-        <div class="card-input">
-          <label for="email" class="card-input__label">
-            E-mail
-          </label>
-          <input
-          id="email"
-          class="card-input__input"
-          type="email"
-          v-model="this.email"
-          autocomplete="off"
-          @input="this.validM = validMail($event.target)"
-          />
-        </div>
-        
-        <div class="card-input">
-          <label for="telefone" class="card-input__label">
-            Telefone
-          </label>
-          <input
-          id="telefone"
-          class="card-input__input input-camp"
-          type="tel"
-          v-model="this.tel"
-          maxlength="15"
-          @input="$event.target.value = formatFone($event.target); this.validT = validNumber($event.target.value)"
-          />
-        </div>
-    
-        <div class="card-input">
-          <label for="endereco" class="card-input__label">
-            Endereço
-          </label>
-          <input
-            id="endereco"
-            class="card-input__input"
-            v-model="name"
-            autocomplete="off"
-          />
-        </div>
-        <form class="form-container" style="width: 430px;">
--->
     <div class="border_line">
           <div class="border">
             <h1>Confirmar Compra</h1>
@@ -67,24 +11,17 @@
             </div>
         
             <div class="confirm-button-div">
-              <input type="submit" value="Finalizar Compra" class="card-form-button" name="submit" @click="submitCard" />
+              <input type="submit" value="Finalizar Compra" class="card-form-button" name="submit" @click="submitPayment" />
             </div>
             </div>
     </div>
-     <!-- 
-  <h1>Confirmar Pagamento Via Pix</h1>
-
-    <div style="width: 100%;">
-      <input type="submit" value="Confirmar" class="card-form__button" name="submit" @click="submitCard" />-->
-      <!-- <input v-if="!(this.nome!='' && this.validM && this.validT)" type="submit" value="Pagar" class="card-form__button disable" disabled /> -->
-  <!--   </div>
-  -->
   </form>
 </template>
 <script>
 
 import axios from 'axios'
 import { userKey, baseApiUrl } from '@/global';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'PixForm',
@@ -106,10 +43,11 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['updatePaymentUrl']),
     /*test(){
       this.$emit('emitType', [2,'https://sandbox.asaas.com/i/8986881833885483'])
     },*/
-    async submitCard(e) {
+    async submitPayment(e) {
       e.preventDefault();
 
       // const { parcelas, price, name, cardNumber, cvv, expireMonth, expireYear } = this;
@@ -137,7 +75,10 @@ export default {
 
 
       console.log(data)
-      this.pixPayment(data)
+      const paymentURL= await this.pixPayment(data)
+      console.log(paymentURL)
+      this.updatePaymentUrl(paymentURL);
+      
       alert(`Pagamento Realizado Com sucesso!`);
       this.$emit('pagamentoConcluido');
       this.$emit('emitType', [2,data])
@@ -157,7 +98,8 @@ export default {
     async pixPayment(data) {
       try {
         const url = `${baseApiUrl}/pix-payment`;
-        await axios.post(url, data);
+        const response = await axios.post(url, data);
+        return response.data
       } catch (error) {
         console.error(error);
         throw error;

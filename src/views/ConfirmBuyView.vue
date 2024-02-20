@@ -7,16 +7,15 @@
             </div>
             <div class="byPix" v-if="byPix">
                 <!--<iframe :src="payData" width="620" height="280" style="border: 2px black solid;"></iframe>-->
-                <div class="link-button">
-                    <a :href="payData" target="_blank" style="padding: 2rem;font-size: 24pt;"><span>Abrir página de
-                            pagamento do PIX</span></a>
-                </div>
+                <a @click="goToPaymentURL" :href="payData" class="link-button" style="padding: 2rem; font-size: 24pt;">
+                    <span>Abrir página de pagamento do PIX</span>
+                </a>
+
             </div>
             <div class="byBoleto" v-if="byBoleto">
-                <iframe :src="payData" width="620" height="280" style="border: 2px black solid;"></iframe>
-                <div class="link-button" @click="doAction">
-                    <a :href="payData" text="Baixar Boleto" download="boleto.pdf" target="_blank"></a>
-                </div>
+                <a @click="goToPaymentURL" :href="payData" class="link-button" style="padding: 2rem; font-size: 24pt;">
+                    <span>Acessar Boleto</span>
+                </a>
             </div>
         </div>
         <RouterLink :to="{ name: 'home' }">
@@ -97,6 +96,7 @@ import CartItemrResume from '@/components/cartItemrResume.vue';
 import PopUp from '@/components/PopUp.vue';
 import axios from "axios"
 import { baseApiUrl, userKey, clientID } from '@/global';
+import { mapGetters } from 'vuex';
 
 export default {
     name: "ConfirmBuy",
@@ -184,6 +184,9 @@ export default {
             tel: ''
         };
     },
+    computed: {
+        ...mapGetters(['paymentUrl'])
+    },
     components: { CartItemrResume, PopUp },
     methods: {
         calcTotal() {
@@ -247,43 +250,24 @@ export default {
                             intent: "CAPTURE"
                         });
                     },
-                    //   onApprove: async (data, actions) => {
-
-                    //     let bodyData={}
-                    //     const orderId = (await actions.order.capture());
-                    //     const json = localStorage.getItem(userKey);
-                    //     const client_id = JSON.parse(json).id;
-                    //     //fazer função no backend para tratar as informações de pedido assim como no asaas pelo lado do servidor e não no front
-                    //     //enviar somente o id do pagamento/transação
-                    //     bodyData.client_id = client_id;
-                    //     bodyData.order_id = orderId.id; 
-                    //     // //cartão teste:4032035738409440
-                    //     // this.paidFor = true;
-
-                    //     this.saveOrderDetails(bodyData)
-
-                    //     // console.log(orderId);
-
-
-                    //   },
 
                     onApprove: async (data, actions) => {
                         const json = localStorage.getItem(userKey)
                         const client_id = JSON.parse(json).id
-                        // Order is captured on the server
 
                         const body = {
                             client_id: client_id
                         }
 
                         const url = `${baseApiUrl}/${data.orderID}/capture-paypal-order`;
-                        axios.post(url,body ,{
+                        axios.post(url, body, {
                             headers: {
                                 "Content-Type": "application/json"
                             }
                         })
                             .then((response) => response.data).then(
                                 alert("Pagamento Realizado com Sucesso")
+
                             );
 
 
@@ -295,6 +279,13 @@ export default {
                 })
                 .render(this.$refs.paypal);
         },
+        
+        goToPaymentURL() {
+                        console.log(this.paymentUrl)
+                        window.open(this.paymentUrl, '_blank');
+
+                    }, 
+
         async getAddress(userId) {
             try {
                 const url = `${baseApiUrl}/address/` + userId;

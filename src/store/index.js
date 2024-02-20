@@ -4,8 +4,10 @@ import axios from 'axios'
 export default createStore({
   state: {
     isLoggedIn: false,
+    paymentUrl:'',
   },
   getters: {
+    paymentUrl: state=>state.paymentUrl
   },
   mutations: {
     setUser(state,user){
@@ -20,9 +22,16 @@ export default createStore({
       state.isLoggedIn = value;
       // console.log(state.isLoggedIn)
       localStorage.setItem('isLoggedIn', value)
-    }
+    },
+
+    paymentUrl(state,url){
+      state.paymentUrl=url
+    },
   },
   actions: {
+    updatePaymentUrl({commit},url){
+        commit('paymentUrl',url);
+    }
   },
   modules: {
   }
