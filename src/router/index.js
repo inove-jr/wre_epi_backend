@@ -15,6 +15,7 @@ import PasswordRecovery from '../views/PasswordRecovery.vue'
 import ChangePassword from '../views/ChangePassword.vue'
 import SearchView from "../views/SearchView.vue"
 
+
 const routes = [
   {
     path: '/',
@@ -22,7 +23,7 @@ const routes = [
     component: HomeView
   },
   {
-    path: "/search?:query",
+    path: "/search",
     name: "search",
     component: SearchView,
     props: true

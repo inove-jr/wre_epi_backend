@@ -1,60 +1,47 @@
 <template>
     <div class="pagination-container">
-        <button
-            v-if="showPrevious"
-            class="item set"
-            @click="changePage(previous)"
-        >
-        <!-- &laquo; -->&lt
+        <button v-for="(page, index) in pages" :key="page" class="item" :class="{ current: page === current }"
+            @click="changePage(index, $event)">
+            {{ page }}
         </button>
-        <button
-            v-for="(page, index) in pages"
-            :key="page"
-            class="item"
-            :class="{ current: page === current }"
-            @click="changePage(index)"
-        >
-        {{ page }}
-        </button>
-        <button v-if="showNext" class="item set" @click="changePage(current)">
-        <!-- &raquo; -->&gt
-        </button>
+
     </div>
 </template>
 
 <script>
-export default{
-    name:'Paginacao',
+export default {
+    name: 'Paginacao',
     props: {
-        offset: {
-            type: [String, Number],
-            default: 0,
-        },
         total: {
             type: [String, Number],
             required: true,
         },
         limit: {
             type: [String, Number],
-            default: 10,
+            default: 20,
+        },
+        totalPages: {
+            type: [String, Number]
         },
     },
     data() {
-        return{
+        return {
 
-    }},
-    computed:{
+        }
+    },
+    computed: {
         current() {
             //corect page ( 0 -> 1, 1 -> 2)
             return this.offset ? this.offset + 1 : 1;
         },
         previous() {
-            return this.offset-1;
+            return this.offset - 1;
         },
         pages() {
-            const pageQtd = Math.ceil(this.total / this.limit);
-            if (pageQtd <= 1) return [1];
-            return Array.from(Array(pageQtd).keys(), (i) => i + 1);
+            if (this.totalPages <= 1) return [1];
+
+            console.log(this.totalPages);
+            return Array.from({ length: this.totalPages }, (_, i) => i + 1);
         },
         showPrevious() {
             return this.current > 1;
@@ -64,14 +51,14 @@ export default{
         },
     },
     methods: {
-        changePage(offset) {
-            this.$emit('change-page', offset);
+        changePage(index, event) {
+            this.$emit('change-page', index, event);
         },
     },
 }
 </script>
 <style scoped>
-.pagination-container{
+.pagination-container {
     padding: 2rem;
     display: flex;
     gap: 0.6rem;
@@ -79,7 +66,8 @@ export default{
     flex-wrap: nowrap;
     justify-content: center;
 }
-.item{
+
+.item {
     font-family: 'Lato';
     font-size: 10pt;
     padding: 0.5rem;
@@ -88,10 +76,12 @@ export default{
     border: none;
     box-shadow: 0px 0px 2px 2px rgba(146, 143, 143, 43%);
 }
-.current{
+
+.current {
     background-color: rgb(91, 172, 252);
 }
-.set{
+
+.set {
     padding: 0 1rem;
     font-weight: bolder;
 }
