@@ -40,24 +40,53 @@
         </section>
         <div class="data-resume">
             <section class="endereco">
-
-                <img class="mapIcon">
-                <div class="col" id="endereço-data" style="padding: 0.6rem; flex-wrap: wrap;">
-                    <span id="endereco"><b> Endereço: </b>{{ endereco.street }}</span>
-                    <span id="bairro"><b>Bairro: </b>{{ endereco.district }}</span>
-                    <div class="row num-com">
-                        <span id="numero"><b> Número: </b>{{ endereco.number }}</span>
-                        <span id="complemento"><b> Complemento: </b>{{ endereco.complement }}</span>
-                    </div>
-                    <div class="row" style="flex-wrap: wrap;">
-                        <span id="cidade"><b> Cidade: </b>{{ endereco.city }}</span>
-                        <span id="uf"><b> Estado: </b>{{ endereco.state }}</span>
+                <div class="col" id="endereço-data" style="flex-wrap: wrap;">
+                    <div class="row">
+                        <span><b>Endereço</b></span>
+                        <img class="mapIcon">
                     </div>
 
-                    <div style="width: 100%; text-align: center;">
-                        <button class="endereco-change" @click="this.$router.push({ name: 'cart' });">Escolher outro
-                            endereço</button>
+                    <div class="row" >
+                        <div class="col" id="address-row">
+                            <div class="row" style="flex-wrap: wrap;">
+                                <span id="cidade">{{ endereco.city }}</span>
+                                <span> &nbsp;-&nbsp; </span>
+                                <span id="uf">{{ endereco.state }}</span>
+                            </div>
+                            <div class="row">
+                                <span id="bairro">{{ endereco.district }}</span>
+                                <span>,&nbsp; </span>
+                                <span id="endereco">{{ endereco.street }}</span>
+                                <span>,&nbsp; </span>
+                                <span id="numero">{{ endereco.number }}</span>
+                            </div>
+                            <div class="row">
+                                <span id="complemento">{{ endereco.complement }}</span>
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin-left: auto;">
+                            <button class="endereco-change" @click="this.$router.push({ name: 'cart' });">Escolher outro
+                                endereço</button>
+                        </div>
                     </div>
+                </div>
+
+                <div class="shipping-quote-div">
+                    <span><b>Opções de Frete</b></span>
+                    <div class="shipping-container-quotes">
+                        <select v-model="selectedOption">
+                            <option disabled value="">Selecione uma opção de frete</option>
+                            <option v-for="(option, index) in shippingOptions" :key="index">
+                                {{ option.name }} - Valor: R$ {{ option.price }} - Entrega em: {{ option.deliveryTime }}
+                            </option>
+                        </select>
+                        <div v-if="selectedOption">
+                            <p>Opção selecionada: {{ selectedOption.name }}</p>
+                            <p>Valor do frete: R$ {{ selectedOption.price }}</p>
+                            <p>Entrega estimada: {{ selectedOption.deliveryTime }}</p>
+                        </div>
+                    </div>
+
                 </div>
 
             </section>
@@ -135,6 +164,12 @@ export default {
             byPix: false,
             byBoleto: false,
             payData: "",
+            selectedOption: null,
+            shippingOptions: [
+                { name: 'Correios', price: 10.00, deliveryTime: '3 dias úteis' },
+                { name: 'Jadlog', price: 15.00, deliveryTime: '2 dias úteis' },
+                { name: 'Sedex', price: 20.00, deliveryTime: '1 dia útil' }
+            ],
             /* listProducts: [
                 {name: "Nome do produto 1 - Capacete do tipo",
                   quantity: 2,
@@ -279,12 +314,12 @@ export default {
                 })
                 .render(this.$refs.paypal);
         },
-        
-        goToPaymentURL() {
-                        console.log(this.paymentUrl)
-                        window.open(this.paymentUrl, '_blank');
 
-                    }, 
+        goToPaymentURL() {
+            console.log(this.paymentUrl)
+            window.open(this.paymentUrl, '_blank');
+
+        },
 
         async getAddress(userId) {
             try {
@@ -333,7 +368,7 @@ export default {
 
                 const cartData = await this.getCart(userData.id);
                 this.listProducts = cartData
-                console.log(this.listProducts);
+                // console.log(this.listProducts);
                 Object.entries(this.listProducts).forEach(([key, value]) => {
                     this.som += value.price * value.quantity
                 });
@@ -368,6 +403,27 @@ export default {
             } catch (error) {
 
             }
+        },
+        async shippingQuoteOptions(productsList){
+            const json = localStorage.getItem(userKey);
+            const userData = JSON.parse(json);
+
+            const addressData = await this.getAddress(userData.id);
+            console.log(addressData.zipCode)
+            const data = {
+                zipCode: addressData.zipCode,
+                products: productsList
+            }
+
+            try {
+                const url = `${baseApiUrl}/shipping-quote`;
+                console.log(data, url);
+                await axios.get(url, data)
+
+            } catch (error) {
+
+            }
+
         }
     }
 }
@@ -435,30 +491,34 @@ export default {
     border-radius: 0 2rem 0 0;
 }
 
-#endereco {
-    min-width: 100%;
+/* 
+#address-row {
+    min-width: 40%;
 }
 
 #numero {
-    min-width: 25%;
+    min-width: 10%;
 }
 
 #complemento {
     min-width: 50%;
-    margin-inline: auto;
 }
 
 #bairro {
-    min-width: 100%;
-}
-
-#cidade {
+    min-width: 40%;
+} 
+ #cidade {
     min-width: 30%;
 }
 
 #uf {
     min-width: 30%;
     margin-inline: auto;
+} */
+
+.shipping-quote-div{
+    width: 80%;
+    margin-bottom: 2rem;
 }
 
 #endereço-data {
@@ -475,12 +535,13 @@ export default {
     height: 3.4rem;
     margin-top: 1rem;
     padding: 0.8rem 1.2rem;
-    font-size: 1.6rem;
+    font-size: 1rem;
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     color: white;
     border: none;
     cursor: pointer;
+    margin-left:auto
 }
 
 .endereco-change:active {
