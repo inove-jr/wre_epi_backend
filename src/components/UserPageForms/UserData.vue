@@ -1,141 +1,145 @@
 <template>
     <section class="form-camp">
-                <div class="basic-info">
-                    <div class="profile-upload">
-                        <label for="profile-picture">
-                            <img class="iconProfile" v-bind:class="{pointer : this.editing}" v-bind:src='this.imageFile'>
+        <div class="basic-info">
+            <div class="profile-upload">
+                <label for="profile-picture">
+                    <img class="iconProfile" v-bind:class="{ pointer: this.editing }" v-bind:src='this.imageFile'>
+                </label>
+                <input v-if="this.editing" type="file" id="profile-picture" accept="image/*"
+                    @change="changeProfilePic($event)">
+            </div>
+            <div class="data">
+                <div>
+                    <div>
+                        <label for="name">
+                            <h3>Nome</h3>
                         </label>
-                        <input v-if="this.editing" type="file" id="profile-picture" accept="image/*" @change="changeProfilePic($event)">
+                        <h3 id="name">
+                            <input v-if="this.editing" class="input-camp" type="text" v-model="this.name">
+                            <span v-if="!this.editing">{{ this.name }}</span>
+                        </h3>
                     </div>
-                    <div class="data">
-                        <div>
-                            <div>
-                                <label for="name">
-                                    <h3>Nome</h3>
-                                </label>
-                                <h3 id="name">
-                                    <input v-if="this.editing" class="input-camp" type="text" v-model="this.name">
-                                    <span v-if="!this.editing">{{ this.name }}</span>
-                                </h3>
-                            </div>
-                            <div>
-                                <label for="email">
-                                    <h3>E-mail</h3>
-                                </label>
-                                <h3 id="email">
-                                    <input v-if="this.editing" class="input-camp" type="email" v-model="this.email">
-                                    <span v-if="!this.editing">{{ this.email }}</span>
-                                </h3>
-                            </div>
-                            <div>
-                                <h3 for="empresa">
-                                    Empresa
-                                </h3>
-                                <h3 id="empresa">
-                                    <input v-if="this.editing" class="input-camp" type="text" v-model="this.empresa">
-                                    <span v-if="!this.editing">{{ this.empresa }}</span>
-                                </h3>
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                <h3 for="cpf" :class="{invalid : invalidCpf}">
-                                    CPF
-                                </h3>
-                                <h3 id="cpf">
-                                    <input v-if="this.editing" class="input-camp" type="text" maxlength="14" v-model="this.cpf" @input="this.cpf = this.validateCpf($event.target)">
-                                    <span v-if="!this.editing">{{ this.cpf }}</span>
-                                </h3>
-                            </div>
-                            <div>
-                                <label for="date">
-                                    <h3>Nascimento</h3>
-                                </label>
-                                <h3 id="date">
-                                    <input v-if="this.editing" class="input-camp" type="date" v-model="this.date">
-                                    <span v-if="!this.editing">{{ this.dateFormat() }}</span>
-                                </h3>
-                            </div>
-                        </div>
+                    <div>
+                        <label for="email">
+                            <h3>E-mail</h3>
+                        </label>
+                        <h3 id="email">
+                            <input v-if="this.editing" class="input-camp" type="email" v-model="this.email">
+                            <span v-if="!this.editing">{{ this.email }}</span>
+                        </h3>
                     </div>
-                    <div class="edit">
-                        <img v-if="!this.editing" @click="this.edit()" src="../../assets/edit.svg">
-                        <img v-if="this.editing" @click="this.save()" src="../../assets/save.svg">
+                    <div>
+                        <h3 for="empresa">
+                            Empresa
+                        </h3>
+                        <h3 id="empresa">
+                            <input v-if="this.editing" class="input-camp" type="text" v-model="this.empresa">
+                            <span v-if="!this.editing">{{ this.empresa }}</span>
+                        </h3>
                     </div>
                 </div>
-                
-                <div class="form">
-                    <div style="margin-left: 15%;">
-                        <h3 for="address-form" id="lblDados">Endereço</h3>
+                <div>
+                    <div>
+                        <h3 for="cpf" :class="{ invalid: invalidCpf }">
+                            CPF
+                        </h3>
+                        <h3 id="cpf">
+                            <input v-if="this.editing" class="input-camp" type="text" maxlength="14" v-model="this.cpf"
+                                @input="this.cpf = this.validateCpf($event.target)">
+                            <span v-if="!this.editing">{{ this.cpf }}</span>
+                        </h3>
                     </div>
-                    <form name="address-form" class="address-form">
+                    <div>
+                        <label for="date">
+                            <h3>Nascimento</h3>
+                        </label>
+                        <h3 id="date">
+                            <input v-if="this.editing" class="input-camp" type="date" v-model="this.date">
+                            <span v-if="!this.editing">{{ this.dateFormat() }}</span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="edit">
+                <img v-if="!this.editing" @click="this.edit()" src="../../assets/edit.svg">
+                <img v-if="this.editing" @click="this.save()" src="../../assets/save.svg">
+            </div>
+        </div>
 
-                        <div class="col" id="formStance">
-                            <div class="col" style="padding-left: 1rem; flex-wrap:wrap; row-gap: 1rem;">
-                                <div class="row form-row">
-                                    <div class="col paddingForm">
-                                        <label class="lblInput">Rua:</label>
-                                        <input id="endereco" type="text" class="inputText" v-model="this.endereco_form.rua"/>
-                                    </div>
-                                    <div class="col paddingForm">
-                                        <label class="lblInput">Número:</label>
-                                        <input id="numero" type="number" class="inputText" v-model="this.endereco_form.numero"/>
-                                    </div>
-                                </div>
+        <div class="form">
+            <div style="margin-left: 15%;">
+                <h3 for="address-form" id="lblDados">Endereço</h3>
+            </div>
+            <form name="address-form" class="address-form">
 
-                                <div class="row form-row"> 
-                                    <div class="col paddingForm">
-                                        <label class="lblInput">Cidade:</label>
-                                        <input id="cidade" type="text" class="inputText" v-model="this.endereco_form.cidade"/>
-                                    </div>
-
-                                    <div class="col paddingForm">
-                                        <label class="lblInput">Bairro:</label>
-                                        <input id="bairro" type="text" class="inputText" v-model="this.endereco_form.bairro"/>
-                                    </div>
-                                    
-                                    <div class="col paddingForm">
-                                        <label class="lblInput">Complemento:</label>
-                                        <input id="complemento" type="text" class="inputText" v-model="this.endereco_form.complemento"/>
-                                    </div>
-                                </div>
-
-                                <div class="row form-row">
-                                    <div class="col paddingForm">
-                                        <label class="lblInput">UF:</label>
-                                        <input id="uf" type="text" class="inputText" maxlength="2" v-model="this.endereco_form.uf"/>
-                                    </div>
-            
-                                    <div class="col paddingForm">
-                                        <label class="lblInput">CEP:</label>
-                                        <input id="cep" type="text" class="inputText" v-model="this.endereco_form.cep"/>
-                                    </div>
-                                </div>
-                           
+                <div class="col" id="formStance">
+                    <div class="col" style="padding-left: 1rem; flex-wrap:wrap; row-gap: 1rem;">
+                        <div class="row form-row">
+                            <div class="col paddingForm">
+                                <label class="lblInput">Rua:</label>
+                                <input id="endereco" type="text" class="inputText" v-model="this.endereco_form.rua" />
                             </div>
-
-                            <div class="paddingForm">
-                                <div class="col" id="save_endereco">
-                                    <button class="endSave" @click="saveEndereco()">Salvar Endereço</button>
-                                </div>
+                            <div class="col paddingForm">
+                                <label class="lblInput">Número:</label>
+                                <input id="numero" type="number" class="inputText" v-model="this.endereco_form.numero" />
                             </div>
                         </div>
-                    </form>
+
+                        <div class="row form-row">
+                            <div class="col paddingForm">
+                                <label class="lblInput">Cidade:</label>
+                                <input id="cidade" type="text" class="inputText" v-model="this.endereco_form.cidade" />
+                            </div>
+
+                            <div class="col paddingForm">
+                                <label class="lblInput">Bairro:</label>
+                                <input id="bairro" type="text" class="inputText" v-model="this.endereco_form.bairro" />
+                            </div>
+
+                            <div class="col paddingForm">
+                                <label class="lblInput">Complemento:</label>
+                                <input id="complemento" type="text" class="inputText"
+                                    v-model="this.endereco_form.complemento" />
+                            </div>
+                        </div>
+
+                        <div class="row form-row">
+                            <div class="col paddingForm">
+                                <label class="lblInput">UF:</label>
+                                <input id="uf" type="text" class="inputText" maxlength="2"
+                                    v-model="this.endereco_form.uf" />
+                            </div>
+
+                            <div class="col paddingForm">
+                                <label class="lblInput">CEP:</label>
+                                <input id="cep" type="text" class="inputText" v-model="this.endereco_form.cep" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="paddingForm">
+                        <div class="col" id="save_endereco">
+                            <button class="endSave" @click="saveEndereco()">Salvar Endereço</button>
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </form>
+        </div>
+    </section>
 </template>
 <script>
 import { mapState } from 'vuex';
-  import { userKey,baseApiUrl } from '@/global';
-  import axios from "axios"
+import { userKey, baseApiUrl } from '@/global';
+import axios from "axios"
 
 
 export default {
     name: 'UserData',
-    beforeMount(){
+    beforeMount() {
         // this.getData()
         this.getInfo()
-    },  
+    },
     data() {
         return {
             name: '',
@@ -143,12 +147,12 @@ export default {
             date: '',
             empresa: '',
             cpf: '',
-           /* previous: {
-                name: '',
-                email: '',
-                date: '',
-                imageFile: ''
-            },*/
+            /* previous: {
+                 name: '',
+                 email: '',
+                 date: '',
+                 imageFile: ''
+             },*/
             endereco_form: {
                 // endereco: '',
                 // numero: 0,
@@ -173,7 +177,7 @@ export default {
         }
     },
     methods: {
-        getData(){
+        getData() {
             this.name = "Juselino Carandino Justiniano"
             this.email = "Juseli.randino.tiniano@somemail.com.br"
             this.date = "2022-02-02"
@@ -189,10 +193,10 @@ export default {
                 uf: 'ND',
                 cep: '000.000.000-99'
             }
-            
+
             this.endereco_form = this.endereco_saved
         },
-        saveEndereco(){
+        saveEndereco() {
             this.endereco_saved = this.endereco_form
         },
         reader(file, callback) {
@@ -201,7 +205,7 @@ export default {
             fr.onerror = (err) => callback(err);
             fr.readAsDataURL(file);
         },
-        changeProfilePic(event){
+        changeProfilePic(event) {
             let input = event.target
 
             if (input.files && input.files[0]) {
@@ -211,32 +215,39 @@ export default {
                 });
             }
         },
-        edit(){
+        edit() {
             this.editing = true
             /*this.previous.name = this.name
             this.previous.email = this.email
             this.previous.date = this.date
             this.previous.imageFile = this.imageFile*/
         },
-        save(){
+        save() {
             this.editing = false
         },
-        dateFormat(){
-            let D = new Date(this.date)
-            return (D.getDay() <= 9 ? '0'+D.getDay().toString() :D.getDay().toString()) + '/' + (D.getMonth()+1 <= 9 ? '0'+(D.getMonth()+1).toString() : (D.getMonth()+1).toString()) + '/' + D.getFullYear().toString()
-        },
-        
-        validateCpf(input){
-            input.value = input.value.replace(/[^0-9.]/g, ''); 
+        dateFormat() {
+            let D = new Date(this.date);
+            return (
+                (D.getDate() <= 9 ? '0' + D.getDate() : D.getDate()) +
+                '/' +
+                ((D.getMonth() + 1) <= 9 ? '0' + (D.getMonth() + 1) : (D.getMonth() + 1)) +
+                '/' +
+                D.getFullYear()
+            );
+        }
+        ,
 
-            if ((input.value  == "00000000000") ||
-            (input.value  == "11111111111") ||
-            (input.value  == "22222222222") || (input.value  == "33333333333") ||
-            (input.value  == "44444444444") || (input.value  == "55555555555") ||
-            (input.value  == "66666666666") || (input.value  == "77777777777") ||
-            (input.value  == "88888888888") || (input.value  == "99999999999") ||
-            (input.value.length != 11)) {this.invalidCpf = true;}
-            else{
+        validateCpf(input) {
+            input.value = input.value.replace(/[^0-9.]/g, '');
+
+            if ((input.value == "00000000000") ||
+                (input.value == "11111111111") ||
+                (input.value == "22222222222") || (input.value == "33333333333") ||
+                (input.value == "44444444444") || (input.value == "55555555555") ||
+                (input.value == "66666666666") || (input.value == "77777777777") ||
+                (input.value == "88888888888") || (input.value == "99999999999") ||
+                (input.value.length != 11)) { this.invalidCpf = true; }
+            else {
                 try {
                     let sm = 0;
                     let peso = 10;
@@ -246,7 +257,7 @@ export default {
                     let dig11 = '';
                     let i = 0;
 
-                    for (i=0; i<9; i++) {
+                    for (i = 0; i < 9; i++) {
                         // converte o i-esimo caractere do CPF em um numero:
                         // por exemplo, transforma o caractere '0' no inteiro 0
                         num = parseInt(input.value[i]);
@@ -259,10 +270,10 @@ export default {
                         dig10 = '0';
                     else dig10 = r.toString(); // converte no respectivo caractere numerico
 
-                // Calculo do 2o. Digito Verificador
+                    // Calculo do 2o. Digito Verificador
                     sm = 0;
                     peso = 11;
-                    for(i=0; i<10; i++) {
+                    for (i = 0; i < 10; i++) {
                         num = parseInt(input.value[i]);
                         sm = sm + (num * peso);
                         peso = peso - 1;
@@ -273,10 +284,10 @@ export default {
                         dig11 = '0';
                     else dig11 = r.toString();
 
-                // Verifica se os digitos calculados conferem com os digitos informados.
+                    // Verifica se os digitos calculados conferem com os digitos informados.
                     if ((dig10 == input.value[i]) && (dig11 == input.value[i])) this.invalidCpf = false
                     else this.invalidCpf = true;
-                } catch(err) {
+                } catch (err) {
                     this.invalidCpf = true;
                 }
             }
@@ -285,81 +296,87 @@ export default {
             return input.value
         },
         async getAddress(userId) {
-          try {
-            const url = `${baseApiUrl}/address/` + userId;
-            const response = await axios.get(url);
-            // console.log(response.data)
-            return response.data;
-          } catch (error) {
-            console.error(error);
-            throw error;
-          }
+            try {
+                const url = `${baseApiUrl}/address/` + userId;
+                const response = await axios.get(url);
+                // console.log(response.data)
+                return response.data;
+            } catch (error) {
+                console.error(error);
+                throw error;
+            }
         },
 
         async getUser(userId) {
-          try {
-            const url = `${baseApiUrl}/users/` + userId;
-            const response = await axios.get(url);
-            return response.data;
-          } catch (error) {
-            console.error(error);
-            throw error;
-          }
+            try {
+                const url = `${baseApiUrl}/users/` + userId;
+                const response = await axios.get(url);
+                return response.data;
+            } catch (error) {
+                console.error(error);
+                throw error;
+            }
         },
         async getInfo() {
-        try {
-          // console.log("entrou o get info")
-          const json = localStorage.getItem(userKey);
-          const userData = JSON.parse(json);
+            try {
+                // console.log("entrou o get info")
+                const json = localStorage.getItem(userKey);
+                const userData = JSON.parse(json);
 
-          const addressData = await this.getAddress(userData.id);
-          this.endereco = { ...addressData };
-          this.endereco_form.rua = this.endereco.street;
-          this.endereco_form.cep = this.endereco.zipCode;
-          this.endereco_form.cidade = this.endereco.city;
-          this.endereco_form.uf = this.endereco.state;
-          this.endereco_form.bairro = this.endereco.district;
-          this.endereco_form.complemento = this.endereco.complement;
-          this.endereco_form.numero = this.endereco.number;
+                const addressData = await this.getAddress(userData.id);
+                this.endereco = { ...addressData };
+                this.endereco_form.rua = this.endereco.street;
+                this.endereco_form.cep = this.endereco.zipCode;
+                this.endereco_form.cidade = this.endereco.city;
+                this.endereco_form.uf = this.endereco.state;
+                this.endereco_form.bairro = this.endereco.district;
+                this.endereco_form.complemento = this.endereco.complement;
+                this.endereco_form.numero = this.endereco.number;
 
-          const userInfo = await this.getUser(userData.id);
-          this.user = { ...userInfo };
-          console.log(this.user)
-          this.name = this.user.name;
-          this.cpf = this.user.cpf;
-          this.email = this.user.email;
-          this.empresa = this.user.empresa;
-          // console.log(this.som);
-        
+                const userInfo = await this.getUser(userData.id);
+                this.user = { ...userInfo };
+                console.log(this.user)
+                this.name = this.user.name;
+                this.cpf = this.user.cpf;
+                this.email = this.user.email;
+                this.empresa = this.user.empresa;
+                this.date = this.user.birth_date;
 
-        } catch (error) {
-          console.error(error);
-        }
-      },
+                // console.log(this.som);
+
+
+            } catch (error) {
+                console.error(error);
+            }
+        },
     },
 }
 </script>
 
 <style scoped>
-h3{
+h3 {
     margin-top: 0;
     margin-bottom: 0.8rem;
     text-align: initial;
     font-size: 11pt;
 }
-h3 span{
+
+h3 span {
     font-weight: 400;
 }
-.data{
+
+.data {
     display: flex;
     flex-direction: row;
     align-items: center;
     column-gap: 2rem;
 }
-.form-camp{
+
+.form-camp {
     margin: auto;
 }
-.iconProfile{
+
+.iconProfile {
     filter: drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.6));
     border-radius: 100%;
     margin: 1rem;
@@ -368,7 +385,8 @@ h3 span{
     max-width: 28rem;
     min-width: 28rem;
 }
-.pointer{
+
+.pointer {
     cursor: pointer;
 }
 
@@ -376,76 +394,79 @@ h3 span{
     display: none;
 }
 
-.basic-info{
+.basic-info {
     display: flex;
     align-items: center;
 }
-.data input{
+
+.data input {
     font-size: 11pt;
     min-width: 34rem;
 }
-.edit{
+
+.edit {
     cursor: pointer;
     margin-bottom: 16%;
 }
 
-.input-camp{
+.input-camp {
     background-color: rgb(236, 236, 236);
     border-radius: 4px;
     min-height: 1rem;
     padding: 0.6rem;
-    border:none;
+    border: none;
     box-shadow: inset 0px 0px 6px 2px rgba(0, 0, 0, 0.25);
 }
 
-.input-camp:focus-visible{
-    outline:none;
+.input-camp:focus-visible {
+    outline: none;
 }
 
-.invalid{
-  box-shadow: 0 0 10px 1px red;
+.invalid {
+    box-shadow: 0 0 10px 1px red;
 }
 
 
 @media screen and (max-width: 800px) {
-    .basic-info{
+    .basic-info {
         display: flex;
         flex-direction: column;
         align-items: center;
         padding-inline: 2rem;
     }
-    .edit{
-        position:sticky;
+
+    .edit {
+        position: sticky;
         z-index: 10;
         bottom: 68%;
-        left: 98%;    
+        left: 98%;
     }
 }
 
-.form{
+.form {
     display: flex;
     flex-direction: column;
-    align-items:flex-start;
+    align-items: flex-start;
     padding: 1rem 3rem 1rem 3rem;
 }
 
-.paddingForm{
+.paddingForm {
     min-width: 33%;
     width: -webkit-fill-available;
     text-align: left;
     font-size: 9pt;
 }
 
-.address-form{
+.address-form {
     margin: auto;
 }
 
-.form-row{
+.form-row {
     column-gap: 0.6rem;
 }
 
 
-.endSave{
+.endSave {
     margin: auto;
     width: 30%;
     height: 4rem;
@@ -462,8 +483,7 @@ h3 span{
     cursor: pointer;
 }
 
-.endSave:active{
+.endSave:active {
     background-color: #eccc48;
     box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #a38200, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
-}
-</style>
+}</style>
