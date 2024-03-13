@@ -35,7 +35,11 @@
                 </div>
             </div>
             <hr>
-            <p class="priceLabel">Total: R$ {{ (this.som).toLocaleString("pt-BR", { minimumFractionDigits: 2 }) }}</p>
+            <div class="label-row">
+                <p class="priceLabel">Items: R$ {{ (this.som-this.shippingPrice).toLocaleString("pt-BR", { minimumFractionDigits: 2 }) }}</p>
+                <p class="priceLabel" v-if="this.shippingPrice">Frete: R$ {{ (this.shippingPrice).toLocaleString("pt-BR", { minimumFractionDigits: 2 }) }}</p>
+                <p class="priceLabel">Total: R$ {{ (this.som).toLocaleString("pt-BR", { minimumFractionDigits: 2 }) }}</p>
+            </div>
 
         </section>
         <div class="data-resume">
@@ -46,7 +50,7 @@
                         <img class="mapIcon">
                     </div>
 
-                    <div class="row" >
+                    <div class="row">
                         <div class="col" id="address-row">
                             <div class="row" style="flex-wrap: wrap;">
                                 <span id="cidade">{{ endereco.city }}</span>
@@ -71,19 +75,27 @@
                     </div>
                 </div>
 
-                <div class="shipping-quote-div">
+                <div class="shipping-quote-div col">
                     <span><b>Opções de Frete</b></span>
-                    <div class="shipping-container-quotes">
-                        <select v-model="selectedOption">
-                            <option disabled value="">Selecione uma opção de frete</option>
-                            <option v-for="(option, index) in shippingOptions" :key="index">
-                                {{ option.name }} - Valor: R$ {{ option.price }} - Entrega em: {{ option.deliveryTime }}
-                            </option>
-                        </select>
-                        <div v-if="selectedOption">
-                            <p>Opção selecionada: {{ selectedOption.name }}</p>
-                            <p>Valor do frete: R$ {{ selectedOption.price }}</p>
-                            <p>Entrega estimada: {{ selectedOption.deliveryTime }}</p>
+                    <div class="shipping-container-quotes row">
+                        <div class="shipping-options-container col">
+
+                            <select v-model="selectedOption" style="margin: 1rem 0rem 1rem 0rem ;">
+                                <option disabled value="">Selecione uma opção de frete</option>
+                                <option v-for="(option, index) in shippingOptions" :key="index"
+                                    :value="{ name: option.ServiceDescription, index: index, price: option.Price, deliveryTime: option.DeliveryTime }">
+                                    {{ option.ServiceDescription }} - Valor: R$ {{ option.Price }} - Entrega em: {{ option.DeliveryTime}}
+                                </option>
+                            </select>
+                            <div v-if="selectedOption">
+                                <p><b>Opção selecionada:</b></p>
+                                {{ selectedOption.name }} - Valor: R$ {{ selectedOption.price }} - Entrega em: {{ selectedOption.deliveryTime }}
+                            </div>
+                        </div>
+
+                        <div style="text-align: center; margin-left: auto;">
+                            <button class="endereco-change" @click="saveShippingOption">Confirmar
+                                Opção de Frete</button>
                         </div>
                     </div>
 
@@ -142,8 +154,6 @@ export default {
         // this.cidade = "Lugar Nenhuma"
         // this.uf = "PE"
         this.getInfo();
-        this.calcTotal();
-
         // setTimeout((()=>{
         //     console.log(this.listProducts)
 
@@ -154,8 +164,10 @@ export default {
             "https://www.paypal.com/sdk/js?currency=BRL&client-id=AUKCNaeSeEWq2Z6SDzilgg66vCHVVlDWtgvlWoSQGE84tBZ_qaFzl4CAqxzRLz5CFoicyVxQIW36tqbv";
         script.addEventListener("load", this.setLoaded);
         document.body.appendChild(script);
+        
+        
     },
-    mounted: function () {
+    mounted () {
     },
     data() {
         return {
@@ -165,10 +177,12 @@ export default {
             byBoleto: false,
             payData: "",
             selectedOption: null,
+            shippingPrice:0,
+            finalOrder:[],
             shippingOptions: [
-                { name: 'Correios', price: 10.00, deliveryTime: '3 dias úteis' },
-                { name: 'Jadlog', price: 15.00, deliveryTime: '2 dias úteis' },
-                { name: 'Sedex', price: 20.00, deliveryTime: '1 dia útil' }
+                // { name: 'Correios', price: 10.00, deliveryTime: '3 dias úteis' },
+                // { name: 'Jadlog', price: 15.00, deliveryTime: '2 dias úteis' },
+                // { name: 'Sedex', price: 20.00, deliveryTime: '1 dia útil' }
             ],
             /* listProducts: [
                 {name: "Nome do produto 1 - Capacete do tipo",
@@ -260,11 +274,11 @@ export default {
                         return actions.order.create({
                             purchase_units: [
                                 {
-                                    items: this.listProducts.map((product) => {
+                                    items: this.finalOrder.map((product) => {
                                         return {
                                             name: product.name,
                                             quantity: product.quantity,
-                                            unit_amount: {
+                                            unit_amount: {  
                                                 currency_code: "BRL",
                                                 value: product.price
                                             }
@@ -374,6 +388,8 @@ export default {
                 });
                 console.log(this.som);
 
+                this.shippingQuoteOptions(cartData)
+
 
             } catch (error) {
                 console.error(error);
@@ -404,24 +420,53 @@ export default {
 
             }
         },
-        async shippingQuoteOptions(productsList){
+
+        async saveShippingOption() {
+            this.som = 0
+            console.log(this.listProducts)
+            
+            Object.entries(this.listProducts).forEach(([key, value]) => {
+                this.som += value.price * value.quantity
+            });
+            console.log(this.som);
+            this.shippingPrice=parseFloat(this.selectedOption.price);
+            this.som+=parseFloat(this.selectedOption.price);
+
+            let shippingInfo = {
+                name:'Frete' + this.selectedOption.name,
+                price:parseFloat(this.selectedOption.price),
+                quantity:1
+
+            }
+            this.finalOrder = [...this.listProducts,shippingInfo]
+
+            console.log(this.finalOrder)
+        }
+        ,
+
+
+        async shippingQuoteOptions(productsList) {
             const json = localStorage.getItem(userKey);
             const userData = JSON.parse(json);
-
+            
             const addressData = await this.getAddress(userData.id);
             console.log(addressData.zipCode)
             const data = {
                 zipCode: addressData.zipCode,
-                products: productsList
+                products: productsList,
+                Total: this.som
             }
-
+            
             try {
+                console.log("calculando frete")
                 const url = `${baseApiUrl}/shipping-quote`;
-                console.log(data, url);
-                await axios.get(url, data)
-
+                console.log(data);
+                const response = await axios.post(url, data)
+                // console.log(response.data)
+                this.shippingOptions = response.data;                
+                console.log(this.shippingOptions)
             } catch (error) {
-
+                console.log(error)
             }
 
         }
@@ -516,7 +561,7 @@ export default {
     margin-inline: auto;
 } */
 
-.shipping-quote-div{
+.shipping-quote-div {
     width: 80%;
     margin-bottom: 2rem;
 }
@@ -533,7 +578,7 @@ export default {
     background-color: #d6ac00;
     box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem #a38200, 0rem 0.1rem 0.5rem 0.2rem rgb(0, 0, 0, 0.25);
     height: 3.4rem;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
     padding: 0.8rem 1.2rem;
     font-size: 1rem;
     font-family: 'Inter', sans-serif;
@@ -541,7 +586,7 @@ export default {
     color: white;
     border: none;
     cursor: pointer;
-    margin-left:auto
+    margin-left: auto
 }
 
 .endereco-change:active {
@@ -815,4 +860,3 @@ export default {
     }
 }
 </style>
-

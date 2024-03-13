@@ -39,7 +39,7 @@
         return {
             email: "",
             password: "",
-            isAdmin: false,
+            isAdmin: true,
             userId:0
         }
     },
