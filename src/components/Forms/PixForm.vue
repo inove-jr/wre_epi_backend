@@ -1,19 +1,19 @@
 <template>
   <form class="form-container">
     <div class="border_line">
-          <div class="border">
-            <h1>Confirmar Compra</h1>
-            <hr>
-            <span>Método de pagamento: <b> PIX </b></span>
-            <div class="show-total">
-              <span >Total: <b>R$ {{(this.price).toLocaleString("pt-BR", { minimumFractionDigits: 2})}}</b></span>
-              <!--<span style="opacity: 0.6;color: rgb(7, 114, 19);">A VISTA!</span>-->
-            </div>
-        
-            <div class="confirm-button-div">
-              <input type="submit" value="Finalizar Compra" class="card-form-button" name="submit" @click="submitPayment" />
-            </div>
-            </div>
+      <div class="border">
+        <h1>Confirmar Compra</h1>
+        <hr>
+        <span>Método de pagamento: <b> PIX </b></span>
+        <div class="show-total">
+          <span>Total: <b>R$ {{ (this.price).toLocaleString("pt-BR", { minimumFractionDigits: 2 }) }}</b></span>
+          <!--<span style="opacity: 0.6;color: rgb(7, 114, 19);">A VISTA!</span>-->
+        </div>
+
+        <div class="confirm-button-div">
+          <input type="submit" value="Finalizar Compra" class="card-form-button" name="submit" @click="submitPayment" />
+        </div>
+      </div>
     </div>
   </form>
 </template>
@@ -27,7 +27,7 @@ export default {
   name: 'PixForm',
   components: {
   },
-  props: ['price'],
+  props: ['price', 'shippingPrice'],
   beforeMount() {
     this.nome = this.N
     this.email = this.E
@@ -71,17 +71,18 @@ export default {
       data.total = this.price
       data.description = 'descrição'
       data.client_id = userData.id
+      data.shipping_price = this.shippingPrice
       console.log(data)
 
 
       console.log(data)
-      const paymentURL= await this.pixPayment(data)
+      const paymentURL = await this.pixPayment(data)
       console.log(paymentURL)
       this.updatePaymentUrl(paymentURL);
-      
-      alert(`Pagamento Realizado Com sucesso!`);
-      this.$emit('pagamentoConcluido');
-      this.$emit('emitType', [2,data])
+
+      // alert(`Pagamento Realizado Com sucesso!`);
+      // // this.$emit('pagamentoConcluido');
+      // this.$emit('emitType', [2,data])
 
 
     },
@@ -99,6 +100,9 @@ export default {
       try {
         const url = `${baseApiUrl}/pix-payment`;
         const response = await axios.post(url, data);
+        alert(`Pagamento Realizado Com sucesso!`);
+        this.$emit('pagamentoConcluido');
+        this.$emit('emitType', [2, data])
         return response.data
       } catch (error) {
         console.error(error);
@@ -170,63 +174,68 @@ input::-webkit-inner-spin-button {
   text-align: left;
 }
 
-.border_line{
-    margin: 1rem;
-    border: 4px solid rgb(6, 91, 124);
-    border-radius: 1rem;
+.border_line {
+  margin: 1rem;
+  border: 4px solid rgb(6, 91, 124);
+  border-radius: 1rem;
 }
-.border{
-    padding: 5rem 3rem 5rem 3rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: 2rem;
+
+.border {
+  padding: 5rem 3rem 5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 2rem;
 }
-.border hr{
-    width: 100%;
-    margin-block: -1rem;
+
+.border hr {
+  width: 100%;
+  margin-block: -1rem;
 }
-.border h1{
-    margin: auto;
-    font-weight: 100;
+
+.border h1 {
+  margin: auto;
+  font-weight: 100;
 }
 
 .form-container {
-    font-size: 11pt;
-    width: 41rem;
-}
-.form-container span{
-    font-size: 16pt;
-}
-.show-total{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  font-size: 11pt;
+  width: 41rem;
 }
 
-.confirm-button-div{
+.form-container span {
+  font-size: 16pt;
+}
+
+.show-total {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirm-button-div {
   width: 100%;
   padding-top: 2rem;
 }
 
 .card-form-button {
-    margin: auto;
-    width: 100%;
-    padding: 1rem;
-    text-transform: uppercase;
-    font-size: 14pt;
-    border-radius: 0.5rem;
-    background-color: rgb(1 173 239);
-    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(16, 79, 119), 0rem 0.1rem 0.3rem 0.2rem rgb(0, 0, 0, 0.25);
-    font-weight: 700;
-    color: white;
-    border: none;
-    cursor: pointer;
+  margin: auto;
+  width: 100%;
+  padding: 1rem;
+  text-transform: uppercase;
+  font-size: 14pt;
+  border-radius: 0.5rem;
+  background-color: rgb(1 173 239);
+  box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(16, 79, 119), 0rem 0.1rem 0.3rem 0.2rem rgb(0, 0, 0, 0.25);
+  font-weight: 700;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
-  
+
 .card-form-button:active {
-    background-color: rgb(61, 200, 255);
-    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(1 90 124), 0rem 0.1rem 0.3rem 0.2rem rgb(0, 0, 0, 0.25);
+  background-color: rgb(61, 200, 255);
+  box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(1 90 124), 0rem 0.1rem 0.3rem 0.2rem rgb(0, 0, 0, 0.25);
 }
 
 .popup {
@@ -266,4 +275,5 @@ input::-webkit-inner-spin-button {
 
 #cardName {
   text-transform: uppercase
-}</style>
+}
+</style>

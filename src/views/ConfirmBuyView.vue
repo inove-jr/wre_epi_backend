@@ -6,7 +6,6 @@
                 <h1>SUCESSO!</h1>
             </div>
             <div class="byPix" v-if="byPix">
-                <!--<iframe :src="payData" width="620" height="280" style="border: 2px black solid;"></iframe>-->
                 <a @click="goToPaymentURL" :href="payData" class="link-button" style="padding: 2rem; font-size: 24pt;">
                     <span>Abrir página de pagamento do PIX</span>
                 </a>
@@ -36,9 +35,13 @@
             </div>
             <hr>
             <div class="label-row">
-                <p class="priceLabel">Items: R$ {{ (this.som-this.shippingPrice).toLocaleString("pt-BR", { minimumFractionDigits: 2 }) }}</p>
-                <p class="priceLabel" v-if="this.shippingPrice">Frete: R$ {{ (this.shippingPrice).toLocaleString("pt-BR", { minimumFractionDigits: 2 }) }}</p>
-                <p class="priceLabel">Total: R$ {{ (this.som).toLocaleString("pt-BR", { minimumFractionDigits: 2 }) }}</p>
+                <p class="priceLabel">Items: R$ {{ (this.som - this.shippingPrice).toLocaleString("pt-BR", {
+        minimumFractionDigits: 2
+    }) }}</p>
+                <p class="priceLabel" v-if="this.shippingPrice">Frete: R$ {{
+        (this.shippingPrice).toLocaleString("pt-BR", { minimumFractionDigits: 2 }) }}</p>
+                <p class="priceLabel">Total: R$ {{ (this.som).toLocaleString("pt-BR", { minimumFractionDigits: 2 }) }}
+                </p>
             </div>
 
         </section>
@@ -84,12 +87,14 @@
                                 <option disabled value="">Selecione uma opção de frete</option>
                                 <option v-for="(option, index) in shippingOptions" :key="index"
                                     :value="{ name: option.ServiceDescription, index: index, price: option.Price, deliveryTime: option.DeliveryTime }">
-                                    {{ option.ServiceDescription }} - Valor: R$ {{ option.Price }} - Entrega em: {{ option.DeliveryTime}}
+                                    {{ option.ServiceDescription }} - Valor: R$ {{ option.Price }} - Entrega em: {{
+        option.DeliveryTime }}
                                 </option>
                             </select>
                             <div v-if="selectedOption">
                                 <p><b>Opção selecionada:</b></p>
-                                {{ selectedOption.name }} - Valor: R$ {{ selectedOption.price }} - Entrega em: {{ selectedOption.deliveryTime }}
+                                {{ selectedOption.name }} - Valor: R$ {{ selectedOption.price }} - Entrega em: {{
+        selectedOption.deliveryTime }}
                             </div>
                         </div>
 
@@ -102,7 +107,7 @@
                 </div>
 
             </section>
-            <section class="forma-pagamento">
+            <section class="forma-pagamento" :class="{ disabled: !shippingChosed || listProducts.length === 0 || formSee }">
                 <h3>Escolha o método de pagamento</h3>
                 <div class="options" v-bind:class="{ deactive: listProducts.length == 0, blur: formSee }">
                     <div class="option_no_def_button" @click="change(1)">
@@ -127,7 +132,7 @@
         </section>
         <section class="overlay" v-if="this.formSee">
             <PopUp :type="this.type" :nome="this.nome" :email="this.email" :tel="this.tel" :totalValue="this.som"
-                v-on:paymentConcluded="paymentConcluded"></PopUp>
+                :shippingPrice="this.shippingPrice" v-on:paymentConcluded="paymentConcluded"></PopUp>
         </section>
     </section>
 </template>
@@ -164,21 +169,22 @@ export default {
             "https://www.paypal.com/sdk/js?currency=BRL&client-id=AUKCNaeSeEWq2Z6SDzilgg66vCHVVlDWtgvlWoSQGE84tBZ_qaFzl4CAqxzRLz5CFoicyVxQIW36tqbv";
         script.addEventListener("load", this.setLoaded);
         document.body.appendChild(script);
-        
-        
+
+
     },
-    mounted () {
+    mounted() {
     },
     data() {
         return {
             formSee: false,
+            shippingChosed: false,
             paidFor: false,
             byPix: false,
             byBoleto: false,
             payData: "",
             selectedOption: null,
-            shippingPrice:0,
-            finalOrder:[],
+            shippingPrice: 0,
+            finalOrder: [],
             shippingOptions: [
                 // { name: 'Correios', price: 10.00, deliveryTime: '3 dias úteis' },
                 // { name: 'Jadlog', price: 15.00, deliveryTime: '2 dias úteis' },
@@ -269,7 +275,6 @@ export default {
             window.paypal
                 .Buttons({
                     fundingSource: window.paypal.FUNDING.PAYPAL,
-
                     createOrder: (data, actions) => {
                         return actions.order.create({
                             purchase_units: [
@@ -278,7 +283,7 @@ export default {
                                         return {
                                             name: product.name,
                                             quantity: product.quantity,
-                                            unit_amount: {  
+                                            unit_amount: {
                                                 currency_code: "BRL",
                                                 value: product.price
                                             }
@@ -424,22 +429,22 @@ export default {
         async saveShippingOption() {
             this.som = 0
             console.log(this.listProducts)
-            
+
             Object.entries(this.listProducts).forEach(([key, value]) => {
                 this.som += value.price * value.quantity
             });
             console.log(this.som);
-            this.shippingPrice=parseFloat(this.selectedOption.price);
-            this.som+=parseFloat(this.selectedOption.price);
+            this.shippingPrice = parseFloat(this.selectedOption.price);
+            this.som += parseFloat(this.selectedOption.price);
 
             let shippingInfo = {
-                name:'Frete' + this.selectedOption.name,
-                price:parseFloat(this.selectedOption.price),
-                quantity:1
+                name: 'Frete' + this.selectedOption.name,
+                price: parseFloat(this.selectedOption.price),
+                quantity: 1
 
             }
-            this.finalOrder = [...this.listProducts,shippingInfo]
-
+            this.finalOrder = [...this.listProducts, shippingInfo]
+            this.shippingChosed=true
             console.log(this.finalOrder)
         }
         ,
@@ -448,7 +453,7 @@ export default {
         async shippingQuoteOptions(productsList) {
             const json = localStorage.getItem(userKey);
             const userData = JSON.parse(json);
-            
+
             const addressData = await this.getAddress(userData.id);
             console.log(addressData.zipCode)
             const data = {
@@ -456,14 +461,14 @@ export default {
                 products: productsList,
                 Total: this.som
             }
-            
+
             try {
                 console.log("calculando frete")
                 const url = `${baseApiUrl}/shipping-quote`;
                 console.log(data);
                 const response = await axios.post(url, data)
                 // console.log(response.data)
-                this.shippingOptions = response.data;                
+                this.shippingOptions = response.data;
                 console.log(this.shippingOptions)
             } catch (error) {
                 console.log(error)
@@ -497,6 +502,11 @@ export default {
     flex-direction: row;
     margin-block: 5.1vw;
     margin-inline: 1rem;
+}
+
+.disabled {
+  pointer-events: none; /* Desativa a interação do usuário */
+  opacity: 0.5; /* Define a opacidade para dar uma aparência desativada */
 }
 
 .resumo {

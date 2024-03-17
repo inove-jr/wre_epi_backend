@@ -24,9 +24,9 @@
           <option value="" disabled selected>Parcelas</option>
           <option v-for="n in 10" :value="n" :key="n">
             {{ n + 'x de R$ ' + (this.price / n).toLocaleString("pt-BR", {
-              minimumFractionDigits: 2, maximumFractionDigits:
-                2
-            }) }}
+        minimumFractionDigits: 2, maximumFractionDigits:
+          2
+      }) }}
           </option>
         </select>
       </div>
@@ -82,7 +82,7 @@ export default {
   name: 'CreditForm',
   components: {
   },
-  props: ['price'],
+  props: ['price', 'shippingPrice'],
   data() {
     return {
       cardNumber: "",
@@ -99,8 +99,12 @@ export default {
   },
   methods: {
     ...mapActions(['updatePaymentUrl']),
+    isPaidFlag() {
+      this.$emit('is-paid', true);
+    },
     async submitCard(e) {
       e.preventDefault();
+      try {
 
       // const { parcelas, price, name, cardNumber, cvv, expireMonth, expireYear } = this;
       const data = {}
@@ -130,6 +134,7 @@ export default {
 
       data.installmentCount = this.parcelas;
       data.installmentValue = this.price / this.parcelas;
+      data.shipping_price = this.shippingPrice
       data.description = 'descrição'
       data.name = this.name;
       data.cardNumber = this.cardNumber;
@@ -152,18 +157,21 @@ export default {
 
 
       console.log(data)
-      alert(` Pagamento Realizado Com sucesso!`);
-      this.$emit('pagamentoConcluido');
+
       
-      this.$emit('emitType', [3,data])
 
       this.name = '';
       this.cardNumber = '';
       this.cvv = '';
       this.expireMonth = '';
       this.expireYear = '';
+      
+        this.credCardPayment(data)
+        
 
-      this.credCardPayment(data)
+      } catch (error) {
+        alert("Error ao processar o pagamento tente novamente")
+      }
 
     },
     async getClientId(cpf) {
@@ -180,7 +188,13 @@ export default {
       try {
         const url = `${baseApiUrl}/credCard-payment`;
         await axios.post(url, data);
+        alert(` Pagamento Realizado Com sucesso!`);
+        this.$emit('emitType', [3, data])
+        this.$emit('pagamentoConcluido');
+        
       } catch (error) {
+        alert("Error ao processar o pagamento tente novamente")
+
         console.error(error);
         throw error;
       }
@@ -311,29 +325,29 @@ input::-webkit-inner-spin-button {
   z-index: 5;
 }
 
-.confirm-button-div{
+.confirm-button-div {
   width: 100%;
   padding-top: 1rem;
 }
 
 .card-form-button {
-    margin: auto;
-    width: 100%;
-    padding: 1rem;
-    text-transform: uppercase;
-    font-size: 14pt;
-    border-radius: 0.5rem;
-    background-color: rgb(1 173 239);
-    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(16, 79, 119), 0rem 0.1rem 0.3rem 0.2rem rgb(0, 0, 0, 0.25);
-    font-weight: 700;
-    color: white;
-    border: none;
-    cursor: pointer;
+  margin: auto;
+  width: 100%;
+  padding: 1rem;
+  text-transform: uppercase;
+  font-size: 14pt;
+  border-radius: 0.5rem;
+  background-color: rgb(1 173 239);
+  box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(16, 79, 119), 0rem 0.1rem 0.3rem 0.2rem rgb(0, 0, 0, 0.25);
+  font-weight: 700;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
-  
+
 .card-form-button:active {
-    background-color: rgb(61, 200, 255);
-    box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(1 90 124), 0rem 0.1rem 0.3rem 0.2rem rgb(0, 0, 0, 0.25);
+  background-color: rgb(61, 200, 255);
+  box-shadow: inset 0rem 0.1rem 0.5rem 0.2rem rgb(1 90 124), 0rem 0.1rem 0.3rem 0.2rem rgb(0, 0, 0, 0.25);
 }
 
 .disable {

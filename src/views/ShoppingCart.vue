@@ -140,7 +140,7 @@ import { baseApiUrl, userKey } from '@/global'
         };
     },
     props:{
-        total:Number
+        // total:Number
     },
     methods: {
         remove(index){

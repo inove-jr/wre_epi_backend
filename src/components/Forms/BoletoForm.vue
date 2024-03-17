@@ -62,7 +62,7 @@ export default {
   name: 'BoletoForm',
   components: {
   },
-  props: ['price'],
+  props: ['price', 'shippingPrice'],
   beforeMount() {
     this.nome = this.N
     this.email = this.E
@@ -104,6 +104,7 @@ export default {
       data.total = this.price
       data.description = 'descrição'
       data.client_id = userData.id
+      data.shipping_price = this.shippingPrice
       console.log(data)
 
 
@@ -112,9 +113,9 @@ export default {
       console.log(paymentURL)
       this.updatePaymentUrl(paymentURL);
 
-      alert(` Pagamento Realizado Com sucesso!`);
+      // alert(` Pagamento Realizado Com sucesso!`);
       this.$emit('pagamentoConcluido');
-      this.$emit('emitType', [1,data])
+      // this.$emit('emitType', [1,data])
 
 
     },
@@ -132,6 +133,9 @@ export default {
       try {
         const url = `${baseApiUrl}/bankSlip-payment`;
         const response = await axios.post(url, data);
+        alert(` Pagamento Realizado Com sucesso!`);
+        this.$emit('pagamentoConcluido');
+        this.$emit('emitType', [1,data])
         return response.data
       } catch (error) {
         console.error(error);

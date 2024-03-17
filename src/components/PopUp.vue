@@ -1,9 +1,8 @@
 <template>
     <section class="popup">
-
-        <CreditForm v-if="this.type=='credit'" :price="this.totalValue" v-on:emitType="emitType"/>
-        <BoletoForm v-if="this.type=='boleto'" :price="this.totalValue" v-on:emitType="emitType"/>
-        <PixForm v-if="this.type=='pix'" :price="this.totalValue" v-on:emitType="emitType"/>
+        <CreditForm v-if="this.type=='credit'" :price="this.totalValue" :shippingPrice="this.shippingPrice" v-on:emitType="emitType"/>
+        <BoletoForm v-if="this.type=='boleto'" :price="this.totalValue" :shippingPrice="this.shippingPrice" v-on:emitType="emitType"/>
+        <PixForm v-if="this.type=='pix'" :price="this.totalValue" :shippingPrice="this.shippingPrice" v-on:emitType="emitType"/>
 
     </section>
 </template>
@@ -19,13 +18,14 @@
             PixForm,
             BoletoForm
         },
-        props:['type', 'nome',  'email', 'tel','totalValue'],
+        props:['type', 'nome',  'email', 'tel','totalValue', 'shippingPrice'],
         data() {
           return {
           }
         },
         mounted() {
           // console.log(this.totalValue)
+          console.log(this.shippingPrice)
         },
         methods:{
           emitType(type){
