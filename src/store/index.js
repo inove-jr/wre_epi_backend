@@ -1,9 +1,11 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 
+const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
 export default createStore({
   state: {
-    isLoggedIn: false,
+    isLoggedIn,
     paymentUrl:'',
   },
   getters: {
@@ -20,8 +22,11 @@ export default createStore({
     },
     setIsLoggedIn(state,value){
       state.isLoggedIn = value;
-      // console.log(state.isLoggedIn)
+      console.log(state.isLoggedIn)
       localStorage.setItem('isLoggedIn', value)
+    },
+    setValidatingToken(state, value) {
+      state.validatingToken = value;
     },
 
     paymentUrl(state,url){

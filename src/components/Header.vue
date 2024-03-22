@@ -30,7 +30,7 @@
           </div>
         </div> -->
 
-      <div v-if="loggedIn === true" class="cart-info">
+      <div v-if="loggedIn === true || is" class="cart-info">
         <p>Bem-vindo,
           <RouterLink :to="{ name: 'userPefil', params: { userId: 1 } }" class="log-camp">
             <span>{{ this.user_name }}</span>
@@ -51,7 +51,7 @@
         </router-link>
       </div>
 
-      <router-link to="/cart">
+      <router-link to="/cart" v-if="loggedIn === true">
         <button class="cart-button">
           <img src="../assets/Vector.svg" alt="" />
           <p>0</p>
@@ -66,6 +66,7 @@
 // import { useCookies } from "vue3-cookies";
 import { mapState } from 'vuex';
 import { userKey } from '@/global';
+import { mapMutations } from 'vuex';
 
 export default {
   name: "HeaderComponent",
@@ -91,8 +92,9 @@ export default {
     logOut() {
       localStorage.removeItem(userKey)
       this.$store.commit('setUser', null)
-      this.loggedIn = false
+      this.$store.commit('setValidatingToken', false);
       this.$router.push('/login')
+      // this.loggedIn = false
     },
     // getCookie: function() { 
 
@@ -123,7 +125,7 @@ export default {
     setHeaderData: function () {
       const json = localStorage.getItem(userKey)
       const userData = JSON.parse(json)
-      //console.log(userData)
+      console.log(userData)
       if (userData) {
         this.loggedIn = true
         this.user_name = userData.name
@@ -141,6 +143,8 @@ export default {
   beforeMount() {
     // this.getCookie()
     // this.getUserData()
+
+
   },
   mounted() {
     this.setHeaderData()
@@ -291,7 +295,17 @@ export default {
 .cart-info-email p:last-child {
   text-decoration: underline;
   margin-left: 0.8rem;
+  cursor: pointer;
 }
+
+.cart-info-email p:last-child:hover {
+  color: rgb(148, 171, 150);
+
+}
+
+
+
+
 
 .cart-button {
   width: 5.778rem;
