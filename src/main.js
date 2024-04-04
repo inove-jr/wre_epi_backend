@@ -25,9 +25,12 @@ const validateToken = async () => {
   try {
     const url = `${baseApiUrl}/validateToken`
     const res = await axios.post(url, userData)
-    if (res.data) {
+    console.log(res.data)
+    if (res.data.valid) {
       store.commit('setIsLoggedIn', true)
       store.commit('setUser', userData)
+      store.commit('setIsAdmin', res.data.isAdmin)
+      console.log(res.data.isAdmin)
     } else {
       localStorage.removeItem(userKey)
       store.commit('setIsLoggedIn', false)

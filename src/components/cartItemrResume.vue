@@ -1,11 +1,11 @@
 <template>
     <div class="cartItem">
         <div class="prod-image">
-            <img :src=this.item.imagem>
+            <img :src=this.item.imageUrl>
         </div>
         <div class="nameItem">
             <p class="label">Produto</p>
-            <p class="Value">{{this.item.name}}</p> 
+            <p class="Value">{{item.name}}</p> 
         </div>
         <div class="quantity">
             <p class="label">Quantidade:</p>
@@ -56,22 +56,24 @@ export default {
            }
         },
         getItems(){
-            const url=`${baseApiUrl}/products/`+this.item.product_id
-                axios.get(url).then(res =>{
-                    this.info={...res.data}
-                    this.item.name= this.info[0].name
-                    this.item.price= this.info[0].price
-                    this.item.imagem=this.info[0].imageUrl
+            // const url=`${baseApiUrl}/products/`+this.item.product_id
+            //     axios.get(url).then(res =>{
+            //         this.info={...res.data}
+            //         this.item.name= this.info[0].name
+            //         this.item.price= this.info[0].price
+            //         this.item.imagem=this.info[0].imageUrl
                     
-                    Object.values(this.info).forEach(value => {
-                        // this.totalPrice+=this.value.price*this.value.quantity;
-                        // console.log(value)
-                        // console.log(this.item)
-                    });
-                    // console.log(this.totalPrice)
+            //         Object.values(this.info).forEach(value => {
+            //             // this.totalPrice+=this.value.price*this.value.quantity;
+            //             // console.log(value)
+            //             // console.log(this.item)
+            //         });
+            //         // console.log(this.totalPrice)
 
-                }).catch((e=>{console.error(e)}))
+            //     }).catch((e=>{console.error(e)}))
+            console.log(this.item.quantity, this.item.price)
         }
+    
     }
 }
 </script>

@@ -70,5 +70,5 @@ methods: {
 </script>
 
 <style>
-  .vueperslides--fixed-height { height: 200px; }
+  .vueperslides--fixed-height { height: 350px; }
 </style>

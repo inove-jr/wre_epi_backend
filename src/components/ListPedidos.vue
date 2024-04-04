@@ -6,29 +6,29 @@
                     <!-- Identificado do Pedido: -->
                     Pedido:
                     <span class="id">
-                       # {{ pedido.id }}
+                       # {{ pedido.order_id }}
                     </span>
                 </div>
                 <div class="value">
-                   Valor: R$ {{ (pedido.value).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}
+                   Valor: R$ {{ (pedido.valor_total) }}
                 </div>
                 <div class="pedido-details">
                     <span class="status">
-                       Status: <span>{{ pedido.status }}</span>
+                       Status: <span>{{ pedido.order_status }}</span>
                     </span>
                     <span class="dataPedido">
-                       Data da compra: <span>{{ pedido.dataPedido }}</span>
+                       Data da compra: <span>{{ pedido.order_date }}</span>
                     </span>
                 </div>
                 <div class="botoes">
                     <button class="datalhesBnt" @click="showDetails(pedidos.indexOf(pedido))">Detalhes</button>
-                    <button class="cancelarBnt">Cançelar</button>
+                    <!-- <button class="cancelarBnt">Cancelar</button> -->
                 </div>
                 
                 <section class="overlay_blur" v-if="this.popControl[pedidos.indexOf(pedido)]" @click="closeDetails(pedidos.indexOf(pedido))">
                 </section>
                 <section class="overlay" v-if="this.popControl[pedidos.indexOf(pedido)]">
-                    <ResumePopUp :itemList=pedido.resume :total="pedido.value"></ResumePopUp>
+                    <ResumePopUp :itemList=pedido.produtos :total="pedido.value"></ResumePopUp>
                 </section>
             </div>
         </div>
@@ -43,12 +43,25 @@
 <script>
 import Paginacao from '../components/Paginacao.vue';
 import ResumePopUp from '../components/ResumePopUp.vue';
+import axios from "axios";
+import { userKey,baseApiUrl } from '@/global';
 
 export default{
     name: 'ListPedidos',
-    beforeMount() {
-        this.getData();
-        this.getStartList();
+    async beforeMount() {
+        
+        try {
+            await this.getData();
+            
+        } catch (error) {
+        console.log(error)     
+        }
+
+        try {
+            await this.getStartList();
+        } catch (error) {
+        console.log(error)
+        }
     },
     data() {
         return {
@@ -61,12 +74,27 @@ export default{
         };
     },
     methods: {
-        getData() {
+        async getOrder(userId) {
+          try {
+            const url = `${baseApiUrl}/orders/` + userId;
+            const response = await axios.get(url)
+            return response.data;
+          } catch (error) {
+            console.error(error);
+            throw error;
+          }
+        },
+        async getData() {
 
-            //MOdificar para receber dados do servidor
+            try {
+                //MOdificar para receber dados do servidor
 
             //Preenchimento para testes
 
+            const json = localStorage.getItem(userKey)
+            const userData = JSON.parse(json)
+            const orderItems = await this.getOrder(userData.id)
+            console.log(orderItems);
             let test = [];
             for (let index = 1; index <= 12; index++) {
                 //Id do pedido, Status,Valor total, e data de pedido
@@ -119,19 +147,56 @@ export default{
                             ]
                 };
 
-                test.push(element)
+                // var element = {
+                //     'id': index,
+                //     'status': status,
+                //     'value': 150*index,
+                //     'dataPedido': this.localizeDate('2012-12-12'),
+                //     'resume': [
+                //                 {nome: "Nome do produto 1 - Capacete do tipo",
+                //                     quantity: 2,
+                //                     price: 100.00,
+                //                     parcelas: 4,
+                //                     imagem: "/img/produto.svg"
+                //                 },
+                //                 {nome: "Nome do produto 2 - Capacete do tipo",
+                //                     quantity: 3,
+                //                     price: 200.00,
+                //                     parcelas: 4,
+                //                     imagem: "/img/produto.svg"
+                //                 },
+                //                 {nome: "Nome do produto 3 - Capacete do tipo",
+                //                     quantity: 2,
+                //                     price: 300.00,
+                //                     parcelas: 4,
+                //                     imagem: "/img/produto.svg"
+                //                 },
+                //                 {nome: "Nome do produto 4 - Capacete do tipo",
+                //                     quantity: 1,
+                //                     price: 400.00,
+                //                     parcelas: 4,
+                //                     imagem: "/img/produto.svg"
+                //                 },
+                //             ]
+                // };
+
+                // test.push(element)
                 
             }
 
-            this.colection = test;
+            this.colection = orderItems;
+            } catch (error) {
+                console.error(error)
+            }
             
         },
-        getStartList() {
+        async getStartList() {
             this.offset = 0;//Manter
             this.limit = 6;//Manter
             this.popControl = Array(this.limit).fill(false),
             this.pedidos = this.colection.slice((this.offset * this.limit), ((this.offset + 1) * this.limit));
-            this.total = this.colection.length;
+            // this.total = this.colection.length;
+            console.log(await this.pedidos[0].produtos[0].nome_produto)
         },
         changePage(offset){
             this.offset = offset;

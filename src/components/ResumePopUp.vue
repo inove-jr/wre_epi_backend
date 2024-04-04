@@ -8,14 +8,11 @@
       <div class="itemList">
         <div class="itemCart" v-for="(item, index) in itemList" :key="index">
                   
-          <CartItemrResume class="itemInfo" @click="calcTotal()" :item=item></CartItemrResume>
+          <CartItemrResume class="itemInfo" :item=item></CartItemrResume>
     
         </div>
       </div>
       <hr>
-      <div class="listTotal">
-        <span> Valor total: R$ {{ (this.total).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}</span>
-      </div>
     </div>
 
   </section>
@@ -33,13 +30,18 @@ export default {
           type: [Array],
           default: [],
       },
-      total:{
+      valor_total:{
         type: Number,
         default: 0
       }
   },
   data() {
     return {
+      }
+    },
+    methods: {
+      teste(){
+        console.log()
       }
     }
   }

@@ -404,11 +404,13 @@ export default {
         addInput() {
             this.images.push('');
             console.log(this.images)
+            alert('adicionado!')
         },
         removeInput(index) {
             this.images.splice(index, 1);
             console.log("indice" + index)
             console.log(this.images)
+            alert('removido!')
         },
         async saveExist(event, id) {
             event.preventDefault()

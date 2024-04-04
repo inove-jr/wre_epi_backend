@@ -8,11 +8,11 @@
                 <RouterLink v-if="!this.isAdmin" :to="{name:'listPedidos', params:{userId: 1}}">
                     <img v-if="!this.isAdmin" class="icon" src="../assets/orders.svg" alt="Lista de pedidos" title="Lista de pedidos">
                 </RouterLink>
-                <RouterLink :to="{name:'productCad'}">
-                    <img v-if="this.isAdmin" class="icon" src="../assets/prod-add.svg" alt="Adição de Produto" title="Adição de Produto">
-                </RouterLink>
                 <RouterLink :to="{name:'sectionCad'}">
                     <img v-if="this.isAdmin" class="icon" src="../assets/section-add.svg" alt="Adição de Seção" title="Adição de Seção">
+                </RouterLink>
+                <RouterLink :to="{name:'productCad'}">
+                    <img v-if="this.isAdmin" class="icon" src="../assets/prod-add.svg" alt="Adição de Produto" title="Adição de Produto">
                 </RouterLink>
                 <RouterLink :to="{name:'bannerConfig'}">
                     <img v-if="this.isAdmin" class="icon" src="../assets/banner.svg" alt="Configuração dos Banners" title="Configuração dos Banners">
@@ -27,11 +27,13 @@
   
 <script>
   import { mapState } from 'vuex';
+  import { mapGetters } from 'vuex';
   import { userKey } from '@/global';
 
   export default {
-    mounted() {
-    },
+    computed: {
+    ...mapGetters(['isAdmin']),
+  },
     beforeMount(){
         this.getUserData()
     },
@@ -39,7 +41,6 @@
         return {
             email: "",
             password: "",
-            isAdmin: true,
             userId:0
         }
     },
@@ -48,6 +49,7 @@
             const json = localStorage.getItem(userKey);
             const userData = JSON.parse(json);
             this.userid=userData.id;
+            console.log(this.isAdmin)
         },
     },
 }

@@ -7,9 +7,11 @@ export default createStore({
   state: {
     isLoggedIn,
     paymentUrl:'',
+    isAdmin: false,
   },
   getters: {
-    paymentUrl: state=>state.paymentUrl
+    paymentUrl: state=>state.paymentUrl,
+    isAdmin: state => state.isAdmin
   },
   mutations: {
     setUser(state,user){
@@ -24,6 +26,10 @@ export default createStore({
       state.isLoggedIn = value;
       console.log(state.isLoggedIn)
       localStorage.setItem('isLoggedIn', value)
+    },
+    setIsAdmin(state,value){
+      state.isAdmin = value;
+      console.log(state.isAdmin)
     },
     setValidatingToken(state, value) {
       state.validatingToken = value;
