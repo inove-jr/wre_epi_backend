@@ -8,7 +8,7 @@
             </div>
             <div class="prod-images">
                 <section class="input-image">
-                    <p>Link Imagen do Banner 1(URL Imagem Banner )</p>
+                    <p>Link Imagen do Banner 1(URL da Imagem do Banner)</p>
                     <!-- <div id="bannerForm">
                         <div>
                             <label for="prodImages" class="btn">Selecione a imagem do banner 1...</label>
@@ -34,7 +34,7 @@
             </div>
             <div class="prod-images">
                 <section class="input-image">
-                    <p>Link Imagen do Banner 2</p>
+                    <p>Link Imagen do Banner 2(URL da Imagem do Banner)</p>
                     <!-- <div id="bannerForm">
                         <div>
                             <label for="prodImages" class="btn">Selecione a imagem do banner 2...</label>
@@ -51,12 +51,11 @@
         <button class="submit" @click="saveBanners()">Salvar</button>
 
         <form class="catForm">
-            <h3>CASO NÃO QUERIA UTILIZAR TODOS OS SLIDES BASTA DEIXAR OS CAMPOS EM BRANCO QUE NAO IRÁ UTILIZAR</h3>
-            <h3>CONFIGURAÇÃO CARROUSEL SLIDE 1</h3>
+            <h3>CASO NÃO QUEIRA UTILIZAR TODOS OS SLIDES BASTA DEIXAR OS CAMPOS EM BRANCO.</h3>
+            <h3>CONFIGURAÇÃO CARROSEL SLIDE 1</h3>
             <div class="linkString">
                 <label for="linkString">Link do Slide 1(Link para onde será direcionado o usuário)</label>
-                <input class="input-camp" type="text" name="linkString"
-                    v-model="this.carrousel[0].carrousel_image_link">
+                <input class="input-camp" type="text" name="linkString" v-model="this.carousel[0].carousel_image_link">
             </div>
             <div class="prod-images">
                 <section class="input-image">
@@ -71,19 +70,18 @@
                         </section>
                     </div> -->
                 </section>
-                <input class="input-camp" type="text" name="linkString" v-model="this.carrousel[0].carrousel_image_url">
+                <input class="input-camp" type="text" name="linkString" v-model="this.carousel[0].carousel_image_url">
             </div>
         </form>
 
         <form class="catForm">
             <div style="flex-direction: row;">
-                <h3>CONFIGURAÇÃO CARROUSEL SLIDE 2</h3>
+                <h3>CONFIGURAÇÃO CARROSEL SLIDE 2</h3>
                 <!-- <button class="repeatB1" @click='repeat1'>Repetir Banner 1</button> -->
             </div>
             <div class="linkString">
                 <label for="linkString">Link do Slide 2(Link para onde será direcionado o usuário)</label>
-                <input class="input-camp" type="text" name="linkString"
-                    v-model="this.carrousel[1].carrousel_image_link">
+                <input class="input-camp" type="text" name="linkString" v-model="this.carousel[1].carousel_image_link">
             </div>
             <div class="prod-images">
                 <section class="input-image">
@@ -98,16 +96,15 @@
                         </section>
                     </div> -->
                 </section>
-                <input class="input-camp" type="text" name="linkString" v-model="this.carrousel[1].carrousel_image_url">
+                <input class="input-camp" type="text" name="linkString" v-model="this.carousel[1].carousel_image_url">
             </div>
         </form>
 
         <form class="catForm">
-            <h3>CONFIGURAÇÃO CARROUSEL SLIDE 3</h3>
+            <h3>CONFIGURAÇÃO CARROSEL SLIDE 3</h3>
             <div class="linkString">
                 <label for="linkString">Link do Slide 3(Link para onde será direcionado o usuário)</label>
-                <input class="input-camp" type="text" name="linkString"
-                    v-model="this.carrousel[2].carrousel_image_link">
+                <input class="input-camp" type="text" name="linkString" v-model="this.carousel[2].carousel_image_link">
             </div>
             <div class="prod-images">
                 <section class="input-image">
@@ -122,19 +119,18 @@
                         </section>
                     </div> -->
                 </section>
-                <input class="input-camp" type="text" name="linkString" v-model="this.carrousel[2].carrousel_image_url">
+                <input class="input-camp" type="text" name="linkString" v-model="this.carousel[2].carousel_image_url">
             </div>
         </form>
 
         <form class="catForm">
             <div style="flex-direction: row;">
-                <h3>CONFIGURAÇÃO DE CARROUSEL SLIDE 4</h3>
+                <h3>CONFIGURAÇÃO DE CARROSEL SLIDE 4</h3>
                 <!-- <button class="repeatB1" @click='repeat1'>Repetir Banner 1</button> -->
             </div>
             <div class="linkString">
                 <label for="linkString">Link do Slide 4(Link para onde será direcionado o usuário)</label>
-                <input class="input-camp" type="text" name="linkString"
-                    v-model="this.carrousel[3].carrousel_image_link">
+                <input class="input-camp" type="text" name="linkString" v-model="this.carousel[3].carousel_image_link">
             </div>
             <div class="prod-images">
                 <section class="input-image">
@@ -149,17 +145,16 @@
                         </section>
                     </div> -->
                 </section>
-                <input class="input-camp" type="text" name="linkString" v-model="this.carrousel[3].carrousel_image_url">
+                <input class="input-camp" type="text" name="linkString" v-model="this.carousel[3].carousel_image_url">
             </div>
         </form>
         <form class="catForm">
             <div style="flex-direction: row;">
-                <h3>CONFIGURAÇÃO DE CARROUSEL SLIDE 5</h3>
+                <h3>CONFIGURAÇÃO DE CARROSEL SLIDE 5</h3>
             </div>
             <div class="linkString">
                 <label for="linkString">Link do Slide 5(Link para onde será direcionado o usuário)</label>
-                <input class="input-camp" type="text" name="linkString"
-                    v-model="this.carrousel[4].carrousel_image_link">
+                <input class="input-camp" type="text" name="linkString" v-model="this.carousel[4].carousel_image_link">
             </div>
             <div class="prod-images">
                 <section class="input-image">
@@ -174,10 +169,10 @@
                         </section>
                     </div> -->
                 </section>
-                <input class="input-camp" type="text" name="linkString" v-model="this.carrousel[4].carrousel_image_url">
+                <input class="input-camp" type="text" name="linkString" v-model="this.carousel[4].carousel_image_url">
             </div>
         </form>
-        <button class="submit" @click="saveCarrousel()">Salvar</button>
+        <button class="submit" @click="saveCarousel()">Salvar</button>
     </div>
 </template>
 <script>
@@ -188,7 +183,7 @@ export default {
     name: 'BannerConfigForm',
     beforeMount() {
         this.getBanners();
-        this.getCarrousel();
+        this.getCarousel();
 
         // this.banner1 = banners[0];
         // this.banner2 = banners[1];
@@ -206,26 +201,26 @@ export default {
                 }
 
             ],
-            carrousel: [
+            carousel: [
                 {
-                    carrousel_image_url: "",
-                    carrousel_image_link: " "
+                    carousel_image_url: "",
+                    carousel_image_link: " "
                 },
                 {
-                    carrousel_image_url: " ",
-                    carrousel_image_link: " "
+                    carousel_image_url: " ",
+                    carousel_image_link: " "
                 },
                 {
-                    carrousel_image_url: "",
-                    carrousel_image_link: " "
+                    carousel_image_url: "",
+                    carousel_image_link: " "
                 },
                 {
-                    carrousel_image_url: " ",
-                    carrousel_image_link: " "
+                    carousel_image_url: " ",
+                    carousel_image_link: " "
                 },
                 {
-                    carrousel_image_url: "",
-                    carrousel_image_link: " "
+                    carousel_image_url: "",
+                    carousel_image_link: " "
                 }
             ]
         }
@@ -238,56 +233,67 @@ export default {
             try {
                 await axios.get(url).then(
                     response => {
-                        if(response.data.length > 0){
-                            this.banners=response.data
+                        if (response.data.length > 0) {
+                            this.banners = response.data
                         }
                     }
                 )
-                
+
             } catch (error) {
-                
+
             }
 
         },
         async saveBanners() {
             const url = `${baseApiUrl}/assets/banners`
             this.data = this.banners
-            console.log(this.data)
 
-            if(confirm("Deseja Salvar as alterações nos banners?")){
+            if (confirm("Deseja Salvar as alterações nos banners?")) {
                 try {
                     await axios.put(url, this.data)
                     alert("Banners salvos com sucesso!");
-    
+
                 } catch (error) {
                     console.error('Erro ao Salvar Banner:', error);
                     throw error;
                 }
             }
         },
-        async saveCarrousel() {
-            const url = `${baseApiUrl}/assets/carrousel`
-            this.data = this.carrousel
-            console.log(this.data)
+        async saveCarousel() {
+            const url = `${baseApiUrl}/assets/carousel/edit`
+            this.data = this.carousel
 
-            if(confirm("Deseja Salvar as alterações no carroussel?")){
+            if (confirm("Deseja Salvar as alterações no carrossel?")) {
                 try {
                     await axios.put(url, this.data)
-                    alert("Carrousel salvo com sucesso!");
-    
+                    alert("Carrossel salvo com sucesso!");
+
                 } catch (error) {
-                    console.error('Erro ao Salvar Carroussel:', error);
+                    console.error('Erro ao Salvar Carrossel:', error);
                     throw error;
                 }
             }
         },
-        async getCarrousel() {
+        async getCarousel() {
 
-            const url = `${baseApiUrl}/assets/carrousel`
+            const url = `${baseApiUrl}/assets/carousel/edit` 
             await axios.get(url).then(
                 response => {
-                    if((response.data).length > 0){
-                        this.carrousel = response.data
+                    console.log((response.data))
+                    if ((response.data).length > 0) {
+                        console.log("O tamanho do registro é:" + response.data.length)
+                        if (response.data.length < 5) {
+                            this.carousel = this.carousel.map((element, index) => {
+                                if (index <= response.data.length - 1) {
+                                    return response.data[index]
+                                } else {
+                                    return element
+                                }
+                            })
+                            console.log(this.carousel)
+                        }else{
+                            this.carousel = response.data
+                        }
                     }
                 }
             ).catch(error => {
