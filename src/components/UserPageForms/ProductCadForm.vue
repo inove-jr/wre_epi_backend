@@ -197,6 +197,13 @@
 
 
                     </div>
+                    <small>
+                        <strong>INSEIR APENAS O ID DO VIDEO DO YOUTUBE PARA ADICIONAR O VÍDEO. POR EXEMPLO: O LINK DO VIDEO É: https://www.youtube.com/watch?v=ASDASaJHGwER</strong>
+                    </small>
+
+                    <small>
+                        <strong>O "ASDASaJHGwER" SERÁ O ID DO VÍDEO, E ISTO QUE DEVERÁ SER ADICIONADO NOS CAMPOS DE URL DE VIDEO ABAIXO.</strong>
+                    </small>
 
                     <small>
                         Link de vídeo curto:
@@ -463,7 +470,7 @@ export default {
         },
         async getItemDetails() {
             const id = this.$route.params.id
-            const url = `${baseApiUrl}/products/${id}`
+            const url = `${baseApiUrl}/product-details/${id}`
             await axios.get(url).then(
                 response => {
                     this.produto = response.data

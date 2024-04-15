@@ -7,20 +7,15 @@
             <span class="text"> Imagem do produto: </span>
 
             <div class="bigImage">
-              <img :src="bigImage" />
+              <img :src="bigImage.url" />
             </div>
 
             <div class="otherImages">
-              <img
-                v-for="(image, index) in otherImages"
-                :key="index"
-                :src="image"
-                @click="select(index)"
-              />
+              <img v-for="(image, index) in images" :key="index" :src=image.url @click="select(index)" />
             </div>
 
             <div class="simple-video-mobile">
-              <VideoEmbed url="745aPtV_W60"/>
+              <VideoEmbed url="745aPtV_W60" />
             </div>
           </div>
 
@@ -29,26 +24,27 @@
               <h2 class="padText">{{ this.produto.name }}</h2>
 
               <div class="padText">
-                <span v-if="produto.short_description !==null && produto.short_description!=undefined">
+                <span v-if="produto.short_description !== null && produto.short_description != undefined">
                   {{ this.produto.short_description }}
                 </span>
               </div>
             </div>
 
             <div class="simple-video">
-              <VideoEmbed url="745aPtV_W60"/>
+              <VideoEmbed url="745aPtV_W60" />
             </div>
           </div>
         </div>
       </div>
 
       <div class="whiteBox productBuy col">
-        <h2  v-if="produto.short_description !==null && produto.short_description!=undefined">R$ {{produto.price.toLocaleString("pt-BR", { minimumFractionDigits: 2})}}</h2>
+        <h2 v-if="produto.short_description !== null && produto.short_description != undefined">R$
+          {{ produto.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) }}</h2>
 
         <p class="paragrafo1">
           <i class="far fa-credit-card"></i> x4 de <span style="font-weight: bold">
-                    R$ {{ (produto.price/4).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}
-                </span> s/ juros
+            R$ {{ (produto.price / 4).toLocaleString("pt-BR", { minimumFractionDigits: 2 }) }}
+          </span> s/ juros
         </p>
 
         <a href="#">Outras formas de pagamento </a>
@@ -56,29 +52,13 @@
         <p class="paragrafo2">Quantidade</p>
 
         <div class="flex-container">
-          <button
-            class="botao"
-            id="botaosub"
-            @click="subtrair()"
-            style="width: 31px; height: 39px"
-          >
+          <button class="botao" id="botaosub" @click="subtrair()" style="width: 31px; height: 39px">
             -
           </button>
 
-          <input
-            class="inputquantidade"
-            type="number"
-            style="width: 55px; height: 39px"
-            id="contador"
-            value = "1"
-          />
+          <input class="inputquantidade" type="number" style="width: 55px; height: 39px" id="contador" v-model="quantidade" />
 
-          <button
-            class="botao"
-            id="botaosoma"
-            @click="somar()"
-            style="width: 31px; height: 39px"
-          >
+          <button class="botao" id="botaosoma" @click="somar()" style="width: 31px; height: 39px">
             +
           </button>
         </div>
@@ -87,12 +67,7 @@
           <label>Digite seu CEP:</label>
         </div>
 
-        <input
-          class="inputcep"
-          id="cep"
-          type="string"
-          style="width: 225px; height: 40px"
-        />
+        <input class="inputcep" id="cep" type="string" style="width: 225px; height: 40px" />
 
         <div class="endereco">
           <hr />
@@ -107,7 +82,7 @@
           <hr />
         </div>
 
-        <button id="comprar" inline="center">
+        <button id="comprar" inline="center" @click="addToCart">
           Comprar
         </button>
         <button id="comprarata">
@@ -120,22 +95,22 @@
       <h3>Descrição:</h3>
       <div class="descricao">
         <p class="padText">
-         {{ produto.long_description }}
+          {{ produto.long_description }}
         </p>
         <div class="video-detalhado">
           <h2>Vídeo com descrição detalhada:</h2>
           <VideoEmbed url="j5a0jTc9S10" />
         </div>
       </div>
-    </div>    
-      <SessaoProdutos class="itens-similares" :nomeSessao="sessao" :listaProdutos="produtos"/>  
+    </div>
+    <SessaoProdutos class="itens-similares" :nomeSessao="sessao" :listaProdutos="produtos" />
   </section>
 </template>
- 
+
 <script>
 import SessaoProdutos from "@/components/sessaoProdutos.vue";
 import VideoEmbed from "../components/VideoEmbed.vue";
-import { baseApiUrl } from '@/global';
+import { baseApiUrl,userKey } from '@/global';
 import axios from "axios";
 
 export default {
@@ -149,53 +124,79 @@ export default {
     return {
       bigImage: "/img/prod1.svg",
       otherImages: ["/img/prod1.svg", "/img/prod2.svg", "/img/prod3.svg"],
+      images: [],
       count: 1,
-      produto:{},
-      produtos:{},
+      produto: {},
+      produtos: {},
+      quantidade:1,
       sessao: "Produtos similares...",
     };
   },
   methods: {
     select(image) {
-      this.bigImage = this.otherImages[image];
+      this.bigImage = this.images[image];
     },
     somar() {
-      let input = document.getElementById("contador");
-      this.count++;
-      input.value = this.count;
+      // let input = document.getElementById("contador");
+      this.quantidade++;
     },
     subtrair() {
-      let input = document.getElementById("contador");
-      this.count--;
-      if(this.count < 1){
-        this.count = 1;
+      // let input = document.getElementById("contador");
+      this.quantidade--;
+      if (this.quantidade < 1) {
+        this.quantidade = 1;
       }
-      input.value = this.count;
     },
     async getItemDetails() {
-      const id= this.$route.params.id
-      const url = `${baseApiUrl}/products/${id}`
+      const id = this.$route.params.id
+      console.log(id);
+      const url = `${baseApiUrl}/product-details/${id}`
       await axios.get(url).then(
         response => {
-          [this.produto] = response.data
+          this.produto = response.data.product
+          this.images = response.data.images
+          console.log(this.produto)
+          this.bigImage = response.data.images[0]
           this.getItemsSection(this.produto.categoryId)
         }
       ).catch(error => {
         console.log(error)
       })
     },
-    async getItemsSection(categoryId){
-          const url = `${baseApiUrl}/categories/${categoryId}/products-cart`
-          await axios.get(url).then(response => {
-            console.log(response.data) 
-            this.produtos=response.data;
-          })
-          .catch(error => {
-            console.log(error)
-          })
-        },
+    async getItemsSection(categoryId) {
+      const url = `${baseApiUrl}/categories/${categoryId}/products-cart`
+      await axios.get(url).then(response => {
+        this.produtos = response.data;
+      })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    async addToCart() {
+      const json = localStorage.getItem(userKey);
+      const userData = JSON.parse(json);
+      console.log(userData.id)
+      console.log(this.produto.id)
+
+      const productToAdd = {}
+
+      productToAdd.product_id = this.produto.id
+      productToAdd.quantity = this.quantidade
+
+      console.log(productToAdd)
+      const url = `${baseApiUrl}/cart/` + userData.id
+      console.log(url)
+
+      axios.post(url, productToAdd).then(res => {
+        alert("Item Adicionado ao carrinho de compras")
+        // return;
+      }).catch((e => {
+        alert(e.response)
+        return;
+      }))
+    },
   },
-  mounted() {
+  beforeMount() {
     this.getItemDetails();
   },
 };
@@ -205,76 +206,87 @@ export default {
 .conteiner {
   padding: 1rem 4rem;
 }
+
 .productView {
   padding: 2rem;
   margin: 0.5rem;
   width: 70%;
   font-size: 1.4rem;
 }
+
 .productBuy {
   min-width: 35rem;
   width: 30%;
   padding: 3rem;
   margin: 0.5rem;
 }
+
 .bigImage img {
   height: 33rem;
-  width: 33rem;
+  max-width: 45rem;
   /* aspect-ratio: 1/1;*/
-  width: auto;
+  /* width: auto; */
   border: 0.1em solid rgb(0, 0, 0, 0.5);
   border-radius: 0.2rem;
 }
 
-.simple-video-mobile{
-    display: none;
+.simple-video-mobile {
+  display: none;
 }
 
 @media only screen and (max-width: 1200px) {
   .conteiner {
     flex-wrap: wrap;
   }
-  .productView{
+
+  .productView {
     padding: 2rem;
     margin: 0.5rem;
     width: 70%;
     font-size: 1.4rem;
   }
-  .productBuy{
+
+  .productBuy {
     min-width: 35rem;
     width: 30%;
     padding: 3rem;
     margin: 0.5rem;
   }
-  .bigImage img{
+
+  .bigImage img {
     height: 33rem;
     width: 33rem;
-   /* aspect-ratio: 1/1;*/
+    /* aspect-ratio: 1/1;*/
     width: auto;
     border: 0.1em solid rgb(0, 0, 0, 0.5);
     border-radius: 0.2rem;
   }
+
   @media only screen and (max-width: 1200px) {
     .conteiner {
       flex-wrap: wrap;
     }
+
     .productView {
       width: 100%;
     }
+
     .productBuy {
       width: 100%;
     }
   }
-  .images{
+
+  .images {
     text-align: left;
   }
-  .text{
+
+  .text {
     font-family: Inter;
     text-align: justify;
     padding-bottom: 0.5rem;
   }
-  
-  .otherImages img{
+
+  .otherImages img {
     height: 5rem;
     aspect-ratio: 1/1;
     width: auto;
@@ -282,22 +294,28 @@ export default {
     border: 0.1em solid rgb(0, 0, 0, 0.5);
     border-radius: 0.2rem;
   }
+
   .columns {
     padding: 2rem;
   }
+
   .padText {
     padding-bottom: 1rem;
   }
-  .video{
+
+  .video {
     width: 100%;
   }
+
   .productBuy {
     width: 100%;
   }
 }
+
 .images {
   text-align: left;
 }
+
 .text {
   font-family: Inter;
   text-align: justify;
@@ -312,17 +330,21 @@ export default {
   border: 0.1em solid rgb(0, 0, 0, 0.5);
   border-radius: 0.2rem;
 }
+
 .columns {
   padding: 2rem;
 }
+
 .padText {
   padding-bottom: 1rem;
 }
+
 .video {
   width: 100%;
   aspect-ratio: 16/9;
   border: none;
 }
+
 .detail {
   font-size: 1.4rem;
   margin: 4.5rem;
@@ -337,26 +359,32 @@ export default {
   width: 8em;
   color: black;
 }
+
 .descricao {
   display: flex;
   flex-direction: column;
   margin-inline: 2em;
 }
+
 .descricao p {
   font-size: 1.6rem;
   text-align: left;
 }
+
 .video-detalhado {
   margin: 1em;
   margin-inline: 4em;
 }
+
 .video-detalhado h2 {
   text-align: left;
   margin-bottom: 1rem;
 }
+
 .video-detalhado iframe {
   max-height: 50em;
 }
+
 #itens-similares {
   margin: 2em;
 }
@@ -421,11 +449,12 @@ export default {
 /* Remover controlador do input type number */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
+
 input[type="number"] {
-    -moz-appearance: textfield;
+  -moz-appearance: textfield;
 }
 
 .botao {
@@ -486,6 +515,7 @@ input[type="number"] {
   border: 1px solid #cacada;
   margin-bottom: 5px;
 }
+
 .paragrafo3 {
   color: rgba(65, 65, 65, 1);
   font-family: "Inter";
@@ -504,7 +534,7 @@ input[type="number"] {
 #comprar {
   margin-top: 12px;
   background: linear-gradient(180deg, #d6ac00 0%, #997a01 100%);
-  width: 20rem; 
+  width: 20rem;
   height: 5rem;
   border: none;
   border-radius: 10px;
@@ -522,7 +552,7 @@ input[type="number"] {
 }
 
 #comprarata {
-  width: 20rem; 
+  width: 20rem;
   height: 5rem;
   background: rgb(15, 10, 38);
   border: none;
@@ -542,6 +572,7 @@ input[type="number"] {
   .detail {
     margin: 1.5rem;
   }
+
   .descricao {
     margin-inline: 0.4em;
   }
@@ -549,86 +580,105 @@ input[type="number"] {
   .video-detalhado {
     margin: 0;
   }
+
   .video-detalhado iframe {
     height: 10em;
   }
-  .descricao p{
+
+  .descricao p {
     font-size: 1.6rem;
     text-align: left;
   }
-  .video-detalhado{
+
+  .video-detalhado {
     margin: 1em;
     margin-inline: 4em;
   }
-  .video-detalhado h2{
+
+  .video-detalhado h2 {
     text-align: left;
     margin-bottom: 1rem;
   }
-  .video-detalhado iframe{
+
+  .video-detalhado iframe {
     max-height: 50em;
   }
-  .itens-similares{
+
+  .itens-similares {
     margin: 2em;
   }
 
   @media only screen and (max-width: 820px) {
-    .detail{
+    .detail {
       margin: 1.5rem;
-    } 
-    .descricao{
+    }
+
+    .descricao {
       margin-inline: 0.4em;
     }
-    
-    .video-detalhado{
+
+    .video-detalhado {
       margin: 0;
     }
-    .video-detalhado iframe{
+
+    .video-detalhado iframe {
       height: 10em;
-    }                   
+    }
   }
 
   @media(max-width: 720px) {
-    .conteiner{
+    .conteiner {
       padding: 1rem 1rem;
     }
-    .productView{
+
+    .productView {
       padding: 2rem;
       width: 100%;
       font-size: 1.4rem;
     }
-    .simple-video-mobile{
+
+    .simple-video-mobile {
       display: contents;
     }
-    .simple-video{
+
+    .simple-video {
       display: none;
     }
-    .images .text{
+
+    .images .text {
       margin-left: 1vw;
     }
-    .images .otherImages{
+
+    .images .otherImages {
       margin-bottom: 4rem;
     }
+
     .bigImage {
       align-self: center;
     }
-    .bigImage img{
-        height: 29rem;
+
+    .bigImage img {
+      height: 29rem;
     }
-    .row-inverse{
+
+    .row-inverse {
       flex-direction: column-reverse;
-    }     
-    .detail{
+    }
+
+    .detail {
       flex-direction: column;
-    }       
-    .detail h3{
+    }
+
+    .detail h3 {
       width: 8rem;
       color: #521717;
-    } 
-    .itens-similares{
-      
+    }
+
+    .itens-similares {
+
       margin: 2em;
       display: flex;
-      flex-direction:inherit;
+      flex-direction: inherit;
       flex-wrap: wrap;
     }
   }

@@ -49,9 +49,6 @@ export default {
         }
     },
     methods:{
-        showId: function(){
-            console.log(produto.id)
-        },
         async addToCart(){
             const json = localStorage.getItem(userKey);
             const userData = JSON.parse(json);
@@ -78,9 +75,10 @@ export default {
 
         goToProductPage(){
             console.log(this.produto.id)
+            console.log("lalallalala")
+            this.$router.push({ name: 'product', params: { id: this.produto.id } });
             const router = useRouter();
 
-            this.$router.push({ name: 'product', params: { id: this.produto.id } });
         }
 
     }
