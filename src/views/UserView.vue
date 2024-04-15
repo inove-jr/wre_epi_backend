@@ -5,7 +5,7 @@
                 <RouterLink :to="{name:'userPefil', params:{userId: userId }}">
                   <img class="icon" src="../assets/user.svg" alt="Perfil" title="Perfil" >
                 </RouterLink>
-                <RouterLink v-if="!this.isAdmin" :to="{name:'listPedidos', params:{userId: 1}}">
+                <RouterLink v-if="!this.isAdmin" :to="{name:'listPedidos', params:{userId: userId}}">
                     <img v-if="!this.isAdmin" class="icon" src="../assets/orders.svg" alt="Lista de pedidos" title="Lista de pedidos">
                 </RouterLink>
                 <RouterLink :to="{name:'sectionCad'}">
@@ -16,6 +16,9 @@
                 </RouterLink>
                 <RouterLink :to="{name:'bannerConfig'}">
                     <img v-if="this.isAdmin" class="icon" src="../assets/banner.svg" alt="Configuração dos Banners" title="Configuração dos Banners">
+                </RouterLink>
+                <RouterLink :to="{name:'OrdersView'}">
+                    <img v-if="this.isAdmin" class="icon" src="../assets/mudanca_pedido_icon.svg" alt="Configuração dos Banners" title="Configuração dos Banners">
                 </RouterLink>
             </section>
             <section class="conteudo">
@@ -48,7 +51,7 @@
         getUserData() {
             const json = localStorage.getItem(userKey);
             const userData = JSON.parse(json);
-            this.userid=userData.id;
+            this.userId=userData.id;
             console.log(this.isAdmin)
         },
     },

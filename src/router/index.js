@@ -14,6 +14,7 @@ import ListaPedidios from '../components/ListPedidos.vue'
 import PasswordRecovery from '../views/PasswordRecovery.vue'
 import ChangePassword from '../views/ChangePassword.vue'
 import SearchView from "../views/SearchView.vue"
+import OrdersView from '@/views/OrdersView.vue'
 
 
 const routes = [
@@ -59,11 +60,6 @@ const routes = [
     component: CadastroView
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  },
-  {
     path: '/confirm',
     name: 'confirmarCompra',
     component: ConfirmBuyView,
@@ -88,6 +84,11 @@ const routes = [
         path: "/perfil/produt-cad/:userId",
         name: "productCad",
         component: ProductCadForm,
+      },
+      {
+        path: "/perfil/orders/:userId",
+        name: "OrdersView",
+        component: OrdersView,
       },
       {
         path: "/perfil/section-cad/:userId",
