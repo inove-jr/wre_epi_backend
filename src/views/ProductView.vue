@@ -7,7 +7,7 @@
             <span class="text"> Imagem do produto: </span>
 
             <div class="bigImage">
-              <img :src="bigImage.url" />
+              <img :src="bigImage" />
             </div>
 
             <div class="otherImages">
@@ -56,7 +56,8 @@
             -
           </button>
 
-          <input class="inputquantidade" type="number" style="width: 55px; height: 39px" id="contador" v-model="quantidade" />
+          <input class="inputquantidade" type="number" style="width: 55px; height: 39px" id="contador"
+            v-model="quantidade" />
 
           <button class="botao" id="botaosoma" @click="somar()" style="width: 31px; height: 39px">
             +
@@ -110,7 +111,7 @@
 <script>
 import SessaoProdutos from "@/components/sessaoProdutos.vue";
 import VideoEmbed from "../components/VideoEmbed.vue";
-import { baseApiUrl,userKey } from '@/global';
+import { baseApiUrl, userKey } from '@/global';
 import axios from "axios";
 
 export default {
@@ -128,20 +129,18 @@ export default {
       count: 1,
       produto: {},
       produtos: {},
-      quantidade:1,
+      quantidade: 1,
       sessao: "Produtos similares...",
     };
   },
   methods: {
     select(image) {
-      this.bigImage = this.images[image];
+      this.bigImage = this.images[image].url;
     },
     somar() {
-      // let input = document.getElementById("contador");
       this.quantidade++;
     },
     subtrair() {
-      // let input = document.getElementById("contador");
       this.quantidade--;
       if (this.quantidade < 1) {
         this.quantidade = 1;
@@ -151,17 +150,24 @@ export default {
       const id = this.$route.params.id
       console.log(id);
       const url = `${baseApiUrl}/product-details/${id}`
-      await axios.get(url).then(
-        response => {
-          this.produto = response.data.product
+
+      try {
+        const response = await axios.get(url)
+        this.produto = response.data.product
+        console.log(response.data.images)
+        if (response.data.images.length > 0 && response.data.images != null && response.data.images != undefined) {
           this.images = response.data.images
-          console.log(this.produto)
-          this.bigImage = response.data.images[0]
-          this.getItemsSection(this.produto.categoryId)
+          this.bigImage = response.data.images[0].url
         }
-      ).catch(error => {
-        console.log(error)
-      })
+        // console.log(this.produto)
+        // console.log(this.images)
+        this.getItemsSection(this.produto.categoryId)
+
+
+      } catch (error) {
+        console.error(error)
+      }
+
     },
     async getItemsSection(categoryId) {
       const url = `${baseApiUrl}/categories/${categoryId}/products-cart`
