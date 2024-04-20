@@ -1,8 +1,7 @@
 <template>
   <div class="main">
-    <vueper-slides autoplay :fixed-height="true">
-
-      <vueper-slide @click="teste(index)" v-for="(slide, index) in slides" :key="index" :image="slide.image" :title="slide.title"
+    <vueper-slides :fixed-height="true" autoplay=true v-if="slides.length>0">
+      <vueper-slide @click="teste(index)" v-for="(slide, index) in slides"  :key="index" :image="slide.image"
         :content="slide.content" :style="'backgroundSize: auto; backgroundRepeat: no-repeat'">
       </vueper-slide>
     </vueper-slides>
@@ -23,35 +22,43 @@ export default {
     VueperSlides,
     VueperSlide,
   },
-  data: () => ({
-    slides: [
-      // {
-      //   //title: 'Slide #1',
-      //  // content: 'Slide 1 content.',
-      //   image: require('../assets/logo.png'),
-      //   style: 'backgroundSize: auto; backgroundRepeat: no-repeat'
+  data(){
 
-      // },
-      // {
-      //  image: require('../assets/logo.png'),
-      //   style: 'backgroundSize: auto; backgroundRepeat: no-repeat'
+       
+  //   {
+  //   slides: [
+  //     // {
+  //     //   //title: 'Slide #1',
+  //     //  // content: 'Slide 1 content.',
+  //     //   image: require('../assets/logo.png'),
+  //     //   style: 'backgroundSize: auto; backgroundRepeat: no-repeat'
 
-      // },
-      // {
-      //   image: require('../assets/logo.png'),
-      //   style: 'backgroundSize: auto; backgroundRepeat: no-repeat'
-      // },
-      // {
-      //   image: require('../assets/logo.png'),
-      //   style: 'backgroundSize: auto; backgroundRepeat: no-repeat'
-      // },
-      // {
-      //   image: require('../assets/logo.png'),
-      //   style: 'backgroundSize: auto; backgroundRepeat: no-repeat'
-      // },
-    ],
-    links:[]
-  }),
+  //     // },
+  //     // {
+  //     //  image: require('../assets/logo.png'),
+  //     //   style: 'backgroundSize: auto; backgroundRepeat: no-repeat'
+
+  //     // },
+  //     // {
+  //     //   image: require('../assets/logo.png'),
+  //     //   style: 'backgroundSize: auto; backgroundRepeat: no-repeat'
+  //     // },
+  //     // {
+  //     //   image: require('../assets/logo.png'),
+  //     //   style: 'backgroundSize: auto; backgroundRepeat: no-repeat'
+  //     // },
+  //     // {
+  //     //   image: require('../assets/logo.png'),
+  //     //   style: 'backgroundSize: auto; backgroundRepeat: no-repeat'
+  //     // },
+  //   ],
+  // },
+  return{
+    links:[],
+    slides:[]
+
+  }
+},
   methods: {
     teste(index) {
       // console.log("click Funcionou!!!"+this.links[index].link)
@@ -85,9 +92,9 @@ export default {
       try {
         const response = await axios.get(url)
         console.log(response.data)
-        this.slides = response.data.imagesUrls
-        this.links = response.data.imagesLinks
-        console.log(this.links)
+          this.slides = response.data.imagesUrls
+          this.links = response.data.imagesLinks
+        console.log(this.links,this.slides)
       } catch (error) {
         console.log(error)
       }
@@ -95,7 +102,9 @@ export default {
   },
   beforeMount() {
     // this.testeCarrousel()
+    // console.log(this.slidesDuration)
     this.getCarousel()
+    console.log(this.slides)
   }
 
 }
