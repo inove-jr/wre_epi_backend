@@ -48,7 +48,7 @@
                         <small>
                             Título:
                         </small>
-                        <input class="inputText" v-model="this.prod.name" />
+                        <input class="inputText" v-model="this.prod.name" required/>
 
                         <small>
                             Valor (R$):
@@ -56,17 +56,17 @@
                         <input class="inputText" type="number" placeholder='0.00' step=".01" pattern="^\d*(\.\d{0,2})?$"
                             @keydown="$event => ['e', 'E', '+', '-'].includes($event.key) && $event.preventDefault()"
                             @change="$event => $event.target.value = parseFloat($event.target.value).toFixed(2)"
-                            v-model="this.prod.price" />
+                            v-model="this.prod.price" required/>
                         <small>
                             Descrição curta:
                         </small>
-                        <textarea class="inputText" v-model="this.prod.short_description"></textarea>
+                        <textarea class="inputText" v-model="this.prod.short_description" required></textarea>
                     </div>
 
                     <small>
                         Descrição longa:
                     </small>
-                    <textarea class="inputText" v-model="this.prod.long_description"></textarea>
+                    <textarea class="inputText" v-model="this.prod.long_description" required></textarea>
 
                     <h1>Dimensões do Produto</h1>
                     <div class="dimensions-section">
@@ -77,7 +77,7 @@
                                         Largura do Produto(Em Cm):
                                     </span>
                                 </label>
-                                <input type="number" class="inputTextSmall" min="0" v-model="this.prod.product_width" />
+                                <input type="number" class="inputTextSmall" min="0" v-model="this.prod.product_width" required/>
                             </div>
                             <div class="row" style="justify-content: center;align-items: center;">
                                 <label class="text-label">
@@ -85,7 +85,7 @@
                                         Comprimento do Produto(Em Cm):
                                     </span>
                                 </label>
-                                <input type="number" class="inputTextSmall" min="0" v-model="this.prod.product_length" />
+                                <input type="number" class="inputTextSmall" min="0" v-model="this.prod.product_length" required/>
                             </div>
                         </div>
                         <div class="row dimensions-row">
@@ -95,7 +95,7 @@
                                         Altura do Produto(Em Cm):
                                     </span>
                                 </label>
-                                <input type="number" class="inputTextSmall" min="0" v-model="this.prod.product_height" />
+                                <input type="number" class="inputTextSmall" min="0" v-model="this.prod.product_height" required/>
                             </div>
                             <div class="row" style="justify-content: center;align-items: center;">
                                 <label class="text-label">
@@ -103,7 +103,7 @@
                                         Peso do Produto(Em Kg):
                                     </span>
                                 </label>
-                                <input type="number" class="inputTextSmall" min="0" v-model="this.prod.product_weight" />
+                                <input type="number" class="inputTextSmall" min="0" v-model="this.prod.product_weight" required/>
                             </div>
                         </div>
 
@@ -116,7 +116,7 @@
                                         Largura da Embalagem do Produto(Em Cm):
                                     </span>
                                 </label>
-                                <input type="number" class="inputTextSmall" min="0" v-model="this.prod.package_width" />
+                                <input type="number" class="inputTextSmall" min="0" v-model="this.prod.package_width" required/>
                             </div>
                             <div class="row" style="justify-content: center;align-items: center;">
                                 <label class="text-label">
@@ -124,7 +124,7 @@
                                         Comprimento da Embalagem do Produto(Em Cm):
                                     </span>
                                 </label>
-                                <input type="number" class="inputTextSmall" min="0" v-model="this.prod.package_length" />
+                                <input type="number" class="inputTextSmall" min="0" v-model="this.prod.package_length" required/>
                             </div>
                         </div>
                         <div class="row dimensions-row">
@@ -134,7 +134,7 @@
                                         Altura da Embalagem do Produto(Em Cm):
                                     </span>
                                 </label>
-                                <input type="number" class="inputTextSmall" min="0" v-model="this.prod.package_height" />
+                                <input type="number" class="inputTextSmall" min="0" v-model="this.prod.package_height" required/>
                             </div>
                             <div class="row" style="justify-content: center;align-items: center;">
                                 <label class="text-label">
@@ -142,7 +142,7 @@
                                         Peso do Produto + Embalagem(Em Kg):
                                     </span>
                                 </label>
-                                <input type="number" class="inputTextSmall" min="0" v-model="this.prod.package_weight" />
+                                <input type="number" class="inputTextSmall" min="0" v-model="this.prod.package_weight" required/>
                             </div>
                         </div>
 
@@ -239,7 +239,7 @@
                     <div class="row submit-container">
                         <button class="purpleButton" :disabled="!this.prod.id" @click="saveExist">Salvar
                             Modificações</button>
-                        <button class="purpleButton" @click="saveNew">Adicionar novo produto</button>
+                        <button class="purpleButton" type='submit'  @click="saveNew">Adicionar novo produto</button>
                     </div>
                 </form>
             </content>
@@ -379,7 +379,7 @@ export default {
                 const url = `${baseApiUrl}/products/`+this.produtos[index].id
                 try {
                     await axios.delete(url)
-                    alert("Produto Escluido Com Sucesso!")
+                    alert("Produto Excluido Com Sucesso!")
                 } catch (error) {
                     alert("Erro ao Excluir Produto", error)
                 }
@@ -428,13 +428,12 @@ export default {
                     const url = `${baseApiUrl}/products/` + this.prod.id
                     try {
                         await axios.put(url, this.prod)
+                        alert("Produto Salvo Com Sucesso!")
                     } catch (error) {
-                        alert("Erro ao Salvar Produto!", error)
+                        console.log(error.response.data.message)
+                        alert(error.response.data.message)   
                     }
-
                 }
-
-
             }
         },
         async saveNew(event) {
@@ -457,15 +456,16 @@ export default {
                         await axios.post(url, this.data)
 
                     } catch (error) {
-                        console.error('Erro ao Salvar Produto:', error);
-                        throw error;
+                        console.log(error.response.data)
+                        alert(error.response.data.message)
                     }
 
                     // this.produtos.push(this.prod);
                     this.prod = {}
                 }
             } else {
-                alert("Dados Insuficientes para cadastrar produto!")
+                console.log(error.response.data.message)
+                alert(error.response.data.message)
             }
         },
         async getItemDetails() {
