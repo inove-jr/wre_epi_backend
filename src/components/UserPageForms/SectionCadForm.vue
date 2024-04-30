@@ -24,14 +24,18 @@ export default {
         }
     },
     methods: {
-        saveCategory(){
+        async saveCategory(){
             const url = `${baseApiUrl}/categories`
             console.log(this.category)
-            axios.post(url,this.category).then(res=>{
-                console.data(res)
-            }).catch((e=>{
-                    alert(e.response.data)
-            }))
+
+            try {
+                await axios.post(url,this.category);
+                alert("Categoria Salva Com Sucesso!!")
+            } catch (error) {
+                console.log(error.response.data.message)
+                alert(error.response.data.message)
+            }
+           
         }
     },
 }
