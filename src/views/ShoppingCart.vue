@@ -240,10 +240,10 @@ export default {
         this.user = { ...userInfo };
         this.name = this.user.name;
         this.cpf = this.user.cpf;
+        console.log(this.user)
 
         this.listProducts = cartData;
 
-        console.log(this.listProducts)
         this.som = 0;
         Object.entries(this.listProducts).forEach(([key, value]) => {
           this.som += value.price * value.quantity;
@@ -274,13 +274,7 @@ export default {
 
   },
   mounted() {
-    // console.log(this.endereco_form)
-    setTimeout(() => {     //Por algum motivo o calculo do valor total dos itens no carrinho não é corretamente exibido quando a pagina é carregada, como se os dados necessarios para o calculo
-      this.calcTotal();   //não tivessem sido recebidos no momento que é realizado o calculo, mesmo utilizando o async/await, mesmo garantindo que os dados utilizados no calculo já tinham sido 
-      //recebidos(usando um if para garantir que os mesmos não fossem nulos por exemplo), mas continuava não exibindo corretamente, porém ao clicar no botão para aumentar,
-      // ou diminuir a quantidade de um produto o valor passava a ser exibido corretamente, o erro foi somente corrigido ao adicionar o setTimeout de 100ms para chamar a função responsavel
-      // pelo calculo do valor total dos itens, não é uma solução ideal, mas está funcionando.
-    }, 800)
+      this.calcTotal();   
   },
 
 }
