@@ -1,10 +1,11 @@
 <template>
     <section class="whiteBox form-container">
         <h3>Cadastro</h3>
-        <form class="cadastro-form">
+        <form class="cadastro-form" @submit="saveUser">
             <div class="input-container">
                 <label for="name">Nome Completo</label>
-                <input type="text" id="name" name="name" v-model="user.name" required placeholder="Digite seu nome..." />
+                <input type="text" id="name" name="name" v-model="user.name" required
+                    placeholder="Digite seu nome..." />
             </div>
             <div class="input-container">
                 <label for="company">Empresa</label>
@@ -17,12 +18,13 @@
             </div>
             <div class="input-container">
                 <label for="CPF">Data de Nascimento</label>
-                <input type="date" id="data" name="CPF" v-model="user.birth_date" required placeholder="Digite seu CPF..." />
+                <input type="date" id="data" name="CPF" v-model="user.birth_date" required
+                    placeholder="Digite seu CPF..." />
             </div>
             <div class="input-container">
                 <label for="CPF">Telefone</label>
-                <input type="text" id="phone" name="CPF" v-model="user.telefone" required
-                    placeholder="Informe Um Telefone para Contato" />
+                <input type="text" id="phone" name="CPF" v-model="user.telefone" required 
+                    placeholder="Informe o seu Telefone" />
             </div>
             <div class="input-container">
                 <label for="email">E-mail</label>
@@ -36,11 +38,11 @@
             </div>
             <div class="input-container">
                 <label for="password-confirm">Confirme Senha</label>
-                <input type="password" id="password-confirm" name="password-confirm" v-model="user.confirmPassword" required
-                    placeholder="Confirmar senha" />
+                <input type="password" id="password-confirm" name="password-confirm" v-model="user.confirmPassword"
+                    required placeholder="Confirmar senha" />
             </div>
             <div class="buttons-container">
-                <button class="submit" @click="saveUser">Cadastrar</button>
+                <button type="submit" class="submit">Cadastrar</button>
                 <button class="submit" @click="reset">Cancelar</button>
             </div>
         </form>
@@ -100,18 +102,24 @@ export default {
         reset() {
             this.user = {}
         },
-        saveUser() {
-            if(this.validarCPF(this.user.cpf)) {
-                const url = `${baseApiUrl}/signup`
-                axios.post(url, this.user).then(res => {
+        async saveUser(e) {
+            e.preventDefault();
+            try {
+                if (this.validarCPF(this.user.cpf) && this.user.name && this.user.empresa && this.user.birth_date && this.user.telefone && this.user.email && this.user.password && this.user.confirmPassword) {
+                    console.log(this.user)
+                    const url = `${baseApiUrl}/signup`
+                    await axios.post(url, this.user)
                     alert("Cadastro Realizado Com Sucesso!!")
                     this.reset()
-                }).catch((e => {
-                    alert(e.response.data)
-                }))
-            }else{
-                alert("CPF INVÁLIDO, POR FAVOR INFORME UM CPF VÁLIDO")
+                } else {
+                    alert("CPF INVÁLIDO, POR FAVOR INFORME UM CPF VÁLIDO")
+                    throw new Error
+                }
+            } catch (error) {
+                console.log(error.response.data.message)
+                alert(error.response.data.message)
             }
+
         },
         validarCPF(cpf) {
             // Remove caracteres não numéricos
@@ -155,7 +163,13 @@ export default {
 
             // CPF válido
             return true;
-        }
+        },
+        validarTelefone() {
+            // Expressão regular para validar telefone no formato (00) 0000-0000 ou (00) 00000-0000
+            const telefoneRegex = /^\(\d{2}\)\s\d{4,5}-\d{4}$/;
+            this.telefoneInvalido = !telefoneRegex.test(this.telefone);
+            return !this.telefoneInvalido; // Retorna true se o telefone for válido, false caso contrário
+        },
 
     }
 }
@@ -223,4 +237,5 @@ export default {
 .submit:hover {
     box-shadow: inset 0 0.1rem 2rem 0.4rem #ffcc00;
     border-color: #ffffff9e;
-}</style>
+}
+</style>
