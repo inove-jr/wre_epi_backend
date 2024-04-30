@@ -11,6 +11,7 @@
 <script>
 import HeaderComponent from "./components/Header.vue";
 import FooterComponent from "./components/footer.vue";
+import { baseApiUrl,userKey } from "@/global";
 
 export default {
   name: "App",
@@ -23,6 +24,7 @@ export default {
       validatingToken: true
     }
   }
+
   
 };
 </script>
