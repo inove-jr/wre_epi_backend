@@ -1,27 +1,39 @@
 <template>
-  <div>
-    <HeaderComponent/>
-    <router-view/>
-    <FooterComponent />
+  <div class="screen">
+    <HeaderComponent :key="$route.fullPath"/>
+    <div class="routerV">
+      <router-view/>
+    </div>
+    <FooterComponent class="footer"/>
   </div>
 </template>
 
 <script>
 import HeaderComponent from "./components/Header.vue";
-import CarrouselComponent from "./components/CarrouselComponent.vue";
 import FooterComponent from "./components/footer.vue";
+import { baseApiUrl,userKey } from "@/global";
 
 export default {
   name: "App",
   components: {
     HeaderComponent,
-    CarrouselComponent,
     FooterComponent,
   },
+  data(){
+    return{
+      validatingToken: true
+    }
+  }
+
+  
 };
 </script>
 
 <style>
+.screen{
+  display: flex;
+  flex-direction: column;
+}
 body {
   margin: 0;
 }
@@ -35,7 +47,6 @@ body {
   color: #000;
   height: 100%;
   width: 100%;
-  background-color: grey;
 }
 .vueperslides--fixed-height {
   height: 200px;
@@ -44,8 +55,18 @@ body {
 body {
   background-color: #ffffff;
 }
-footer {
-  background-color: #3a9e3e;
+.footer {
+  position: relative;
+  background-color: #02589a;
   color: #ffffff;
 }
+.routerV{
+  min-height: 79vh;
+}
+
+@media(max-width: 720px){
+    #footer {
+      display: none;
+    }
+  }
 </style>

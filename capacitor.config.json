@@ -1,0 +1,6 @@
+{
+  "appId": "com.example.app",
+  "appName": "wre_epi",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}

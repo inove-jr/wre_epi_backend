@@ -1,0 +1,241 @@
+<template>
+    <section class="whiteBox form-container">
+        <h3>Cadastro</h3>
+        <form class="cadastro-form" @submit="saveUser">
+            <div class="input-container">
+                <label for="name">Nome Completo</label>
+                <input type="text" id="name" name="name" v-model="user.name" required
+                    placeholder="Digite seu nome..." />
+            </div>
+            <div class="input-container">
+                <label for="company">Empresa</label>
+                <input type="text" id="company" name="company" v-model="user.empresa" required
+                    placeholder="Digite sua empresa..." />
+            </div>
+            <div class="input-container">
+                <label for="CPF">CPF</label>
+                <input type="text" id="CPF" name="CPF" v-model="user.cpf" required placeholder="Digite seu CPF..." />
+            </div>
+            <div class="input-container">
+                <label for="CPF">Data de Nascimento</label>
+                <input type="date" id="data" name="CPF" v-model="user.birth_date" required
+                    placeholder="Digite seu CPF..." />
+            </div>
+            <div class="input-container">
+                <label for="CPF">Telefone</label>
+                <input type="text" id="phone" name="CPF" v-model="user.telefone" required 
+                    placeholder="Informe o seu Telefone" />
+            </div>
+            <div class="input-container">
+                <label for="email">E-mail</label>
+                <input type="text" id="email" name="email" v-model="user.email" required
+                    placeholder="Digite seu e-mail..." />
+            </div>
+            <div class="input-container">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" v-model="user.password" required
+                    placeholder="Digite sua senha..." />
+            </div>
+            <div class="input-container">
+                <label for="password-confirm">Confirme Senha</label>
+                <input type="password" id="password-confirm" name="password-confirm" v-model="user.confirmPassword"
+                    required placeholder="Confirmar senha" />
+            </div>
+            <div class="buttons-container">
+                <button type="submit" class="submit">Cadastrar</button>
+                <button class="submit" @click="reset">Cancelar</button>
+            </div>
+        </form>
+    </section>
+</template>
+<script>
+import axios from 'axios'
+import { baseApiUrl } from '@/global'
+
+const validCPF = (cpf) => checkAll(prepare(cpf))
+////////
+
+const notDig = i => !['.', '-', ' '].includes(i)
+const prepare = cpf => cpf.trim().split('').filter(notDig).map(Number)
+const is11Len = cpf => cpf.length === 11
+const notAllEquals = cpf => !cpf.every(i => cpf[0] === i)
+const onlyNum = cpf => cpf.every(i => !isNaN(i))
+
+const calcDig = limit => (a, i, idx) => a + i * ((limit + 1) - idx)
+const somaDig = (cpf, limit) => cpf.slice(0, limit).reduce(calcDig(limit), 0)
+const resto11 = somaDig => 11 - (somaDig % 11)
+const zero1011 = resto11 => [10, 11].includes(resto11) ? 0 : resto11
+
+const getDV = (cpf, limit) => zero1011(resto11(somaDig(cpf, limit)))
+const verDig = pos => cpf => getDV(cpf, pos) === cpf[pos]
+
+const checks = [is11Len, notAllEquals, onlyNum, verDig(9), verDig(10)]
+const checkAll = cpf => checks.map(f => f(cpf)).every(r => !!r)
+
+
+////////
+export default {
+    name: 'CadastroForm',
+    data() {
+        return {
+            mode: 'save',
+            user: {},
+            // name: '',
+            // company: '',
+            // CPF: '',
+            // email: '',
+            // password: '',
+            // passwordConfirm: ''
+        }
+    },
+    methods: {
+        async cadastro(e) {
+            e.preventDefault();
+            const data = {
+                // name: this.name,                    
+                // company: this.company,                    
+                // CPF: this.CPF,                    
+                // email: this.email,
+                // password: this.password,
+            }
+        },
+        reset() {
+            this.user = {}
+        },
+        async saveUser(e) {
+            e.preventDefault();
+            try {
+                if (this.validarCPF(this.user.cpf) && this.user.name && this.user.empresa && this.user.birth_date && this.user.telefone && this.user.email && this.user.password && this.user.confirmPassword) {
+                    console.log(this.user)
+                    const url = `${baseApiUrl}/signup`
+                    await axios.post(url, this.user)
+                    alert("Cadastro Realizado Com Sucesso!!")
+                    this.reset()
+                } else {
+                    alert("CPF INVÁLIDO, POR FAVOR INFORME UM CPF VÁLIDO")
+                    throw new Error
+                }
+            } catch (error) {
+                console.log(error.response.data.message)
+                alert(error.response.data.message)
+            }
+
+        },
+        validarCPF(cpf) {
+            // Remove caracteres não numéricos
+            cpf = cpf.replace(/\D/g, '');
+
+            // Verifica se o CPF possui 11 dígitos
+            if (cpf.length !== 11) {
+                return false;
+            }
+
+            // Verifica se todos os dígitos são iguais, o que tornaria o CPF inválido
+            if (/^(\d)\1{10}$/.test(cpf)) {
+                return false;
+            }
+
+            // Calcula o primeiro dígito verificador
+            let soma = 0;
+            for (let i = 0; i < 9; i++) {
+                soma += parseInt(cpf.charAt(i)) * (10 - i);
+            }
+            let resto = 11 - (soma % 11);
+            let dv1 = resto === 10 || resto === 11 ? 0 : resto;
+
+            // Verifica se o primeiro dígito verificador está correto
+            if (dv1 !== parseInt(cpf.charAt(9))) {
+                return false;
+            }
+
+            // Calcula o segundo dígito verificador
+            soma = 0;
+            for (let i = 0; i < 10; i++) {
+                soma += parseInt(cpf.charAt(i)) * (11 - i);
+            }
+            resto = 11 - (soma % 11);
+            let dv2 = resto === 10 || resto === 11 ? 0 : resto;
+
+            // Verifica se o segundo dígito verificador está correto
+            if (dv2 !== parseInt(cpf.charAt(10))) {
+                return false;
+            }
+
+            // CPF válido
+            return true;
+        },
+        validarTelefone() {
+            // Expressão regular para validar telefone no formato (00) 0000-0000 ou (00) 00000-0000
+            const telefoneRegex = /^\(\d{2}\)\s\d{4,5}-\d{4}$/;
+            this.telefoneInvalido = !telefoneRegex.test(this.telefone);
+            return !this.telefoneInvalido; // Retorna true se o telefone for válido, false caso contrário
+        },
+
+    }
+}
+</script>
+<style scoped>
+.form-container {
+    width: fit-content;
+    margin: auto;
+    margin-block: 3em;
+    padding: 3em;
+    border-radius: 0.3em;
+}
+
+.form-container h3 {
+    font-size: 2.7em;
+    font-weight: 700;
+    text-align: center;
+    padding-bottom: 1rem;
+    color: #0a0d26;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 0.3rem;
+    gap: 0.3rem;
+}
+
+.input-container label {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #515151;
+
+}
+
+.input-container input {
+    padding: 0.8rem;
+    width: 48rem;
+    border: 1px solid #FFFFFF;
+    background-color: #EEE;
+    box-shadow: inset 0 0.1rem 0.4rem 0.2rem rgba(0, 0, 0, 0.25);
+    border-radius: 0.5rem;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: row;
+    column-gap: 5em;
+    justify-content: center;
+    padding-top: 2em;
+}
+
+.submit {
+    background: #d6ac00;
+    color: white;
+    border-radius: 0.4rem;
+    font-size: 2em;
+    font-weight: 600;
+    text-align: center;
+    padding: 0.2rem;
+    padding-inline: 1.8rem;
+}
+
+.submit:hover {
+    box-shadow: inset 0 0.1rem 2rem 0.4rem #ffcc00;
+    border-color: #ffffff9e;
+}
+</style>

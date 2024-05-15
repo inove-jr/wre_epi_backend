@@ -1,46 +1,86 @@
 <template>
-    <div class="whiteBox card">
+    <div class="whiteBox card" @click="goToProductPage()">
         <div class="row center">
-            <span class="nome">{{ produto.nome }}</span>
+            <span class="nome">{{ produto.name }}</span>
         </div>
         <div class="image">
-            <img :src="produto.imagem" alt="Imagem Produto">
+            <img :src="produto.imageUrl" alt="Imagem Produto">
         </div>
     
         <div class="row center">
             <div class="col">
                 <span>à vista</span>
-                <span class="preco">R$ {{ produto.preco.toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}</span>
+                <span class="preco" v-if="produto.price !==null && produto.price !==undefined ">R$ {{ produto.price.toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}</span>
             </div>
         </div>
 
         <div class="row center">
             <span>
-                x{{produto.parcelas}} de
+               4 x de
                 <span style="font-weight: bold">
-                    R$ {{ (produto.preco/produto.parcelas).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}
+                    R$ {{ (produto.price/4).toLocaleString("pt-BR", { minimumFractionDigits: 2}) }}
                 </span>
                 s/ juros
             </span>
         </div>
             
         <div class="row center">
-            <button  @click="$router.push( { name: 'product', params: { id:0} })">Comprar</button>
+            <button  @click="$router.push( { name: 'product', params: { id:this.produto.id} }), addToCart()">Comprar</button>
         </div>
     </div>
 </template>
 <script>
+import { baseApiUrl,userKey } from '@/global'
+import axios from "axios"
+import { RouterLink, useRouter } from 'vue-router';
 export default {
+    
     name: "ProductCard",
     props:{
         produto:{
-            nome: String,
-            preco: Number,
-            parcelas: Number,
-            imagem: String
+            // nome: String,
+            // preco: Number,
+            // parcelas: Number,
+            // imagem: String
+            name: String,
+            price: Number,
+            parcelas: 4,
+            imageUrl: String
         }
     },
     methods:{
+        async addToCart(){
+            const json = localStorage.getItem(userKey);
+            const userData = JSON.parse(json);
+            console.log(userData.id)
+            console.log(this.produto.id)
+
+            const productToAdd={}
+
+            productToAdd.product_id=this.produto.id
+            productToAdd.quantity=1
+
+            console.log(productToAdd)
+            const url = `${baseApiUrl}/cart/`+userData.id
+            console.log(url)
+          
+            axios.post(url, productToAdd).then(res =>{
+                alert("Item Adicionado ao carrinho de compras")
+                // return;
+            }).catch((e=>{
+                alert(e.response)
+                return;
+                }))
+        },
+
+        goToProductPage(){
+            console.log(this.produto.id)
+            console.log("lalallalala")
+            this.$router.push({ name: 'product', params: { id: this.produto.id } });
+            const router = useRouter();
+
+        }
+
     }
 }
 
@@ -78,7 +118,7 @@ export default {
         color: white;
         font-size: 2rem;
         font-weight: bold;
-        background-color: #0a260b;
+        background-color: #0c0a26;
         border: none;
         border-radius: 0.5rem;
         padding: 0.3rem 2rem 0.6rem 2rem;
@@ -88,10 +128,42 @@ export default {
     }
 
     button:hover{
-        background-color: #2A732A;
+        background-color: #102c91;
     }
     .card{
         max-width: 24rem;
         min-width: 22.4rem;
+    }
+    
+    @media (max-width: 720px) {
+        .nome{
+            font-size: 1.2rem;
+            margin: 1.5rem;
+        }
+        .image{
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background-color: white;
+            margin: auto;  
+        }
+        .image img{
+            max-width: 8rem;
+        }
+        span{
+            font-size: 1.1rem;
+        }
+        .text-bot-preco {
+            text-align: left;
+        }
+        .preco{
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .card{
+            max-width: 16.9rem;
+            min-width: 14rem;
+            margin: 0.3rem;
+            margin-bottom: 1rem;
+        }
     }
 </style>

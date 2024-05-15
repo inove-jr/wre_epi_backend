@@ -1,20 +1,144 @@
 <template>
-    <section>
-        
-    </section> 
+    <div class="row" style="width: 100%; height: 58.5rem; justify-content: center">
+        <section class="whiteBox row">
+            <div class="col" style="width: 100%; margin: 3rem">
+                <label class="lblTitle">Login:</label>
+                <div style="margin: 2rem 0">
+                    <div class="col" style="padding: 0 2rem">
+                        <label class="lblInput">E-mail:</label>
+                        <input id="email" type="text" class="inputText" placeholder="Digite seu e-mail"
+                            v-model="user.email"/>
+                    </div>
+
+                    <div class="col" style="padding: 0 2rem">
+                        <label class="lblInput">Senha:</label>
+                        <input id="senha" type="password" class="inputText" placeholder="Digite sua senha"
+                            v-model="user.password"/>
+                    </div>
+                </div>
+
+                <div class="row" style="justify-content: center">
+                    <button @click="signin">Login</button>
+
+                    <button>Cancelar</button>
+                </div>
+
+                <div class="lblTextInf">
+                    <span>Esqueceu sua senha?</span>
+                    <router-link to="/password-recovery">
+                    <a href="">Recuperar conta</a>
+                    </router-link>
+                    <br/>
+                    <span>Não possui uma conta? </span>
+                    <router-link to="/cadastro">
+                    <a href="">Cadastre-se</a>
+                </router-link>
+                </div>
+            </div>
+        </section>
+    </div>
 </template>
   
 <script>
+
+    import axios from 'axios'
+    import { baseApiUrl,userKey } from '@/global'  
+    import { useCookies } from "vue3-cookies";
+    import { mapMutations } from 'vuex';
+
   export default {
+    setup() {
+      const { cookies } = useCookies();
+      return { cookies };
+    },
     mounted() {
     },
-      data() {
+    data() {
         return {
+            // email: "",
+            // password: "",
+            user:{}
         }
-      }
-  }
+    },
+    methods: {
+        // login: function() { 
+        //     console.log(this.$cookies);
+        //     if(!(this.email == "" || this.password == "")){
+        //         this.makeCookie(this.email);
+        //         this.$router.back();
+        //     }
+        // },
+        // makeCookie: function(email) { 
+        //     this.cookies.set('loggedIn', 'true', { expires: '1h' }); 
+        //     this.cookies.set('loggedUser_name',"Carlo", { expires: '1h' }); 
+        //     this.cookies.set('loggedUser_email', email, { expires: '1h' });
+        // },
+        reset(){
+              this.user = {}
+        },
+
+        ...mapMutations(['setIsLoggedIn']),
+
+        signin(){
+            const url = `${baseApiUrl}/signin`
+            axios.post(url, this.user)
+                .then(res=>{
+                    this.$store.commit('setUser',res.data)
+                    localStorage.setItem(userKey, JSON.stringify(res.data))
+                    this.$router.push('/')
+                    console.log("entrou")
+                    this.setIsLoggedIn(true)
+                })
+                .catch((e=>{
+                   alert(e.response.data)
+                   console.log("erro")
+                }))
+        }
+    },
+}
 </script>
   
 <style scoped>
-
+    section {
+        margin: 5rem;
+        width: 100%;
+        max-width: 50rem;
+    }
+    button {
+        color: white;
+        font-size: 2rem;
+        font-family: Lato;
+        /*background-color: #0a260b;*/
+        background-color: #8f7200;
+        border: none;
+        margin: 1rem;
+        border-radius: 0.5rem;
+        padding: 0.4rem 2rem 0.7rem 2rem;
+        cursor: pointer;
+        transition: 0.05s ease-in-out;
+    }
+    button:hover {
+        /*background-color: #2A732A;*/
+        background-color: #d6ac00;
+    }
+    .lblInput {
+        text-align: left;
+        font-family: 'Inter', sans-serif;
+        font-size: 1.2rem;
+        margin: 1rem 0 0.5rem 0;
+        color: #515151;
+    }
+    .lblTitle {
+        font-family: 'Inter', sans-serif;
+        font-size: 2.4rem;
+        font-weight: bold;
+        margin: 0 0 0.5rem 0;
+        color: #0A260B;
+    }
+    .lblTextInf {
+        margin: 2rem 0;
+        font-family: 'Inter', sans-serif;
+        font-size: 1.6rem;
+        color: #414141;
+    }
 </style>
